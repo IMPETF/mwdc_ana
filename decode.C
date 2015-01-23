@@ -22,6 +22,7 @@
 #include "TROOT.h"
 #include "TProfile.h"
 #include "TString.h"
+#include "TStyle.h"
 #include "json/jsoncpp.cpp"
 //
 typedef std::map< UInt_t,std::vector<int> > ChannelMap;
@@ -426,9 +427,6 @@ CrateInfo* read_config(const char* filename,const char* prefix,const char* suffi
     printf("error: parse JSON file\n");
     exit(1);
   }
-  
-  
-  info->Print();
   
   return info;
 }
@@ -847,7 +845,7 @@ int print_info(const char* datadir, const char* rootfile,const char* logfile,int
     for(int j=0;j<boardnum;j++){
       tree[j]->GetEntry(i);
     }
-
+    //get initial and final bunch_id and event_id,these ids are original
     if(i==0){
       for(int j=0;j<boardnum;j++){
 	initbunch_id[j]=bunch_id[j];
@@ -878,15 +876,7 @@ int print_info(const char* datadir, const char* rootfile,const char* logfile,int
 	  bunch_id[j]=bunch_id[j]+0x1000;
         }
     }
-    /*
-    if(i == (min-1)){
-	for(int j=0;j<boardnum;j++){
-	  finalbunch_id[j]=bunch_id[j];
-          finalevent_id[j]=event_id[j];
-        }
-    }
-    */
-      //---------------------------------------------------
+    //---------------------------------------------------
     for(int j=0;j<boardnum;j++){
       if(bunch_id[j] < prebunch_id[j]){
 	deltabunch_id[j]=bunch_id[j]+0x1000-prebunch_id[j];
@@ -993,6 +983,349 @@ int print_info(const char* datadir, const char* rootfile,const char* logfile,int
   return 0;
 }
 
+
+int check(const char* datadir,const char* outfile)
+{
+  TH1F* hbunch_mwdc=new TH1F("hbunch_mwdc","hbunch_mwdc",6,-0.5,5.5);
+   TH1F* hbunch_tof=new TH1F("hbunch_tof","hbunch_tof",6,-0.5,5.5);
+   TH1F* hbunch_all=new TH1F("hbunch_all","hbunch_all",6,2.5,8.5);
+  //readin the config file which include channelmapping info
+  TString file_config=TString(datadir)+"/crate.json";
+  CrateInfo* info=read_config(file_config.Data(),"mapping");
+  info->Print();
+  //check the structure of root file,check the consitency between root file and config file
+  TString file_data=TString(datadir)+"/"+outfile;  
+  TFile* file_out=new TFile(file_data);
+  if(!file_out){
+    printf("open file error: %s\n",outfile);
+    exit(1);
+  }
+  TDirectory* raw_dir=file_out->GetDirectory("raw");
+  if(!raw_dir){
+    printf("dir \"raw\" not exist in this file.invoke convert_hptdc first\n");
+    exit(1);
+  }
+  
+  TList* keys=raw_dir->GetListOfKeys();
+  int boardnum=info->GetBoardNum();
+  int mwdcnum=0;
+  int tofnum=0;
+  BoardInfo** boardinfo=new BoardInfo*[boardnum]{};
+  for(int i=0;i<boardnum;i++){
+      boardinfo[i]=info->GetBoardInfo(i);
+      switch (boardinfo[i]->GetType()) {
+	case EMWDC:
+	  mwdcnum++;
+	  break;
+	case ETOF:
+	  tofnum++;
+	default:
+	  break;
+      }
+      if(!keys->FindObject(boardinfo[i]->GetName())){
+	printf("error missing raw tree: you may not use the same config file\n");
+	exit(1);
+      }
+  }
+  //init and get corresponding tree from root file
+  TTree** 	tree_in_mwdc=new TTree*[mwdcnum]{};
+  BoardInfo**	mwdc_boardinfo=new BoardInfo*[mwdcnum]{};
+  UInt_t*	mwdc_triggerid=new UInt_t[mwdcnum]{};
+  Int_t*	mwdc_bunchid=new Int_t[mwdcnum]{};
+  
+  TTree** 	tree_in_tof=new TTree*[tofnum]{};
+  BoardInfo**	tof_boardinfo=new BoardInfo*[tofnum]{};
+  UInt_t*	tof_triggerid=new UInt_t[tofnum]{};
+  Int_t*	tof_bunchid=new Int_t[tofnum]{};
+  
+  TTree** 	tree_in=new TTree*[boardnum]{};
+  mwdcnum=0;tofnum=0;
+  for(int i=0;i<boardnum;i++){
+    switch (boardinfo[i]->GetType()){
+      case EMWDC:
+	raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_mwdc[mwdcnum++]);
+	mwdc_boardinfo[mwdcnum-1]=boardinfo[i];
+	tree_in[i]=tree_in_mwdc[mwdcnum-1];
+	
+	tree_in[i]->SetBranchAddress("trigger_id",&mwdc_triggerid[mwdcnum-1]);
+	tree_in[i]->SetBranchAddress("bunch_id",&mwdc_bunchid[mwdcnum-1]);
+	/*tree_in[i]->Print();
+	*/
+	mwdc_boardinfo[mwdcnum-1]->Print();
+	break;
+      case ETOF:
+	raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_tof[tofnum++]);
+	tof_boardinfo[tofnum-1]=boardinfo[i];
+	tree_in[i]=tree_in_tof[tofnum-1];
+	
+	tree_in[i]->SetBranchAddress("trigger_id",&tof_triggerid[tofnum-1]);
+	tree_in[i]->SetBranchAddress("bunch_id",&tof_bunchid[tofnum-1]);
+	/*tree_in[i]->Print();
+	*/
+	tof_boardinfo[tofnum-1]->Print();
+	break;
+      default:
+	break;
+    }
+  }
+
+  //
+  Int_t temp_entries;
+  Int_t entries=tree_in[0]->GetEntriesFast();
+  for(int i=0;i<boardnum;i++){
+    temp_entries=tree_in[i]->GetEntriesFast();
+    if(temp_entries<entries){
+      entries=temp_entries;
+    }
+  }
+  Int_t max_triggerid,min_triggerid,temp_triggerid;
+  Int_t max_bunchid,min_bunchid,temp_bunchid;
+  Int_t unmatched_trigger=0,unmatched_bunch_mwdc=0,unmatched_bunch_tof=0;
+  Int_t matched_bunch=0;
+  //start merge loop
+  for(int i=0;i<entries;i++){
+    if(!((i+1)%5000)){
+      printf("%d events checked\n",i+1);
+    }
+    //
+    for(int j=0;j<boardnum;j++){
+      tree_in[j]->GetEntry(i);
+    }
+    //check trigger_id and bunch_id
+    max_triggerid=TMath::MaxElement(mwdcnum,mwdc_triggerid);
+    min_triggerid=TMath::MinElement(mwdcnum,mwdc_triggerid);
+    max_bunchid=TMath::MaxElement(mwdcnum,mwdc_bunchid);
+    min_bunchid=TMath::MinElement(mwdcnum,mwdc_bunchid);
+    if(max_triggerid!=min_triggerid){
+      printf("ERROR event_%d:unmatched trigger_id between MWDC boards(T:%d,%d)\n",i+1,max_triggerid,min_triggerid);
+    }
+    else{
+      temp_triggerid=max_triggerid;
+    }
+    if(max_bunchid != min_bunchid){
+      unmatched_bunch_mwdc++;
+      temp_bunchid=-1;
+    }
+    else{
+      temp_bunchid=max_bunchid;
+    }
+    hbunch_mwdc->Fill(max_bunchid-min_bunchid);
+    //
+    max_triggerid=TMath::MaxElement(tofnum,tof_triggerid);
+    min_triggerid=TMath::MinElement(tofnum,tof_triggerid);
+    max_bunchid=TMath::MaxElement(tofnum,tof_bunchid);
+    min_bunchid=TMath::MinElement(tofnum,tof_bunchid);
+    if((max_triggerid!=min_triggerid)){
+      printf("ERROR event_%d:unmatched trigger_id between TOF boards(T:%d,%d)\n",i+1,max_triggerid,min_triggerid);
+    }
+    else if((temp_triggerid != max_triggerid)){
+      printf("ERROR event_%d:unmatched trigger_id between MWDC and TOF boards(T:%d,%d)\n",i+1,max_triggerid,temp_triggerid);
+    }
+    if(max_bunchid != min_bunchid){
+      unmatched_bunch_tof++;
+    }
+    else if((temp_bunchid != -1) && (TMath::Abs(temp_bunchid-max_bunchid)==6)){ //|| temp_bunchid==max_bunchid) ){
+      matched_bunch++;
+    }
+    hbunch_tof->Fill(max_bunchid-min_bunchid);
+    //
+    hbunch_all->Fill(TMath::MaxElement(tofnum,tof_bunchid)-TMath::MinElement(mwdcnum,mwdc_bunchid));
+  }
+  printf("total events %d\n",entries);
+  printf("total mathced bunch events %d\n",matched_bunch);
+  printf("MWDC unmatched bunch events: %d\n",unmatched_bunch_mwdc);
+  printf("TOF unmatched bunch events: %d\n",unmatched_bunch_tof);
+  //
+  gStyle->SetOptStat(111111);
+  TCanvas *c1=new TCanvas("c1","c1",1200,400);
+  c1->Divide(3,1);
+  c1->cd(1);
+  hbunch_mwdc->Draw();
+  c1->cd(2);
+  hbunch_tof->Draw();
+  c1->cd(3);
+  hbunch_all->Draw();
+  //
+  delete file_out;
+  delete [] tree_in_mwdc;
+  delete [] mwdc_boardinfo;
+  delete [] mwdc_triggerid;
+  delete [] mwdc_bunchid;
+  
+  delete [] tree_in_tof;
+  delete [] tof_boardinfo;
+  delete [] tof_triggerid;
+  delete [] tof_bunchid;
+  
+  delete [] tree_in;
+  delete [] boardinfo;
+  //
+  return 0;
+}
+
+int template_raw(const char* datadir,const char* outfile)
+{
+  //readin the config file which include channelmapping info
+  TString file_config=TString(datadir)+"/crate.json";
+  CrateInfo* info=read_config(file_config.Data(),"mapping");
+  info->Print();
+  //check the structure of root file,check the consitency between root file and config file
+  TString file_data=TString(datadir)+"/"+outfile;  
+  TFile* file_out=new TFile(file_data);
+  if(!file_out){
+    printf("open file error: %s\n",outfile);
+    exit(1);
+  }
+  TDirectory* raw_dir=file_out->GetDirectory("raw");
+  if(!raw_dir){
+    printf("dir \"raw\" not exist in this file.invoke convert_hptdc first\n");
+    exit(1);
+  }
+  
+  TList* keys=raw_dir->GetListOfKeys();
+  int boardnum=info->GetBoardNum();
+  int mwdcnum=0;
+  int tofnum=0;
+  BoardInfo** boardinfo=new BoardInfo*[boardnum]{};
+  for(int i=0;i<boardnum;i++){
+      boardinfo[i]=info->GetBoardInfo(i);
+      switch (boardinfo[i]->GetType()) {
+	case EMWDC:
+	  mwdcnum++;
+	  break;
+	case ETOF:
+	  tofnum++;
+	default:
+	  break;
+      }
+      if(!keys->FindObject(boardinfo[i]->GetName())){
+	printf("error missing raw tree: you may not use the same config file\n");
+	exit(1);
+      }
+  }
+  //init and get corresponding tree from root file
+  TTree** 	tree_in_mwdc=new TTree*[mwdcnum]{};
+  BoardInfo**	mwdc_boardinfo=new BoardInfo*[mwdcnum]{};
+  UInt_t*	mwdc_triggerid=new UInt_t[mwdcnum]{};
+  Int_t*	mwdc_bunchid=new Int_t[mwdcnum]{};
+  ChannelMap** 	mwdc_leading_raw=new ChannelMap*[mwdcnum]{};
+  ChannelMap** 	mwdc_trailing_raw=new ChannelMap*[mwdcnum]{};
+  
+  TTree** 	tree_in_tof=new TTree*[tofnum]{};
+  BoardInfo**	tof_boardinfo=new BoardInfo*[tofnum]{};
+  UInt_t*	tof_triggerid=new UInt_t[tofnum]{};
+  Int_t*	tof_bunchid=new Int_t[tofnum]{};
+  ChannelMap** 	tof_timeleading_raw=new ChannelMap*[tofnum]{};
+  ChannelMap** 	tof_timetrailing_raw=new ChannelMap*[tofnum]{};
+  ChannelMap** 	tof_totleading_raw=new ChannelMap*[tofnum]{};
+  ChannelMap** 	tof_tottrailing_raw=new ChannelMap*[tofnum]{};
+  
+  TTree** 	tree_in=new TTree*[boardnum]{};
+  mwdcnum=0;tofnum=0;
+  for(int i=0;i<boardnum;i++){
+    switch (boardinfo[i]->GetType()){
+      case EMWDC:
+	raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_mwdc[mwdcnum++]);
+	mwdc_boardinfo[mwdcnum-1]=boardinfo[i];
+	tree_in[i]=tree_in_mwdc[mwdcnum-1];	
+	tree_in[i]->SetBranchAddress("trigger_id",&mwdc_triggerid[mwdcnum-1]);
+	tree_in[i]->SetBranchAddress("bunch_id",&mwdc_bunchid[mwdcnum-1]);
+	tree_in[i]->SetBranchAddress("leading_raw",&mwdc_leading_raw[mwdcnum-1]);
+	tree_in[i]->SetBranchAddress("trailing_raw",&mwdc_trailing_raw[mwdcnum-1]);
+
+	mwdc_boardinfo[mwdcnum-1]->Print();
+	break;
+      case ETOF:
+	raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_tof[tofnum++]);
+	tof_boardinfo[tofnum-1]=boardinfo[i];
+	tree_in[i]=tree_in_tof[tofnum-1];	
+	tree_in[i]->SetBranchAddress("trigger_id",&tof_triggerid[tofnum-1]);
+	tree_in[i]->SetBranchAddress("bunch_id",&tof_bunchid[tofnum-1]);
+	tree_in[i]->SetBranchAddress("time_leading_raw",&tof_timeleading_raw[tofnum-1]);
+	tree_in[i]->SetBranchAddress("time_trailing_raw",&tof_timetrailing_raw[tofnum-1]);
+	tree_in[i]->SetBranchAddress("tot_leading_raw",&tof_totleading_raw[tofnum-1]);
+	tree_in[i]->SetBranchAddress("tot_trailing_raw",&tof_tottrailing_raw[tofnum-1]);
+
+	tof_boardinfo[tofnum-1]->Print();
+	break;
+      default:
+	break;
+    }
+  }
+  //init
+  Int_t temp_entries;
+  Int_t entries=tree_in[0]->GetEntriesFast();
+  for(int i=0;i<boardnum;i++){
+    temp_entries=tree_in[i]->GetEntriesFast();
+    if(temp_entries<entries){
+      entries=temp_entries;
+    }
+  }
+  
+  ChannelMap::iterator it;  
+  //start merge loop
+  for(int i=0;i<entries;i++){
+    if(!((i+1)%5000)){
+      printf("%d events processed\n",i+1);
+    }
+    //
+    for(int j=0;j<boardnum;j++){
+      tree_in[j]->GetEntry(i);
+    }
+    //process
+    for(int j=0;j<mwdcnum;j++){
+      for(it=mwdc_leading_raw[j]->begin();it!=mwdc_leading_raw[j]->end();it++){
+	
+      }
+      for(it=mwdc_trailing_raw[j]->begin();it!=mwdc_trailing_raw[j]->end();it++){
+
+      }
+    }
+
+    for(int j=0;j<tofnum;j++){
+      for(it=tof_timeleading_raw[j]->begin();it!=tof_timeleading_raw[j]->end();it++){
+
+      }
+      for(it=tof_timetrailing_raw[j]->begin();it!=tof_timetrailing_raw[j]->end();it++){
+
+      }
+      for(it=tof_totleading_raw[j]->begin();it!=tof_totleading_raw[j]->end();it++){
+
+      }
+      for(it=tof_tottrailing_raw[j]->begin();it!=tof_tottrailing_raw[j]->end();it++){
+
+      }
+    }
+  }
+  
+  printf("%d events processed totally!\n",entries);
+  
+  //
+  delete file_out;
+  delete [] tree_in_mwdc;
+  delete [] mwdc_boardinfo;
+  delete [] mwdc_triggerid;
+  delete [] mwdc_bunchid;
+  delete [] mwdc_leading_raw;
+  delete [] mwdc_trailing_raw;
+  
+  delete [] tree_in_tof;
+  delete [] tof_boardinfo;
+  delete [] tof_triggerid;
+  delete [] tof_bunchid;
+  delete [] tof_timeleading_raw;
+  delete [] tof_timetrailing_raw;
+  delete [] tof_totleading_raw;
+  delete [] tof_tottrailing_raw;
+  
+  delete [] tree_in;
+  delete [] boardinfo;
+  //
+  delete info;
+  
+  return 0;
+}
+
 int merge_hptdc(const char* datadir,const char* outfile)
 {
   //readin the config file which include channelmapping info
@@ -1016,7 +1349,7 @@ int merge_hptdc(const char* datadir,const char* outfile)
   int boardnum=info->GetBoardNum();
   int mwdcnum=0;
   int tofnum=0;
-  BoardInfo** boardinfo=new BoardInfo*[boardnum];
+  BoardInfo** boardinfo=new BoardInfo*[boardnum]{};
   for(int i=0;i<boardnum;i++){
       boardinfo[i]=info->GetBoardInfo(i);
       switch (boardinfo[i]->GetType()) {
@@ -1120,12 +1453,9 @@ int merge_hptdc(const char* datadir,const char* outfile)
   Int_t max_triggerid,min_triggerid,temp_triggerid;
   Int_t max_bunchid,min_bunchid,temp_bunchid;
   
-  TH1F* h1=new TH1F("h1","h1",512,0,512);
-  int tem=0;
   //start merge loop
   for(int i=0;i<entries;i++){
-    tem=0;
-    if(!(i%4999)){
+    if(!((i+1)%5000)){
       printf("%d events merged\n",i+1);
     }
     //
@@ -1161,7 +1491,6 @@ int merge_hptdc(const char* datadir,const char* outfile)
       for(it=mwdc_leading_raw[j]->begin();it!=mwdc_leading_raw[j]->end();it++){
 	if(mwdc_boardinfo[j]->IsChannelValid(it->first)){
 	  mwdc_leading[mwdc_boardinfo[j]->GetEncodedID(it->first)]=it->second;
-	  tem++;
 	}
       }
       for(it=mwdc_trailing_raw[j]->begin();it!=mwdc_trailing_raw[j]->end();it++){
@@ -1170,7 +1499,6 @@ int merge_hptdc(const char* datadir,const char* outfile)
 	}
       }
     }
-    h1->Fill(tem);
     tof_timeleading.clear();tof_timetrailing.clear();
     tof_totleading.clear();tof_tottrailing.clear();
     for(int j=0;j<tofnum;j++){
@@ -1205,13 +1533,104 @@ int merge_hptdc(const char* datadir,const char* outfile)
   tree_out_mwdc->Write(0,TObject::kOverwrite);
   tree_out_tof->Write(0,TObject::kOverwrite);
   //
-  h1->Write(0,TObject::kOverwrite);
   delete file_out;
-  //h1->Draw();
+  delete [] tree_in_mwdc;
+  delete [] mwdc_boardinfo;
+  delete [] mwdc_triggerid;
+  delete [] mwdc_bunchid;
+  delete [] mwdc_leading_raw;
+  delete [] mwdc_trailing_raw;
+  
+  delete [] tree_in_tof;
+  delete [] tof_boardinfo;
+  delete [] tof_triggerid;
+  delete [] tof_bunchid;
+  delete [] tof_timeleading_raw;
+  delete [] tof_timetrailing_raw;
+  delete [] tof_totleading_raw;
+  delete [] tof_tottrailing_raw;
+  
+  delete [] tree_in;
+  delete [] boardinfo;
+  //
+  delete info;
   return 0;
 }
 
-void analysis(const char* datadir,const char* outfile)
+int template_merge(const char* datadir,const char* outfile)
+{
+  TString file_data=TString(datadir)+"/"+outfile;  
+  TFile* file_out=new TFile(file_data);
+  if(!file_out){
+    printf("open file error: %s\n",outfile);
+    exit(1);
+  }
+  //
+  TTree *tree_mwdc,*tree_tof;
+  file_out->GetObject("merge/mwdc",tree_mwdc);
+  file_out->GetObject("merge/tof",tree_tof);
+  
+  ChannelMap *mwdc_leading=0,*mwdc_trailing=0;
+  tree_mwdc->SetBranchAddress("leading_raw",&mwdc_leading);
+  tree_mwdc->SetBranchAddress("trailing_raw",&mwdc_trailing);
+  ChannelMap *tof_timeleading=0,*tof_timetrailing=0,*tof_totleading=0,*tof_tottrailing=0;
+  tree_tof->SetBranchAddress("time_leading_raw",&tof_timeleading);
+  tree_tof->SetBranchAddress("time_trailing_raw",&tof_timetrailing);
+  tree_tof->SetBranchAddress("tot_leading_raw",&tof_totleading);
+  tree_tof->SetBranchAddress("tot_trailing_raw",&tof_tottrailing);
+  //
+  int entries=tree_mwdc->GetEntriesFast();
+  ChannelMap::iterator it;
+  UChar_t type,location,direction;
+  UShort_t index;
+  for(int i=0;i<entries;i++){
+    if(!((i+1)%5000)){
+      printf("%d events analyzed\n",i+1);
+    }
+    tree_mwdc->GetEntry(i);
+    tree_tof->GetEntry(i);
+    //
+    for(it=mwdc_leading->begin();it!=mwdc_leading->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=EMWDC) {
+	printf("event_%d:MWDC unmatched type\n",i+1);
+      }
+    }
+    //
+    for(it=tof_timeleading->begin();it!=tof_timeleading->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=ETOF) {
+	printf("event_%d:TOF unmatched type\n",i+1);
+      }
+    }
+    for(it=tof_timetrailing->begin();it!=tof_timetrailing->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=ETOF) {
+	printf("event_%d:TOF unmatched type\n",i+1);
+      }
+    }
+    for(it=tof_totleading->begin();it!=tof_totleading->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=ETOF) {
+	printf("event_%d:TOF unmatched type\n",i+1);
+      }
+    }
+    for(it=tof_tottrailing->begin();it!=tof_tottrailing->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=ETOF) {
+	printf("event_%d:TOF unmatched type\n",i+1);
+      }
+    }
+  }
+  
+  printf("%d events processed totally\n",entries);
+  //
+  delete file_out;
+  
+  return 0;
+}
+
+void mapping_validation(const char* datadir,const char* outfile)
 {
   //TH1F* hmwdc_size=new TH1F("hmwdc_size","hmwdc_size",513,-0.5,512.5);
   //TH1F* htof_size=new TH1F("htof_size","htof_size",513,-0.5,512.5);
@@ -1274,6 +1693,7 @@ void analysis(const char* datadir,const char* outfile)
       hwireid[i][j]->Draw();
     }
   }
+  c->Print(TString(datadir)+"/"+"mapping_validation.pdf");
   //c->cd(1);hmwdc_size->Draw();
   //c->cd(2);htof_size->Draw();
   
