@@ -23,6 +23,7 @@
 #include "TProfile.h"
 #include "TString.h"
 #include "TStyle.h"
+#include "TPaveText.h"
 #include "json/jsoncpp.cpp"
 //
 typedef std::map< UInt_t,std::vector<int> > ChannelMap;
@@ -1492,14 +1493,13 @@ int draw_multihit(const char* datadir,const char* outfile)
   //
   std::vector<TH1F*> histrepo[2];
   Int_t multihit[2][3],flag_singlehit;
-  Float_t singlehit[2][3]={};
+  Float_t singlehit[2][3],zerohit[2][3],twohit[2][3],otherhit[2][3];
   Float_t singlehit_all=0;
   TH1* htemp;
   for(int i=0;i<2;i++){
     for(int j=0;j<3;j++){
       htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_"+"multihit");
       if(htemp)	{
-	printf("already exists\n");
 	delete htemp;
       }
       histrepo[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_"+"multihit",label_direction[j]+"_"+label_location[i]+"_"+"multihit",11,-0.5,10.5));
@@ -1531,6 +1531,7 @@ int draw_multihit(const char* datadir,const char* outfile)
   ChannelMap::iterator it;
   UChar_t type,location,direction;
   UShort_t index;
+  //for(int i=0;i<100;i++){
   for(int i=0;i<entries;i++){
     if(!((i+1)%5000)){
       printf("%d events analyzed\n",i+1);
@@ -1596,7 +1597,8 @@ int draw_multihit(const char* datadir,const char* outfile)
   
   printf("%d events processed totally\n",entries);
   //
-  Int_t nx=3,ny=2;
+  const Int_t nx=3,ny=2;
+  TPaveText* pavtxt[2][3];
   TCanvas *can = (TCanvas*) gROOT->FindObject("can");
   if(can) delete can;
   can=new TCanvas("can","can",300*nx,300*ny);
@@ -1606,8 +1608,24 @@ int draw_multihit(const char* datadir,const char* outfile)
       can->cd(nx*i+j+1);
       gPad->SetLogy();
       histrepo[i][j]->DrawCopy();
+      
+      pavtxt[i][j]=new TPaveText(0.5,0.5,1,1,"NDC");
+      pavtxt[i][j]->AddText(Form("total:%d",entries));
       singlehit[i][j]=histrepo[i][j]->GetBinContent(histrepo[i][j]->FindFixBin(1));
+      pavtxt[i][j]->AddText(Form("one:%.4f",singlehit[i][j]/entries));
       printf("%s:%.4f\t",(label_direction[j]+label_location[i]).Data(),singlehit[i][j]/entries);
+      
+      zerohit[i][j]=histrepo[i][j]->GetBinContent(histrepo[i][j]->FindFixBin(0));
+      pavtxt[i][j]->AddText(Form("zero:%.4f",zerohit[i][j]/entries));
+      
+      twohit[i][j]=histrepo[i][j]->GetBinContent(histrepo[i][j]->FindFixBin(2));
+      pavtxt[i][j]->AddText(Form("two:%.4f",twohit[i][j]/entries));
+      
+      otherhit[i][j]=entries-singlehit[i][j]-zerohit[i][j]-twohit[i][j];
+      pavtxt[i][j]->AddText(Form("other:%.4f",otherhit[i][j]/entries));
+      
+      pavtxt[i][j]->Draw();
+      
     }
     printf("\n");
   }
