@@ -1373,16 +1373,25 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   TString label_location[2]={"Down","Up"};
   TString label_direction[3]={"X","Y","U"};
   //
+  TH1* htemp;
   std::vector<TH1F*> histrepo_mwdc[2],histrepo_mwdc_weight[2],histrepo_mwdc_ratio[2];
   for(int i=0;i<2;i++){
     for(int j=0;j<3;j++){
+      htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]);
+      if(htemp) delete htemp;
       histrepo_mwdc[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i],label_direction[j]+"_"+label_location[i],106,0.5,106.5));
+      
+      htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_weight");
+      if(htemp) delete htemp;
       histrepo_mwdc_weight[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_weight",label_direction[j]+"_"+label_location[i]+"_weight",106,0.5,106.5));
+      
+      htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_ratio");
+      if(htemp) delete htemp;
       histrepo_mwdc_ratio[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_ratio",label_direction[j]+"_"+label_location[i]+"_ratio",106,0.5,106.5));
     
-      histrepo_mwdc[i][j]->GetYaxis()->SetRangeUser(1.05,1.25);
-      histrepo_mwdc_weight[i][j]->GetYaxis()->SetRangeUser(1.05,1.25);
-      histrepo_mwdc_ratio[i][j]->GetYaxis()->SetRangeUser(1.05,1.25);
+      //histrepo_mwdc[i][j]->GetYaxis()->SetRangeUser(1.05,1.25);
+      //histrepo_mwdc_weight[i][j]->GetYaxis()->SetRangeUser(1.05,1.25);
+      //histrepo_mwdc_ratio[i][j]->GetYaxis()->SetRangeUser(1.05,1.25);
     }
   }
   //
@@ -1411,6 +1420,7 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   UChar_t type,location,direction;
   UShort_t index;
   for(int i=0;i<entries;i++){
+  //for(int i=0;i<100;i++){
     if(!((i+1)%5000)){
       printf("%d events analyzed\n",i+1);
     }
@@ -1454,21 +1464,160 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   
   printf("%d events processed totally\n",entries);
   //
-  TH1* htemp;
-  TCanvas* can=new TCanvas("can","can",900,600);
-  can->Divide(3,2);
+  TCanvas *can = (TCanvas*) gROOT->FindObject("can");
+  if(can) delete can;
+  can=new TCanvas("can","can",900,600);
+  can->Divide(3,2,0,0,3);
   for(int i=0;i<2;i++){
     for(int j=0;j<3;j++){
       can->cd(3*i+j+1);
+      gPad->SetLogy();
       histrepo_mwdc_ratio[i][j]->Divide(histrepo_mwdc_weight[i][j],histrepo_mwdc[i][j]);
       htemp=histrepo_mwdc_ratio[i][j]->DrawCopy();
-      htemp->GetYaxis()->SetRangeUser(1.05,1.25);
+      htemp->SetMinimum(0.95);
+      htemp->SetMaximum(1.45);
+      //htemp->GetYaxis()->SetRangeUser(1.05,1.25);
     }
   }
   delete file_out;
   
   return 0;
 }
+
+int draw_multihit(const char* datadir,const char* outfile)
+{
+  //  
+  TString label_location[2]={"Down","Up"};
+  TString label_direction[3]={"X","Y","U"};
+  //
+  std::vector<TH1F*> histrepo[2];
+  Int_t multihit[2][3],flag_singlehit;
+  Float_t singlehit[2][3]={};
+  Float_t singlehit_all=0;
+  TH1* htemp;
+  for(int i=0;i<2;i++){
+    for(int j=0;j<3;j++){
+      htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_"+"multihit");
+      if(htemp)	{
+	printf("already exists\n");
+	delete htemp;
+      }
+      histrepo[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_"+"multihit",label_direction[j]+"_"+label_location[i]+"_"+"multihit",11,-0.5,10.5));
+    }
+  }
+ 
+  //
+  TString file_data=TString(datadir)+"/"+outfile;  
+  TFile* file_out=new TFile(file_data);
+  if(!file_out){
+    printf("open file error: %s\n",outfile);
+    exit(1);
+  }
+  //
+  TTree *tree_mwdc,*tree_tof;
+  file_out->GetObject("merge/mwdc",tree_mwdc);
+  file_out->GetObject("merge/tof",tree_tof);
+  
+  ChannelMap *mwdc_leading=0,*mwdc_trailing=0;
+  tree_mwdc->SetBranchAddress("leading_raw",&mwdc_leading);
+  tree_mwdc->SetBranchAddress("trailing_raw",&mwdc_trailing);
+  ChannelMap *tof_timeleading=0,*tof_timetrailing=0,*tof_totleading=0,*tof_tottrailing=0;
+  tree_tof->SetBranchAddress("time_leading_raw",&tof_timeleading);
+  tree_tof->SetBranchAddress("time_trailing_raw",&tof_timetrailing);
+  tree_tof->SetBranchAddress("tot_leading_raw",&tof_totleading);
+  tree_tof->SetBranchAddress("tot_trailing_raw",&tof_tottrailing);
+  //
+  int entries=tree_mwdc->GetEntriesFast();
+  ChannelMap::iterator it;
+  UChar_t type,location,direction;
+  UShort_t index;
+  for(int i=0;i<entries;i++){
+    if(!((i+1)%5000)){
+      printf("%d events analyzed\n",i+1);
+    }
+    tree_mwdc->GetEntry(i);
+    tree_tof->GetEntry(i);
+    //
+    flag_singlehit=0;
+    for(int i=0;i<2;i++){
+      for(int j=0;j<3;j++){
+	multihit[i][j]=0;
+      }
+    }
+    for(it=mwdc_leading->begin();it!=mwdc_leading->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=EMWDC) {
+	printf("event_%d:MWDC unmatched type\n",i+1);
+      }
+      multihit[location][direction]++;
+    }
+    for(it=mwdc_trailing->begin();it!=mwdc_trailing->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=EMWDC) {
+	printf("event_%d:MWDC unmatched type\n",i+1);
+      }
+    }
+    //
+    for(it=tof_timeleading->begin();it!=tof_timeleading->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=ETOF) {
+	printf("event_%d:TOF unmatched type\n",i+1);
+      }
+    }
+    for(it=tof_timetrailing->begin();it!=tof_timetrailing->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=ETOF) {
+	printf("event_%d:TOF unmatched type\n",i+1);
+      }
+    }
+    for(it=tof_totleading->begin();it!=tof_totleading->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=ETOF) {
+	printf("event_%d:TOF unmatched type\n",i+1);
+      }
+    }
+    for(it=tof_tottrailing->begin();it!=tof_tottrailing->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=ETOF) {
+	printf("event_%d:TOF unmatched type\n",i+1);
+      }
+    }
+    //
+    for(int i=0;i<2;i++){
+      for(int j=0;j<3;j++){
+	histrepo[i][j]->Fill(multihit[i][j]);
+	if(multihit[i][j]!=1){
+	  flag_singlehit++;
+	}
+      }
+    }
+    if(!flag_singlehit)	singlehit_all++;
+  }
+  
+  printf("%d events processed totally\n",entries);
+  //
+  Int_t nx=3,ny=2;
+  TCanvas *can = (TCanvas*) gROOT->FindObject("can");
+  if(can) delete can;
+  can=new TCanvas("can","can",300*nx,300*ny);
+  can->Divide(nx,ny,0,0,3);
+  for(int i=0;i<ny;i++){
+    for(int j=0;j<nx;j++){
+      can->cd(nx*i+j+1);
+      gPad->SetLogy();
+      histrepo[i][j]->DrawCopy();
+      singlehit[i][j]=histrepo[i][j]->GetBinContent(histrepo[i][j]->FindFixBin(1));
+      printf("%s:%.4f\t",(label_direction[j]+label_location[i]).Data(),singlehit[i][j]/entries);
+    }
+    printf("\n");
+  }
+  printf("singlehit events:%.4f\n",singlehit_all/entries);
+  //
+  delete file_out;
+  
+  return 0;
+}
+
 
 int merge_hptdc(const char* datadir,const char* outfile)
 {
@@ -1701,6 +1850,75 @@ int merge_hptdc(const char* datadir,const char* outfile)
   return 0;
 }
 
+void mapping_validation(const char* datadir,const char* outfile)
+{
+  //TH1F* hmwdc_size=new TH1F("hmwdc_size","hmwdc_size",513,-0.5,512.5);
+  //TH1F* htof_size=new TH1F("htof_size","htof_size",513,-0.5,512.5);
+  TH1F* hwireid[2][3];
+  TString label_location[2]={"Down","Up"};
+  TString label_direction[3]={"X","Y","U"};
+  for(int i=0;i<2;i++){
+    for(int j=0;j<3;j++){
+      hwireid[i][j]=new TH1F("MWDC_"+label_location[i]+"_"+label_direction[j],"MWDC_"+label_location[i]+"_"+label_direction[j],106,0.5,106.5);
+    }
+  }
+  //
+  TString file_data=TString(datadir)+"/"+outfile;  
+  TFile* file_out=new TFile(file_data);
+  if(!file_out){
+    printf("open file error: %s\n",outfile);
+    exit(1);
+  }
+  //
+  TTree *tree_mwdc,*tree_tof;
+  file_out->GetObject("merge/mwdc",tree_mwdc);
+  file_out->GetObject("merge/tof",tree_tof);
+  
+  ChannelMap *mwdc_leading=0,*mwdc_trailing=0;
+  tree_mwdc->SetBranchAddress("leading_raw",&mwdc_leading);
+  tree_mwdc->SetBranchAddress("trailing_raw",&mwdc_trailing);
+  ChannelMap *tof_timeleading,*tof_timetrailing,*tof_totleading,*tof_tottrailing;
+  tree_tof->SetBranchAddress("time_leading_raw",&tof_timeleading);
+  tree_tof->SetBranchAddress("time_trailing_raw",&tof_timetrailing);
+  tree_tof->SetBranchAddress("tot_leading_raw",&tof_totleading);
+  tree_tof->SetBranchAddress("tot_trailing_raw",&tof_tottrailing);
+  //
+  int entries=tree_mwdc->GetEntriesFast();
+  ChannelMap::iterator it;
+  UChar_t type,location,direction;
+  UShort_t index;
+  for(int i=0;i<entries;i++){
+    if(!(i%5000)){
+      printf("%d events analyzed\n",i+1);
+    }
+    tree_mwdc->GetEntry(i);
+    //tree_tof->GetEntry(i);
+    //
+    for(it=mwdc_leading->begin();it!=mwdc_leading->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=EMWDC) {
+	printf("event_%d:MWDC unmatched type\n",i+1);
+      }
+      hwireid[location][direction]->Fill(index+1);
+    }
+  }
+  
+  delete file_out;
+  
+  TCanvas* c=new TCanvas("c","c",900, 300);
+  c->Divide(3,2);
+  for(int i=0;i<2;i++){
+    for(int j=0;j<3;j++){
+      c->cd(i*3+j+1);
+      hwireid[i][j]->Draw();
+    }
+  }
+  c->Print(TString(datadir)+"/"+"mapping_validation.pdf");
+  //c->cd(1);hmwdc_size->Draw();
+  //c->cd(2);htof_size->Draw();
+  
+}
+
 int template_raw(const char* datadir,const char* outfile)
 {
   //readin the config file which include channelmapping info
@@ -1801,6 +2019,7 @@ int template_raw(const char* datadir,const char* outfile)
   }
   
   ChannelMap::iterator it;  
+  //for(int i=0;i<100;i++){
   for(int i=0;i<entries;i++){
     if(!((i+1)%5000)){
       printf("%d events processed\n",i+1);
@@ -1836,7 +2055,17 @@ int template_raw(const char* datadir,const char* outfile)
   }
   
   printf("%d events processed totally!\n",entries);
-  
+  //
+  Int_t nx=1,ny=1;
+  TCanvas *can = (TCanvas*) gROOT->FindObject("can");
+  if(can) delete can;
+  can=new TCanvas("can","can",300*nx,300*ny);
+  can->Divide(nx,ny,0,0,3);
+  for(int i=0;i<nx;i++){
+    for(int j=0;j<ny;j++){
+      can->cd(ny*i+j+1);
+    }
+  }
   //
   delete file_out;
   delete [] tree_in_mwdc;
@@ -1892,6 +2121,7 @@ int template_merge(const char* datadir,const char* outfile)
   ChannelMap::iterator it;
   UChar_t type,location,direction;
   UShort_t index;
+  //for(int i=0;i<100;i++){
   for(int i=0;i<entries;i++){
     if(!((i+1)%5000)){
       printf("%d events analyzed\n",i+1);
@@ -1905,6 +2135,7 @@ int template_merge(const char* datadir,const char* outfile)
 	printf("event_%d:MWDC unmatched type\n",i+1);
       }
     }
+    
     //
     for(it=tof_timeleading->begin();it!=tof_timeleading->end();it++){
       Encoding::Decode(it->first,type,location,direction,index);
@@ -1934,79 +2165,23 @@ int template_merge(const char* datadir,const char* outfile)
   
   printf("%d events processed totally\n",entries);
   //
+  Int_t nx=1,ny=1;
+  TCanvas *can = (TCanvas*) gROOT->FindObject("can");
+  if(can) delete can;
+  can=new TCanvas("can","can",300*nx,300*ny);
+  can->Divide(nx,ny,0,0,3);
+  for(int i=0;i<nx;i++){
+    for(int j=0;j<ny;j++){
+      can->cd(ny*i+j+1);
+    }
+  }
+  //
   delete file_out;
   
   return 0;
 }
 
-void mapping_validation(const char* datadir,const char* outfile)
-{
-  //TH1F* hmwdc_size=new TH1F("hmwdc_size","hmwdc_size",513,-0.5,512.5);
-  //TH1F* htof_size=new TH1F("htof_size","htof_size",513,-0.5,512.5);
-  TH1F* hwireid[2][3];
-  TString label_location[2]={"Down","Up"};
-  TString label_direction[3]={"X","Y","U"};
-  for(int i=0;i<2;i++){
-    for(int j=0;j<3;j++){
-      hwireid[i][j]=new TH1F("MWDC_"+label_location[i]+"_"+label_direction[j],"MWDC_"+label_location[i]+"_"+label_direction[j],106,0.5,106.5);
-    }
-  }
-  //
-  TString file_data=TString(datadir)+"/"+outfile;  
-  TFile* file_out=new TFile(file_data);
-  if(!file_out){
-    printf("open file error: %s\n",outfile);
-    exit(1);
-  }
-  //
-  TTree *tree_mwdc,*tree_tof;
-  file_out->GetObject("merge/mwdc",tree_mwdc);
-  file_out->GetObject("merge/tof",tree_tof);
-  
-  ChannelMap *mwdc_leading=0,*mwdc_trailing=0;
-  tree_mwdc->SetBranchAddress("leading_raw",&mwdc_leading);
-  tree_mwdc->SetBranchAddress("trailing_raw",&mwdc_trailing);
-  ChannelMap *tof_timeleading,*tof_timetrailing,*tof_totleading,*tof_tottrailing;
-  tree_tof->SetBranchAddress("time_leading_raw",&tof_timeleading);
-  tree_tof->SetBranchAddress("time_trailing_raw",&tof_timetrailing);
-  tree_tof->SetBranchAddress("tot_leading_raw",&tof_totleading);
-  tree_tof->SetBranchAddress("tot_trailing_raw",&tof_tottrailing);
-  //
-  int entries=tree_mwdc->GetEntriesFast();
-  ChannelMap::iterator it;
-  UChar_t type,location,direction;
-  UShort_t index;
-  for(int i=0;i<entries;i++){
-    if(!(i%5000)){
-      printf("%d events analyzed\n",i+1);
-    }
-    tree_mwdc->GetEntry(i);
-    //tree_tof->GetEntry(i);
-    //
-    for(it=mwdc_leading->begin();it!=mwdc_leading->end();it++){
-      Encoding::Decode(it->first,type,location,direction,index);
-      if (type!=EMWDC) {
-	printf("event_%d:MWDC unmatched type\n",i+1);
-      }
-      hwireid[location][direction]->Fill(index+1);
-    }
-  }
-  
-  delete file_out;
-  
-  TCanvas* c=new TCanvas("c","c",900, 300);
-  c->Divide(3,2);
-  for(int i=0;i<2;i++){
-    for(int j=0;j<3;j++){
-      c->cd(i*3+j+1);
-      hwireid[i][j]->Draw();
-    }
-  }
-  c->Print(TString(datadir)+"/"+"mapping_validation.pdf");
-  //c->cd(1);hmwdc_size->Draw();
-  //c->cd(2);htof_size->Draw();
-  
-}
+
 #ifdef __MAKECINT__
 //#pragma link C++ class std::vector<int>+;
 #pragma link C++ class std::map<UInt_t,std::vector<int> >+;
