@@ -456,11 +456,11 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
   unsigned int packet_num=0;
   //unsigned int pre_triggerid=0;
   //int pre_eventid=0;
-  int event_id=0;
-  int bunch_id=0;
+  Int_t event_id=0;
+  Int_t bunch_id=0;
   ChannelMap leading_raw;
   ChannelMap trailing_raw;
-  int tdc_index,channel_index,tdc_value;
+  UInt_t tdc_index,channel_index,tdc_value;
   UInt_t global_channel;
   int event_flag=0;//0 event complete;1 event incomplete
   tree_out->Branch("trigger_id",&trigger_id,"trigger_id/i");
@@ -612,7 +612,7 @@ TTree* convert_tof(const char* infile,const char* name,const char* title)
   ChannelMap time_trailing_raw;
   ChannelMap tot_leading_raw;
   ChannelMap tot_trailing_raw;
-  int tdc_index,channel_index,tdc_value;
+  UInt_t tdc_index,channel_index,tdc_value;
   UInt_t global_channel;
   int event_flag=0;//0 event complete;1 event incomplete
   tree_out->Branch("trigger_id",&trigger_id,"trigger_id/i");
@@ -1413,7 +1413,7 @@ int draw_noise_merge(const char* datadir,const char* outfile)
     for(int j=0;j<3;j++){
       htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_"+"subtract");
       if(htemp)	delete htemp;
-      histrepo_sub[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_"+"subtract",label_direction[j]+"_"+label_location[i]+"_"+"subtract",129,-8.5,120.5));
+      histrepo_sub[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_"+"subtract",label_direction[j]+"_"+label_location[i]+"_"+"subtract",17,-8.5,8.5));
     }
   }
  
@@ -1464,7 +1464,8 @@ int draw_noise_merge(const char* datadir,const char* outfile)
       //
       it_trailing=mwdc_trailing->find(it->first);
       if(it_trailing!=mwdc_trailing->end()){
-	histrepo_sub[location][direction]->Fill(it->second.size()-it_trailing->second.size());
+	//std::vector::size() return a unsigned int type,so need to cast to int before substract
+	histrepo_sub[location][direction]->Fill((int)it->second.size()-(int)it_trailing->second.size());
       }
       else{
 	histrepo_sub[location][direction]->Fill(it->second.size());
@@ -1476,6 +1477,11 @@ int draw_noise_merge(const char* datadir,const char* outfile)
 	printf("event_%d:MWDC unmatched type\n",i+1);
       }
       hist_distall_trailing->Fill(it->second.size());
+      //
+      it_trailing=mwdc_leading->find(it->first);
+      if(it_trailing==mwdc_leading->end()){
+	histrepo_sub[location][direction]->Fill(-((int)it->second.size()));
+      }
     }
     //
     for(it=tof_timeleading->begin();it!=tof_timeleading->end();it++){
@@ -1556,6 +1562,7 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   
   htemp=hist_distall_trailing->DrawCopy("same");
   htemp->SetLineColor(kRed);
+  can3->BuildLegend();
   hist_distall_trailing->Write(0,TObject::kOverwrite);
   //
   Int_t nx=3,ny=2;
@@ -1631,9 +1638,9 @@ int draw_multihit(const char* datadir,const char* outfile)
     tree_tof->GetEntry(i);
     //
     flag_singlehit=0;
-    for(int i=0;i<2;i++){
-      for(int j=0;j<3;j++){
-	multihit[i][j]=0;
+    for(int j=0;j<2;j++){
+      for(int k=0;k<3;k++){
+	multihit[j][k]=0;
       }
     }
     for(it=mwdc_leading->begin();it!=mwdc_leading->end();it++){
