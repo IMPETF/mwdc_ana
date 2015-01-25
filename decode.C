@@ -1371,33 +1371,55 @@ int draw_noise_raw(const char* datadir,const char* outfile)
 
 int draw_noise_merge(const char* datadir,const char* outfile)
 {
+  gStyle->SetOptStat(111111);
+  //
   TString label_location[2]={"Down","Up"};
   TString label_direction[3]={"X","Y","U"};
-  //
-  TH1* htemp;
+  //leading_hitnum distribution of each channel
+  TH1* htemp;TH2* htemp2d;
   std::vector<TH1F*> histrepo_mwdc[2],histrepo_mwdc_weight[2],histrepo_mwdc_ratio[2];
+  std::vector<TH2F*> histrepo_dist[2];
   for(int i=0;i<2;i++){
     for(int j=0;j<3;j++){
       htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]);
       if(htemp) delete htemp;
-      histrepo_mwdc[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i],label_direction[j]+"_"+label_location[i],106,0.5,106.5));
+      histrepo_mwdc[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i],label_direction[j]+"_"+label_location[i],108,-0.5,107.5));
       
       htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_weight");
       if(htemp) delete htemp;
-      histrepo_mwdc_weight[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_weight",label_direction[j]+"_"+label_location[i]+"_weight",106,0.5,106.5));
+      histrepo_mwdc_weight[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_weight",label_direction[j]+"_"+label_location[i]+"_weight",108,-0.5,107.5));
       
       htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_ratio");
       if(htemp) delete htemp;
-      histrepo_mwdc_ratio[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_ratio",label_direction[j]+"_"+label_location[i]+"_ratio",106,0.5,106.5));
-    
-      //histrepo_mwdc[i][j]->GetYaxis()->SetRangeUser(1.05,1.25);
-      //histrepo_mwdc_weight[i][j]->GetYaxis()->SetRangeUser(1.05,1.25);
-      //histrepo_mwdc_ratio[i][j]->GetYaxis()->SetRangeUser(1.05,1.25);
+      histrepo_mwdc_ratio[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_ratio",label_direction[j]+"_"+label_location[i]+"_ratio",108,-0.5,107.5));
+      //
+      htemp2d=(TH2*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_dist");
+      if(htemp2d) delete htemp2d;
+      histrepo_dist[i].push_back(new TH2F("h"+label_direction[j]+"_"+label_location[i]+"_dist",label_direction[j]+"_"+label_location[i]+"_dist",108,-0.5,107.5,10,-0.5,9.5));
     }
   }
   //
+  TH1F*	hist_distall_leading,*hist_distall_trailing;
+  htemp=(TH1*)gROOT->FindObject("hdist_all_leading");
+  if(htemp) delete htemp;
+  hist_distall_leading=new TH1F("hdist_all_leading","hdist_all_leading",12,-0.5,11.5);
+  
+  htemp=(TH1*)gROOT->FindObject("hdist_all_trailing");
+  if(htemp) delete htemp;
+  hist_distall_trailing=new TH1F("hdist_all_trailing","hdist_all_trailing",12,-0.5,11.5);
+  //leading_hitnum-trailing_hitnum in a hptdc channel
+  std::vector<TH1F*> histrepo_sub[2];
+  for(int i=0;i<2;i++){
+    for(int j=0;j<3;j++){
+      htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_"+"subtract");
+      if(htemp)	delete htemp;
+      histrepo_sub[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_"+"subtract",label_direction[j]+"_"+label_location[i]+"_"+"subtract",129,-8.5,120.5));
+    }
+  }
+ 
+  //
   TString file_data=TString(datadir)+"/"+outfile;  
-  TFile* file_out=new TFile(file_data);
+  TFile* file_out=new TFile(file_data,"update");
   if(!file_out){
     printf("open file error: %s\n",outfile);
     exit(1);
@@ -1418,6 +1440,7 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   //
   int entries=tree_mwdc->GetEntriesFast();
   ChannelMap::iterator it;
+  ChannelMap::iterator it_trailing;
   UChar_t type,location,direction;
   UShort_t index;
   for(int i=0;i<entries;i++){
@@ -1435,6 +1458,24 @@ int draw_noise_merge(const char* datadir,const char* outfile)
       }
       histrepo_mwdc[location][direction]->Fill(index+1);
       histrepo_mwdc_weight[location][direction]->Fill(index+1,it->second.size());
+      //
+      histrepo_dist[location][direction]->Fill(index+1,it->second.size());
+      hist_distall_leading->Fill(it->second.size());
+      //
+      it_trailing=mwdc_trailing->find(it->first);
+      if(it_trailing!=mwdc_trailing->end()){
+	histrepo_sub[location][direction]->Fill(it->second.size()-it_trailing->second.size());
+      }
+      else{
+	histrepo_sub[location][direction]->Fill(it->second.size());
+      }
+    }
+    for(it=mwdc_trailing->begin();it!=mwdc_trailing->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=EMWDC) {
+	printf("event_%d:MWDC unmatched type\n",i+1);
+      }
+      hist_distall_trailing->Fill(it->second.size());
     }
     //
     for(it=tof_timeleading->begin();it!=tof_timeleading->end();it++){
@@ -1464,6 +1505,17 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   }
   
   printf("%d events processed totally\n",entries);
+  //dir "histogram"
+  TDirectory* dir_hist=file_out->GetDirectory("merge/histogram");
+  if(!dir_hist){
+    dir_hist=file_out->mkdir("merge/histogram");
+    if(!dir_hist){
+      printf("error!can't mkdir \"merge/hitogram\" in %s\n",outfile);
+      exit(1);
+    }
+    dir_hist=file_out->GetDirectory("merge/histogram");
+  }
+  dir_hist->cd();
   //
   TCanvas *can = (TCanvas*) gROOT->FindObject("can");
   if(can) delete can;
@@ -1472,12 +1524,51 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   for(int i=0;i<2;i++){
     for(int j=0;j<3;j++){
       can->cd(3*i+j+1);
-      gPad->SetLogy();
       histrepo_mwdc_ratio[i][j]->Divide(histrepo_mwdc_weight[i][j],histrepo_mwdc[i][j]);
       htemp=histrepo_mwdc_ratio[i][j]->DrawCopy();
       htemp->SetMinimum(0.95);
       htemp->SetMaximum(1.45);
       //htemp->GetYaxis()->SetRangeUser(1.05,1.25);
+      histrepo_mwdc_ratio[i][j]->Write(0,TObject::kOverwrite);
+      histrepo_mwdc[i][j]->Write(0,TObject::kOverwrite);
+    }
+  }
+  TCanvas *can2 = (TCanvas*) gROOT->FindObject("can2");
+  if(can2) delete can2;
+  can2=new TCanvas("can2","can2",900,600);
+  can2->Divide(3,2,0,0,3);
+  for(int i=0;i<2;i++){
+    for(int j=0;j<3;j++){
+      can2->cd(3*i+j+1);
+      gPad->SetLogz();
+      histrepo_dist[i][j]->DrawCopy("lego2z");
+      gDirectory->Print();
+      histrepo_dist[i][j]->Write(0,TObject::kOverwrite);
+    }
+  }
+  //
+  TCanvas *can3 = (TCanvas*) gROOT->FindObject("can3");
+  if(can2) delete can3;
+  can3=new TCanvas("can3","can3",600,600);
+  can3->SetLogy();
+  hist_distall_leading->DrawCopy();
+  hist_distall_leading->Write(0,TObject::kOverwrite);
+  
+  htemp=hist_distall_trailing->DrawCopy("same");
+  htemp->SetLineColor(kRed);
+  hist_distall_trailing->Write(0,TObject::kOverwrite);
+  //
+  Int_t nx=3,ny=2;
+  TCanvas *can4 = (TCanvas*) gROOT->FindObject("can4");
+  if(can4) delete can4;
+  can4=new TCanvas("can4","can4",300*nx,300*ny);
+  can4->Divide(nx,ny,0,0,3);
+  for(int i=0;i<ny;i++){
+    for(int j=0;j<nx;j++){
+      can4->cd(nx*i+j+1);
+      gPad->SetLogy();
+      histrepo_sub[i][j]->DrawCopy();
+      histrepo_sub[i][j]->Write(0,TObject::kOverwrite);
     }
   }
   delete file_out;
@@ -2073,6 +2164,17 @@ int template_raw(const char* datadir,const char* outfile)
   }
   
   printf("%d events processed totally!\n",entries);
+  //dir "histogram"
+  TDirectory* dir_hist=file_out->GetDirectory("raw/histogram");
+  if(!dir_hist){
+    dir_hist=file_out->mkdir("raw/histogram");
+    if(!dir_hist){
+      printf("error!can't mkdir \"raw/hitogram\" in %s\n",outfile);
+      exit(1);
+    }
+    dir_hist=file_out->GetDirectory("raw/histogram");
+  }
+  dir_hist->cd();
   //
   Int_t nx=1,ny=1;
   TCanvas *can = (TCanvas*) gROOT->FindObject("can");
@@ -2153,7 +2255,12 @@ int template_merge(const char* datadir,const char* outfile)
 	printf("event_%d:MWDC unmatched type\n",i+1);
       }
     }
-    
+    for(it=mwdc_trailing->begin();it!=mwdc_trailing->end();it++){
+      Encoding::Decode(it->first,type,location,direction,index);
+      if (type!=EMWDC) {
+	printf("event_%d:MWDC unmatched type\n",i+1);
+      }
+    }
     //
     for(it=tof_timeleading->begin();it!=tof_timeleading->end();it++){
       Encoding::Decode(it->first,type,location,direction,index);
@@ -2182,6 +2289,17 @@ int template_merge(const char* datadir,const char* outfile)
   }
   
   printf("%d events processed totally\n",entries);
+  //dir "histogram"
+  TDirectory* dir_hist=file_out->GetDirectory("merge/histogram");
+  if(!dir_hist){
+    dir_hist=file_out->mkdir("merge/histogram");
+    if(!dir_hist){
+      printf("error!can't mkdir \"merge/hitogram\" in %s\n",outfile);
+      exit(1);
+    }
+    dir_hist=file_out->GetDirectory("merge/histogram");
+  }
+  dir_hist->cd();
   //
   Int_t nx=1,ny=1;
   TCanvas *can = (TCanvas*) gROOT->FindObject("can");
