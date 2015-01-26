@@ -260,7 +260,7 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
   #---call rootcint------------------------------------------
   add_custom_command(OUTPUT ${dictionary}.cxx ${dictionary}.h
                      COMMAND ${rootcint_cmd} -cint -f  ${dictionary}.cxx 
-                                          -c ${ARG_OPTIONS} ${definitions} ${includedirs} ${rheaderfiles} ${_linkdef} 
+                                          -c -p ${ARG_OPTIONS} ${definitions} ${includedirs} ${rheaderfiles} ${_linkdef} 
                      DEPENDS ${headerfiles} ${_linkdef} ${ROOTCINTDEP})
 endfunction()
 
