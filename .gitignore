@@ -4,6 +4,7 @@
 *.d
 *.so
 *.txt
+!CMakeLists.txt
 *.log
 *.csv
 build/
