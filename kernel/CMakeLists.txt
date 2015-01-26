@@ -21,4 +21,5 @@ ROOT_LINKER_LIBRARY(mwdc global.h global_Dict.cxx BoardInfo.h BoardInfo_Dict.cxx
 		    LIBRARIES Core Cint RIO Hist Gpad Tree Rint)
 		    
 #-------------------------------------------------------
-#configure_file()
+#configure_file(${PROJECT_BINARY_DIR}/libmwdc.so ${CMAKE_BINARY_DIR} COPYONLY)
+install(TARGETS mwdc DESTINATION ${CMAKE_INSTALL_PREFIX})
