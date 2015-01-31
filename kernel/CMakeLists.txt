@@ -10,6 +10,8 @@ add_definitions(-std=c++11)
 
 include_directories(${ROOT_INCLUDE_DIRS})
 
+FILE(GLOB headers ${PROJECT_SOURCE_DIR}/*.h)
+
 ROOT_GENERATE_DICTIONARY(global_Dict ${CMAKE_CURRENT_SOURCE_DIR}/global.h LINKDEF global_LinkDef.h)
 ROOT_GENERATE_DICTIONARY(BoardInfo_Dict ${CMAKE_CURRENT_SOURCE_DIR}/BoardInfo.h LINKDEF BoardInfo_LinkDef.h)
 ROOT_GENERATE_DICTIONARY(CrateInfo_Dict ${CMAKE_CURRENT_SOURCE_DIR}/CrateInfo.h LINKDEF CrateInfo_LinkDef.h)
@@ -21,5 +23,7 @@ ROOT_LINKER_LIBRARY(mwdc global.h global_Dict.cxx BoardInfo.h BoardInfo_Dict.cxx
 		    LIBRARIES Core Cint RIO Hist Gpad Tree Rint)
 		    
 #-------------------------------------------------------
-#configure_file(${PROJECT_BINARY_DIR}/libmwdc.so ${CMAKE_BINARY_DIR} COPYONLY)
-install(TARGETS mwdc DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(TARGETS mwdc DESTINATION lib)
+foreach(_header ${headers})
+  install(FILES ${_header} DESTINATION include)
+endforeach()

@@ -706,7 +706,7 @@ TTree* convert_tof(const char* infile,const char* name,const char* title)
 	    }
 	    else if((tdc_index == 0) || (tdc_index == 1)){
 	      channel_index=(buffer[i]>>21)&0x7;
-	      tdc_value=(buffer[i]&0x7FFFF)<<2 + ((buffer[i]>>19)&0x3);
+	      tdc_value=((buffer[i]&0x7FFFF)<<2) + ((buffer[i]>>19)&0x3);
 	      global_channel=time_index[tdc_index*8+channel_index];
 	      time_leading_raw[global_channel].push_back(tdc_value);
 	    }
@@ -724,7 +724,7 @@ TTree* convert_tof(const char* infile,const char* name,const char* title)
 	    }
 	    else if((tdc_index == 0) || (tdc_index == 1)){
 	      channel_index=(buffer[i]>>21)&0x7;
-	      tdc_value=(buffer[i]&0x7FFFF)<<2 + ((buffer[i]>>19)&0x3);
+	      tdc_value=((buffer[i]&0x7FFFF)<<2) + ((buffer[i]>>19)&0x3);
 	      global_channel=time_index[tdc_index*8+channel_index];
 	      time_trailing_raw[global_channel].push_back(tdc_value);
 	    }
