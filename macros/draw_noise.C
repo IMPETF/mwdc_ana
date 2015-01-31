@@ -6,6 +6,10 @@
 #include "CrateInfo.h"
 #include "BoardInfo.h"
 #include "utility.h"
+//
+#include "TStyle.h"
+#include "TH2F.h"
+
 
 int draw_noise_raw(const char* datadir,const char* outfile)
 {
@@ -14,7 +18,7 @@ int draw_noise_raw(const char* datadir,const char* outfile)
   std::vector<TH1F*> histrepo_tof,histrepo_tof_weight,histrepo_tof_ratio;
   //readin the config file which include channelmapping info
   TString file_config=TString(datadir)+"/crate.json";
-  CrateInfo* info=read_config(file_config.Data(),"mapping");
+  CrateInfo* info=Utility::read_config(file_config.Data(),"mapping");
   info->Print();
   //check the structure of root file,check the consitency between root file and config file
   TString file_data=TString(datadir)+"/"+outfile;  
