@@ -254,6 +254,11 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   htemp=(TH1*)gROOT->FindObject("hdist_all_trailing");
   if(htemp) delete htemp;
   hist_distall_trailing=new TH1F("hdist_all_trailing","hdist_all_trailing",12,-0.5,11.5);
+
+  TH2F* h2d_leading_vs_trailing;
+  htemp2d=(TH2*)gROOT->FindObject("h2d_leading_vs_trailing");
+  if(htemp2d) delete htemp2d;
+  h2d_leading_vs_trailing=new TH2F("h2d_leading_vs_trailing","h2d_leading_vs_trailing",10,-0.5,9.5,10,-0.5,10.5);
   //leading_hitnum-trailing_hitnum in a hptdc channel
   std::vector<TH1F*> histrepo_sub[2];
   for(int i=0;i<2;i++){
@@ -313,9 +318,11 @@ int draw_noise_merge(const char* datadir,const char* outfile)
       if(it_trailing!=mwdc_trailing->end()){
 	//std::vector::size() return a unsigned int type,so need to cast to int before substract
 	histrepo_sub[location][direction]->Fill((int)it->second.size()-(int)it_trailing->second.size());
+	h2d_leading_vs_trailing->Fill(it->second.size(),it_trailing->second.size());
       }
       else{
 	histrepo_sub[location][direction]->Fill(it->second.size());
+	h2d_leading_vs_trailing->Fill(it->second.size(),0);
       }
     }
     for(it=mwdc_trailing->begin();it!=mwdc_trailing->end();it++){
@@ -328,6 +335,7 @@ int draw_noise_merge(const char* datadir,const char* outfile)
       it_trailing=mwdc_leading->find(it->first);
       if(it_trailing==mwdc_leading->end()){
 	histrepo_sub[location][direction]->Fill(-((int)it->second.size()));
+	h2d_leading_vs_trailing->Fill(0.0,(float)it->second.size());
       }
     }
     //
@@ -401,7 +409,7 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   }
   //
   TCanvas *can3 = (TCanvas*) gROOT->FindObject("can3");
-  if(can2) delete can3;
+  if(can3) delete can3;
   can3=new TCanvas("can3","can3",600,600);
   can3->SetLogy();
   hist_distall_leading->DrawCopy();
@@ -409,6 +417,10 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   
   htemp=hist_distall_trailing->DrawCopy("same");
   htemp->SetLineColor(kRed);
+  htemp=(TH1*)hist_distall_leading->Clone("hsub");
+  htemp->Add(hist_distall_trailing,hist_distall_leading,1,-1);
+  htemp->SetLineColor(kGreen);
+  htemp->DrawCopy("same");
   can3->BuildLegend();
   hist_distall_trailing->Write(0,TObject::kOverwrite);
   //
@@ -425,6 +437,16 @@ int draw_noise_merge(const char* datadir,const char* outfile)
       histrepo_sub[i][j]->Write(0,TObject::kOverwrite);
     }
   }
+  //
+  TCanvas *can5 = (TCanvas*) gROOT->FindObject("can5");
+  if(can5) delete can5;
+  can5=new TCanvas("can5","can5",600,600);
+  //can5->SetLogy();
+  htemp2d=(TH2*)h2d_leading_vs_trailing->DrawCopy("text");
+  htemp2d->GetXaxis()->SetTitle("leading");
+  htemp2d->GetYaxis()->SetTitle("trailing");
+  h2d_leading_vs_trailing->Write(0,TObject::kOverwrite);
+  //
   delete file_out;
   
   return 0;

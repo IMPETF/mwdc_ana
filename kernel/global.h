@@ -74,5 +74,7 @@ namespace Encoding {
       index = encoded_id&0xFFFF;
     }
 }
-
+//
+const int g_range_precision=524288;
+const int g_range_highprecision=2097152;
 #endif // _global_h_

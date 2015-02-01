@@ -33,8 +33,6 @@ inline int get_index(int small,int large)
 int draw_tof(const char* datadir,const char* outfile)
 {
   gStyle->SetOptStat(1111111);
-  const int range_precision=524288;
-  const int range_highprecision=2097152;
   //
   TString label_location[2]={"Down","Up"};
   //TString label_direction[3]={"X","Y","U"};
