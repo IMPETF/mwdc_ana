@@ -168,7 +168,7 @@ int draw_drift(const char* datadir,const char* outfile)
       can2->cd(nx*i+j+1);
       gPad->SetLogy();
       histrepo_single[i][j]->DrawCopy();
-      histrepo_single[i][j]->Write(0.TObject::kOverwrite);
+      histrepo_single[i][j]->Write(0,TObject::kOverwrite);
     }
   }
   //

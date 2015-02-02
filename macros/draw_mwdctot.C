@@ -31,7 +31,7 @@ int draw_mwdctot(const char* datadir,const char* outfile)
       if(htemp)	{
 	delete htemp;
       }
-      histrepo_singlehit[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_"+"mwdctot_single",label_direction[j]+"_"+label_location[i]+"_"+"mwdctot_single",1000,-g_range_precision-0.5,g_range_precision+0.5));
+      histrepo_singlehit[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_"+"mwdctot_single",label_direction[j]+"_"+label_location[i]+"_"+"mwdctot_single",1000,-0.5,19999+0.5));
     }
   }
   std::vector<TH1F*> histrepo_all[2];
@@ -138,21 +138,21 @@ int draw_mwdctot(const char* datadir,const char* outfile)
   for(int i=0;i<ny;i++){
     for(int j=0;j<nx;j++){
       can->cd(nx*i+j+1);
-      gPad->SetLogy();
+      //gPad->SetLogy();
       histrepo_singlehit[i][j]->DrawCopy();
-      /*
-      histrepo[i][j]->Write(0,TObject::kOverwrite);
-      */
+      
+      histrepo_singlehit[i][j]->Write(0,TObject::kOverwrite);
+      
     }
   }
   TCanvas *can2 = (TCanvas*) gROOT->FindObject("can2");
   if(can2) delete can2;
   can2=new TCanvas("can2","can2",300*nx,300*ny);
-  can2->Divide(nx,ny,0,0,3);
+  can2->Divide(nx,ny);
   for(int i=0;i<ny;i++){
     for(int j=0;j<nx;j++){
       can2->cd(nx*i+j+1);
-      gPad->SetLogy();
+      //gPad->SetLogy();
       histrepo_all[i][j]->DrawCopy();
      
     }
