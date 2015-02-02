@@ -259,6 +259,11 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   htemp2d=(TH2*)gROOT->FindObject("h2d_leading_vs_trailing");
   if(htemp2d) delete htemp2d;
   h2d_leading_vs_trailing=new TH2F("h2d_leading_vs_trailing","h2d_leading_vs_trailing",10,-0.5,9.5,10,-0.5,10.5);
+  
+  TH2F* h2d_leading_vs_trailing_singlehit;
+  htemp2d=(TH2*)gROOT->FindObject("h2d_leading_vs_trailing_singlehit");
+  if(htemp2d) delete htemp2d;
+  h2d_leading_vs_trailing_singlehit=new TH2F("h2d_leading_vs_trailing_singlehit","h2d_leading_vs_trailing_singlehit",10,-0.5,9.5,10,-0.5,10.5);
   //leading_hitnum-trailing_hitnum in a hptdc channel
   std::vector<TH1F*> histrepo_sub[2];
   for(int i=0;i<2;i++){
@@ -277,9 +282,10 @@ int draw_noise_merge(const char* datadir,const char* outfile)
     exit(1);
   }
   //
-  TTree *tree_mwdc,*tree_tof;
+  TTree *tree_mwdc,*tree_tof,*tree_multihit;
   file_out->GetObject("merge/mwdc",tree_mwdc);
   file_out->GetObject("merge/tof",tree_tof);
+  file_out->GetObject("merge/mwdc_multihit",tree_multihit);
   
   ChannelMap *mwdc_leading=0,*mwdc_trailing=0;
   tree_mwdc->SetBranchAddress("leading_raw",&mwdc_leading);
@@ -289,6 +295,8 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   tree_tof->SetBranchAddress("time_trailing_raw",&tof_timetrailing);
   tree_tof->SetBranchAddress("tot_leading_raw",&tof_totleading);
   tree_tof->SetBranchAddress("tot_trailing_raw",&tof_tottrailing);
+  Int_t multihit[2][3];
+  tree_multihit->SetBranchAddress("multihit",multihit);
   //
   int entries=tree_mwdc->GetEntriesFast();
   ChannelMap::iterator it;
@@ -302,8 +310,9 @@ int draw_noise_merge(const char* datadir,const char* outfile)
     }
     tree_mwdc->GetEntry(i);
     tree_tof->GetEntry(i);
+    tree_multihit->GetEntry(i);
     //
-    for(it=mwdc_leading->begin();it!=mwdc_leading->end();it++){
+    for(it=mwdc_trailing->begin();it!=mwdc_trailing->end();it++){
       Encoding::Decode(it->first,type,location,direction,index);
       if (type!=EMWDC) {
 	printf("event_%d:MWDC unmatched type\n",i+1);
@@ -314,53 +323,34 @@ int draw_noise_merge(const char* datadir,const char* outfile)
       histrepo_dist[location][direction]->Fill(index+1,it->second.size());
       hist_distall_leading->Fill(it->second.size());
       //
-      it_trailing=mwdc_trailing->find(it->first);
-      if(it_trailing!=mwdc_trailing->end()){
+      it_trailing=mwdc_leading->find(it->first);
+      if(it_trailing!=mwdc_leading->end()){
 	//std::vector::size() return a unsigned int type,so need to cast to int before substract
 	histrepo_sub[location][direction]->Fill((int)it->second.size()-(int)it_trailing->second.size());
 	h2d_leading_vs_trailing->Fill(it->second.size(),it_trailing->second.size());
+	if(multihit[location][direction]==1){
+	  h2d_leading_vs_trailing_singlehit->Fill(it->second.size(),it_trailing->second.size());
+	}
       }
       else{
 	histrepo_sub[location][direction]->Fill(it->second.size());
-	h2d_leading_vs_trailing->Fill(it->second.size(),0);
+	h2d_leading_vs_trailing->Fill(it->second.size(),0.0);
+	if(multihit[location][direction]==1){
+	  h2d_leading_vs_trailing_singlehit->Fill(it->second.size(),0);
+	}
       }
     }
-    for(it=mwdc_trailing->begin();it!=mwdc_trailing->end();it++){
+    for(it=mwdc_leading->begin();it!=mwdc_leading->end();it++){
       Encoding::Decode(it->first,type,location,direction,index);
       if (type!=EMWDC) {
 	printf("event_%d:MWDC unmatched type\n",i+1);
       }
       hist_distall_trailing->Fill(it->second.size());
       //
-      it_trailing=mwdc_leading->find(it->first);
-      if(it_trailing==mwdc_leading->end()){
+      it_trailing=mwdc_trailing->find(it->first);
+      if(it_trailing==mwdc_trailing->end()){
 	histrepo_sub[location][direction]->Fill(-((int)it->second.size()));
 	h2d_leading_vs_trailing->Fill(0.0,(float)it->second.size());
-      }
-    }
-    //
-    for(it=tof_timeleading->begin();it!=tof_timeleading->end();it++){
-      Encoding::Decode(it->first,type,location,direction,index);
-      if (type!=ETOF) {
-	printf("event_%d:TOF unmatched type\n",i+1);
-      }
-    }
-    for(it=tof_timetrailing->begin();it!=tof_timetrailing->end();it++){
-      Encoding::Decode(it->first,type,location,direction,index);
-      if (type!=ETOF) {
-	printf("event_%d:TOF unmatched type\n",i+1);
-      }
-    }
-    for(it=tof_totleading->begin();it!=tof_totleading->end();it++){
-      Encoding::Decode(it->first,type,location,direction,index);
-      if (type!=ETOF) {
-	printf("event_%d:TOF unmatched type\n",i+1);
-      }
-    }
-    for(it=tof_tottrailing->begin();it!=tof_tottrailing->end();it++){
-      Encoding::Decode(it->first,type,location,direction,index);
-      if (type!=ETOF) {
-	printf("event_%d:TOF unmatched type\n",i+1);
       }
     }
   }
@@ -418,7 +408,7 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   htemp=hist_distall_trailing->DrawCopy("same");
   htemp->SetLineColor(kRed);
   htemp=(TH1*)hist_distall_leading->Clone("hsub");
-  htemp->Add(hist_distall_trailing,hist_distall_leading,1,-1);
+  htemp->Add(hist_distall_leading,hist_distall_trailing,1,-1);
   htemp->SetLineColor(kGreen);
   htemp->DrawCopy("same");
   can3->BuildLegend();
@@ -440,12 +430,19 @@ int draw_noise_merge(const char* datadir,const char* outfile)
   //
   TCanvas *can5 = (TCanvas*) gROOT->FindObject("can5");
   if(can5) delete can5;
-  can5=new TCanvas("can5","can5",600,600);
+  can5=new TCanvas("can5","can5",1200,600);
+  can5->Divide(2,1);
   //can5->SetLogy();
+  can5->cd(1);
   htemp2d=(TH2*)h2d_leading_vs_trailing->DrawCopy("text");
   htemp2d->GetXaxis()->SetTitle("leading");
   htemp2d->GetYaxis()->SetTitle("trailing");
   h2d_leading_vs_trailing->Write(0,TObject::kOverwrite);
+  can5->cd(2);
+  htemp2d=(TH2*)h2d_leading_vs_trailing_singlehit->DrawCopy("text");
+  htemp2d->GetXaxis()->SetTitle("leading");
+  htemp2d->GetYaxis()->SetTitle("trailing");
+  h2d_leading_vs_trailing_singlehit->Write(0,TObject::kOverwrite);
   //
   delete file_out;
   
