@@ -55,7 +55,16 @@ int draw_tof(const char* datadir,const char* outfile)
     for(int j=0;j<4;j++){
       htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_"+"tot");
       if(htemp)	delete htemp;
-      histreop_tot[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_"+"tot",label_direction[j]+"_"+label_location[i]+"_"+"tot",4000,1000.5,5000.5));
+      histreop_tot[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_"+"tot",label_direction[j]+"_"+label_location[i]+"_"+"tot",401,1000.5,5000.5));
+    }
+  }
+  //
+  std::vector<TH1F*> histreop_timing_tot[2];
+  for(int i=0;i<2;i++){
+    for(int j=0;j<4;j++){
+      htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_timeing_"+"tot");
+      if(htemp)	delete htemp;
+      histreop_timing_tot[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_timeing_"+"tot",label_direction[j]+"_"+label_location[i]+"_timeing_"+"tot",501,-0.5,5000.5));
     }
   }
   //
@@ -120,6 +129,11 @@ int draw_tof(const char* datadir,const char* outfile)
       it_found=tof_totleading->find(it->first);
       if(it_found!=tof_totleading->end()){
 	histrepo[location][index]->Fill(((it->second)[0]>>2)-(it_found->second)[0]);
+      }
+      //
+      it_found=tof_timetrailing->find(it->first);
+      if(it_found!=tof_timetrailing->end()){
+	histreop_timing_tot[location][index]->Fill((it_found->second)[0]-(it->second)[0]);
       }
       //
       tmp1=location*4+index;
@@ -207,7 +221,7 @@ int draw_tof(const char* datadir,const char* outfile)
   for(int i=0;i<ny;i++){
     for(int j=0;j<nx;j++){
       can2->cd(nx*i+j+1);
-      gPad->SetLogy();
+      //gPad->SetLogy();
       histreop_tot[i][j]->DrawCopy();
     }
   }
@@ -240,6 +254,19 @@ int draw_tof(const char* datadir,const char* outfile)
       printf("%s: %.2f\n",histrepo_tot_diff[7*i+j]->GetName(),histrepo_tot_diff[7*i+j]->GetMean());
     }
   }
+  //
+  TCanvas *can5 = (TCanvas*) gROOT->FindObject("can5");
+  if(can5) delete can5;
+  can5=new TCanvas("can5","can5",300*nx,300*ny);
+  can5->Divide(nx,ny);
+  for(int i=0;i<ny;i++){
+    for(int j=0;j<nx;j++){
+      can5->cd(nx*i+j+1);
+      gPad->SetLogy();
+      histreop_timing_tot[i][j]->DrawCopy();
+    }
+  }
+  //
   delete file_out;
   
   return 0;
