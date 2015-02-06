@@ -714,7 +714,8 @@ int print_info(const char* datadir, const char* rootfile,const char* logfile,int
   return 0;
 }
 
-
+//trigger_id consitency,bunch_id consitency
+//difference of bunch_ids.
 int check(const char* datadir,const char* outfile)
 {
   TH1F* hbunch_mwdc=new TH1F("hbunch_mwdc","hbunch_mwdc",6,-0.5,5.5);
