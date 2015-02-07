@@ -387,6 +387,7 @@ TTree* convert_tof(const char* infile,const char* name,const char* title)
 	exit(1);
       }
       printf("(packet_%u) insufficent data\n",packet_num);
+      break;
     }
     if(event_len%4){
       printf("(packet_%u) event_len error\n",packet_num);
