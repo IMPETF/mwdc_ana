@@ -30,6 +30,7 @@
 #include "TStyle.h"
 #include <fstream>
 #include <stdio.h>
+#include <iostream>
 
 namespace Utility {
  void read_mwdcinfo(BoardInfo* boardinfo,Json::Value& board)
@@ -226,15 +227,18 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
 	break;
       }
     }
-    
+    if(event_len > 8192*4){
+      free(buffer);
+      buffer=(unsigned int*)malloc(event_len);
+    }
     //group decoding
     counter=fread(buffer,1,event_len,file_in);
     if(counter!=event_len){
       if(ferror(file_in)){
-	printf("unexpected behavior\n");
+	printf("(packet_%u)unexpected behavior\n",packet_num);
 	exit(1);
       }
-      printf("(packet_%u) insufficent data\n",packet_num);
+      printf("(packet_%u) insufficent data:%d words\n",packet_num,event_len/4);
       break;
     }
     if(event_len%4){
@@ -383,7 +387,7 @@ TTree* convert_tof(const char* infile,const char* name,const char* title)
     counter=fread(buffer,1,event_len,file_in);
     if(counter!=event_len){
       if(ferror(file_in)){
-	printf("unexpected behavior\n");
+	printf("(packet_%u)unexpected behavior\n",packet_num);
 	exit(1);
       }
       printf("(packet_%u) insufficent data\n",packet_num);
@@ -1197,6 +1201,204 @@ void mapping_validation(const char* datadir,const char* outfile)
   //c->cd(1);hmwdc_size->Draw();
   //c->cd(2);htof_size->Draw();
   
+}
+
+}
+
+namespace Utility {
+  int convert_eventblock(char* data,Int_t *Xpos,Int_t *Ypos,Int_t *Xneg,Int_t *Yneg)
+  {
+    //printf("in burst\n");
+    const Int_t FEE[4]={0x20,0x24,0x28,0x2c};
+    Int_t* tmp[4];
+    tmp[0]=Xpos;
+    tmp[1]=Xneg;
+    tmp[2]=Ypos;
+    tmp[3]=Yneg;
+    const int data_length=186;
+    const int block_length=194;
+    unsigned char* burst=(unsigned char*)data;
+
+    int read_length=0;
+    int trig_couter[4];
+    int init=0;
+    for(int feeid=0;feeid<4;feeid++){
+        init=feeid*block_length;
+        if(burst[init]==0x55 && burst[init+1]==0xaa && burst[init+2]==0xeb && burst[init+3]==0x90
+                && burst[init+192]==0x5a && burst[init+193]==0xa5){
+            if(burst[init+5]==FEE[feeid]){
+                read_length=((burst[init+6]&0xFF)<<8) + (burst[init+7]&0xFF);
+                if(read_length != data_length){
+                    printf("error! wrong data length %d != %d \n",read_length,data_length);
+                    return -1;
+                }
+                for(int data_id=0;data_id<90;data_id++){
+                    tmp[feeid][data_id]=((burst[init+8+data_id*2]&0xFF)<<8) + (burst[init+8+data_id*2+1]&0xFF);
+                    if(tmp[feeid][data_id]==0){
+                        tmp[feeid][data_id] = -5;
+                    }
+                    else if(tmp[feeid][data_id] > 0x3FFF){
+                        tmp[feeid][data_id] = 16400;
+                    }
+                }
+                trig_couter[feeid] = ((burst[init+188]&0xF)<<8)+burst[init+189];
+                //trig_couter[feeid] = (burst[init+189]);
+            }
+            else
+            {
+                printf("error! wrong sequence in a burst\n");
+                return -1;
+            }
+        }
+        else{
+            printf("error! incomplete block\n");
+            return -1;
+        }
+    }
+
+    if((trig_couter[0] != trig_couter[1]) || (trig_couter[0] != trig_couter[2]) || (trig_couter[0] != trig_couter[3]) ){
+        printf("error! inconsistent trigger count in a burst");
+        return -1;
+    }
+    else
+        return trig_couter[0];
+}
+
+  int convert_psd(const Char_t* parentDir,const Char_t* infile,const Char_t* outDir,const Char_t* outfile)
+{
+    int id8[41]={0,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,46,47,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66};
+    int id5[41]={23,24,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,45,68,69,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88};
+    //
+    const Int_t FEE[4]={0x20,0x24,0x28,0x2c};
+    const Int_t block_length=194;
+
+    Char_t infname[200],outfname[200];
+    sprintf(infname,"%s/%s",parentDir,infile);
+    sprintf(outfname,"%s/%s",outDir,outfile);
+    //
+    TFile *f=new TFile(outfname,"RECREATE");
+    if(f->IsZombie()){
+        printf("this file will not been recreated!\n");
+        delete f;
+        return -1;
+    }
+    else if(f->IsOpen()){
+        ifstream in;
+        in.open(infname,std::ios_base::in | std::ios_base::binary);
+        if(!in.is_open()){
+            std::cout << "can't open"<< infname << std::endl;
+        }
+
+//-----------------------------------------------------------------------
+        int Ch_tmp1,Ch_tmp2;
+        unsigned char x;
+
+        TH1F *hxpos[90];
+        TH1F *hxneg[90];
+        TH1F *hypos[90];
+        TH1F *hyneg[90];
+        for(int i=0;i<90;i++){
+            hxpos[i]=new TH1F(Form("xpos_%d",i+1),Form("xpos_%d",i+1),400,0,4000);
+            hxneg[i]=new TH1F(Form("xneg_%d",i+1),Form("xneg_%d",i+1),400,0,4000);
+            hypos[i]=new TH1F(Form("ypos_%d",i+1),Form("ypos_%d",i+1),400,0,4000);
+            hyneg[i]=new TH1F(Form("yneg_%d",i+1),Form("yneg_%d",i+1),400,0,4000);
+        }
+
+        TTree *tree = new TTree("PSD","PSD Testing event mode");
+        Int_t Xpos[90],Ypos[90],Xneg[90],Yneg[90];
+        Int_t trigger_id;
+        tree->Branch("event_id",&trigger_id,"event_id/I");
+        tree->Branch("xpos",Xpos,"xpos[90]/I");
+        tree->Branch("ypos",Ypos,"ypos[90]/I");
+        tree->Branch("xneg",Xneg,"xneg[90]/I");
+        tree->Branch("yneg",Yneg,"yneg[90]/I");
+	
+	TTree *tree_psd_out=new TTree("psd_hitinfo","psd_hitinfo");
+	int x_dy8_pos[41],x_dy5_pos[41],x_dy8_neg[41],x_dy5_neg[41];
+	int y_dy8_pos[41],y_dy5_pos[41],y_dy8_neg[41],y_dy5_neg[41];
+	tree_psd_out->Branch("xpos_dy8",x_dy8_pos,"xpos_dy8[41]/I");
+	tree_psd_out->Branch("xpos_dy5",x_dy5_pos,"xpos_dy5[41]/I");
+	tree_psd_out->Branch("xneg_dy8",x_dy8_neg,"xneg_dy8[41]/I");
+	tree_psd_out->Branch("xneg_dy5",x_dy5_neg,"xneg_dy5[41]/I");
+	tree_psd_out->Branch("ypos_dy8",y_dy8_pos,"ypos_dy8[41]/I");
+	tree_psd_out->Branch("ypos_dy5",y_dy5_pos,"ypos_dy5[41]/I");
+	tree_psd_out->Branch("yneg_dy8",y_dy8_neg,"yneg_dy8[41]/I");
+	tree_psd_out->Branch("yneg_dy5",y_dy5_neg,"yneg_dy5[41]/I");
+//----------------------------------------------------------------------------------------
+    unsigned int event_num=0;
+    char burst_block[block_length*4];
+    int trigger_id_pre=0;
+    while(!in.eof()){
+        //printf("test");
+        in.read(burst_block,block_length*4);
+        if(!in.eof()){
+            trigger_id=convert_eventblock(burst_block,Xpos,Ypos,Xneg,Yneg);
+            if(trigger_id == -1){
+                exit(EXIT_FAILURE);
+            }
+            else{
+                event_num++;
+		if(event_num%5000==0){
+		  printf("%d events converted\n",event_num);
+		}
+		if(event_num==1 && trigger_id!=0){
+		  printf("ERROR: Init trigger_id should be 0\n");
+		  exit(EXIT_FAILURE);
+		}
+		else if(event_num != 1){
+		  if(trigger_id_pre == 0xFFF){
+		    trigger_id_pre=0;
+		  }
+		  else{
+		    trigger_id_pre++;
+		  }
+		  if(trigger_id_pre != trigger_id){
+		    printf("ERROR :incontinuous trigger id\n");
+		  }
+		}
+		trigger_id_pre=trigger_id;
+		
+                for(int i=0;i<90;i++){
+                    hxpos[i]->Fill(Xpos[i]);
+                    hypos[i]->Fill(Ypos[i]);
+                    hxneg[i]->Fill(Xneg[i]);
+                    hyneg[i]->Fill(Yneg[i]);
+                }
+                tree->Fill();
+		//
+		for(int j=0;j<41;j++){
+		  x_dy8_pos[j]=Xpos[id8[j]];
+		  x_dy5_pos[j]=Xpos[id5[j]];
+
+		  x_dy8_neg[j]=Xneg[id8[40-j]];
+		  x_dy5_neg[j]=Xneg[id5[40-j]];
+
+		  y_dy8_pos[j]=Ypos[id8[40-j]];
+		  y_dy5_pos[j]=Ypos[id5[40-j]];
+
+		  y_dy8_neg[j]=Yneg[id8[j]];
+		  y_dy5_neg[j]=Yneg[id5[j]];
+		}
+		tree_psd_out->Fill();
+            }
+        }
+        else{
+            break;
+        }
+    }
+    std::cout<< event_num <<" events converted totally!"<<std::endl;
+
+    in.close();
+    f->Write(0,TObject::kOverwrite);//overwrite AutoSave keys
+    f->Close();
+    delete f;
+  }
+  else{
+    printf("error: %s can not be created!\n",outfile);
+    delete f;
+    return -1;
+  }
+    return 0;
 }
 
 }

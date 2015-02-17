@@ -22,6 +22,7 @@
 #define _Utility_h_
 
 #include "json.h"
+#include "Rtypes.h"
 
 class BoardInfo;
 class CrateInfo;
@@ -41,5 +42,8 @@ namespace Utility {
   //
   int merge_hptdc(const char* datadir,const char* outfile);
   void mapping_validation(const char* datadir,const char* outfile);
+  //For PSD
+  int convert_eventblock(char* data,Int_t *Xpos,Int_t *Ypos,Int_t *Xneg,Int_t *Yneg);
+  int convert_psd(const Char_t* parentDir,const Char_t* infile,const Char_t* outDir,const Char_t* outfile="raw.root");
 }
 #endif // _Utility_h_
