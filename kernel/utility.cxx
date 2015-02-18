@@ -166,8 +166,8 @@ CrateInfo* read_config(const char* filename,const char* prefix,const char* suffi
 namespace Utility {
 TTree* convert_mwdc(const char* infile,const char* name,const char* title)
 {
-  TH1F* h1=new TH1F("h1","h1",200,-99.5,100.5);
-  TH2F* h2=new TH2F("h2","h2",1025,-0.5,1024.5,1025,-0.5,1024.5);
+  //TH1F* h1=new TH1F("h1","h1",200,-99.5,100.5);
+  //TH2F* h2=new TH2F("h2","h2",1025,-0.5,1024.5,1025,-0.5,1024.5);
   //
   UInt_t hptdc_index[128]={0,1,63,62,61,2,3,60,59,4,58,5,57,6,56,7,55,8,9,54,53,52,51,11,10,12,50,13,49,48,14,15,
                           16,17,47,46,45,18,19,44,43,20,42,21,41,22,40,23,39,24,25,38,37,36,35,27,26,28,34,29,33,32,30,31,
@@ -207,6 +207,7 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
   int counter;
   int type_id;
   int tempcounter=0;
+  unsigned int total_words=0;
   while(!feof(file_in)){
     memset(buffer,0,8192*sizeof(unsigned int));
     //packet header
@@ -220,7 +221,10 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
 	break;
       }
     }
+    total_words++;
+    //
     packet_num++;
+    //
     counter=fread(&event_len,1,4,file_in);
     if(counter<4){
       if(ferror(file_in)){
@@ -231,6 +235,8 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
 	break;
       }
     }
+    total_words++;
+    //
     if(event_len > 8192*4){
       free(buffer);
       buffer=(unsigned int*)malloc(event_len);
@@ -242,7 +248,8 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
 	printf("(packet_%u)unexpected behavior\n",packet_num);
 	exit(1);
       }
-      printf("(packet_%u) insufficent data:%d words\n",packet_num,event_len/4);
+      printf("(packet_%u triggerid_%u) insufficent data:%d words\n",packet_num,event_len/4,trigger_id);
+      printf("total words read:%u\n",total_words);
       break;
     }
     if(event_len%4){
@@ -251,11 +258,14 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
     
     event_len=event_len/4;
     word_count=buffer[event_len-1]&0xFF;
+    total_words+=event_len;
+    /*
     //if(event_len != word_count){
       printf("(packet_%u): event_len != word_count: %d_%d\n",packet_num,event_len,word_count);
       h1->Fill(event_len-word_count);
       h2->Fill(event_len,word_count);
     //}
+    */
     type_id=buffer[0]>>28;
     if(type_id==0){
       tdc_index=(buffer[0]>>24)&0xF;
@@ -317,13 +327,14 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
   fclose(file_in);
   printf("\n%s packet_num: %d\n",infile,packet_num);
   //
+  /*
   TCanvas* can=new TCanvas("can","can",800,400);
   can->Divide(2,1);
   can->cd(1);
   h1->Draw();
   can->cd(2);
   h2->Draw("colz");
-  
+  */
   return tree_out;
   
 }
@@ -412,9 +423,11 @@ TTree* convert_tof(const char* infile,const char* name,const char* title)
     }
     event_len=event_len/4;
     word_count=buffer[event_len-1]&0xFF;
+    /*
     if(event_len != word_count){//interesting behavior:word_count and event_len is not always consistent.
-      //printf("event_len != word_count: %d_%d\n",event_len,word_count);
+      printf("event_len != word_count: %d_%d\n",event_len,word_count);
     }
+    */
     type_id=buffer[0]>>28;
     if(type_id==0){
       tdc_index=(buffer[0]>>24)&0xF;
