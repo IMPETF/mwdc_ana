@@ -23,6 +23,7 @@
 
 #include "json.h"
 #include "Rtypes.h"
+#include <stdio.h>
 
 class BoardInfo;
 class CrateInfo;
@@ -47,11 +48,10 @@ namespace Utility {
   int convert_psd(const Char_t* parentDir,const Char_t* infile,const Char_t* outDir,const Char_t* outfile="raw.root");
 
   //For ungrouped MWDC rawdata
-  /*
+  char _GetNextEvent_ungrouped(FILE*fp,unsigned int* buffer,int* buffer_len,int* event_len,int* bunch_id,int* event_id);
   TTree* convert_mwdc_ungrouped(const char* infile,const char* name,const char* title);
   TTree* convert_tof_ungrouped(const char* infile,const char* name,const char* title);
   int convert_hptdc_ungrouped(const char* datadir,const char* outfile,const char* prefix,const char* suffix=".at1");
-*/
   
 }
 #endif // _Utility_h_

@@ -1429,3 +1429,165 @@ namespace Utility {
 }
 
 }
+
+namespace Utility
+{
+  //return value:
+    1) 1: complete event GroupHead and GroupTrailer found
+    2) 2: no GroupTrailer
+    3) -1:file stream error
+    4) -2:not GroupHeader
+    5) -3:some other data in packet
+    5) 0:EOF
+  char _GetNextEvent_ungrouped(FILE*fp,unsigned int* buffer,int* buffer_len,int* event_len,int* bunch_id,int* event_id)
+  {
+    unsigned int* new_buffer;
+    unsigned int gheader,gtrailer;
+    int type_id;
+    event_len=0;
+    //GroupHeader
+    if(fread(&gheader,4,1,fp) <1){
+      if(feof())
+	return 0;
+      else
+	return -1;
+    }
+    else{
+      type_id=gheader>>28;
+      if(type_id=0x0){
+	bunch_id=gheader&0xFFF;
+	event_id=(gheader>>12)&0xFFF;
+      }
+      else{
+	return -2;
+      }
+    }
+    //
+    while(type_id!=0x1){
+      if(fread(buffer+event_len,4,1,fp) <1){
+	if(feof())
+	  return 0;
+	else
+	  return -1;
+      }
+      else{
+	type_id=buffer[event_len]>>28;
+	
+      }
+      //
+      if(event_len>buffer_len){
+	new_buffer=malloc((buffer_len+1024)*4);
+	memcpy(new_buffer,buffer,buffer_len*4);
+	buffer_len+=1024;
+	free(buffer);
+	buffer=new_buffer;
+      }
+    }
+  }
+  //
+  TTree* convert_mwdc_ungrouped(const char* infile,TDirectory* dir,const char* name,const char* title)
+  {
+    UInt_t hptdc_index[128]={0,1,63,62,61,2,3,60,59,4,58,5,57,6,56,7,55,8,9,54,53,52,51,11,10,12,50,13,49,48,14,15,
+                          16,17,47,46,45,18,19,44,43,20,42,21,41,22,40,23,39,24,25,38,37,36,35,27,26,28,34,29,33,32,30,31,
+                          64,65,127,126,125,66,67,124,123,68,122,69,121,70,120,71,119,72,73,118,117,116,115,75,74,76,114,77,113,112,78,79,
+                          80,81,111,110,109,82,83,108,107,84,106,85,105,86,104,87,103,88,89,102,101,100,99,91,90,92,98,93,97,96,94,95};
+    //
+    unsigned int* buffer;
+    int buffer_len=1024;
+    //IMPORTANT: buffer should be large enough to hold an event,otherwise fread error may occur.
+    buffer=(unsigned int*)malloc(sizeof(unsigned int)*buffer_len);
+    //
+    FILE* file_in=fopen(infile,"rb");
+    if(!file_in){
+      perror("fopen");
+      fprintf(stderr,"fopen() failed in file %s at line # %d\n", __FILE__,__LINE__);
+      exit(EXIT_FAILURE);
+    }
+    //
+    int event_len,event_id=0,bunch_id=0;
+    char event_flag=1;//0 eof; 1 event complete;2 event incomplete
+    int eventid_pre=0;
+    unsigned int packet_num=0;
+    ChannelMap leading_raw;
+    ChannelMap trailing_raw;
+    UInt_t tdc_index,channel_index,tdc_value;
+    UInt_t global_channel;
+    
+    TTree* tree_out=new TTree(name,title);
+    tree_out->SetDirectory(dir);
+    tree_out->Branch("event_flag",&event_flag,"event_flag/B");
+    tree_out->Branch("bunch_id",&bunch_id,"bunch_id/I");
+    tree_out->Branch("event_id",&event_id,"event_id/I");
+    tree_out->Branch("leading_raw",&leading_raw);
+    tree_out->Branch("trailing_raw",&trailing_raw);
+    //
+    int type_id;
+    int i;
+    while(event_flag>0){
+      event_flag=_GetNextEvent_ungrouped(file_in,buffer,buffer_len,event_len,bunch_id,event_id);
+      if(event_flag>0){
+	packet_num++;
+	if(packet_num%5000){
+	  printf("%d packets converted\n",packet_num);
+	}
+	//
+	if(packet_num!=1){
+	  if(eventid_pre==0xFFF){
+	    eventid_pre=0;
+	  }
+	  else{
+	    eventid_pre++;
+	  }
+	}
+	if(eventid_pre != event_id){
+	  printf("(packet_%u)incontinuous event_id(pre=%d,cur=%d)\n",packet_num,eventid_pre-1,event_id);
+	  eventid_pre=event_id;
+	}
+	
+	//
+	leading_raw.clear();
+	trailing_raw.clear();
+	//
+	for(i=0;i<event_len;i++){
+	  type_id=buffer[i]>>28;
+	  switch(type_id){
+	    case 0x4:
+	      tdc_index=(buffer[i]>>24)&0xF;
+	      channel_index=(buffer[i]>>19)&0x1F;
+	      tdc_value=buffer[i]&0x7FFFF;
+	      global_channel=hptdc_index[tdc_index*32+channel_index];
+	      leading_raw[global_channel].push_back(tdc_value);
+	      break;
+	    case 0x5:
+	      tdc_index=(buffer[i]>>24)&0xF;
+	      channel_index=(buffer[i]>>19)&0x1F;
+	      tdc_value=buffer[i]&0x7FFFF;
+	      global_channel=hptdc_index[tdc_index*32+channel_index];
+	      trailing_raw[global_channel].push_back(tdc_value);
+	      break;
+	    case 0x6:
+	      tdc_index=(buffer[i]>>24)&0xF;
+	      printf("(packet_%u)data error_flag: tdc%d(0x%x)\n",packet_num,tdc_index,buffer[i]&0x7FFF);
+	      break;
+	    default:
+	      printf("(packet_%u)unexpected type_id(0x%x) in packet\n",packet_num,type_id);
+	  }	
+	}
+	//
+	tree_out->Fill();
+      }
+    }
+    
+    switch(event_flag){
+      case -1:
+	break;
+      default:
+	printf("\n%s EOF reached,packet_num: %d\n",infile,packet_num);
+    }
+    //
+    free(buffer);
+    fclose(file_in);
+    //
+    return tree_out;
+  }
+}
