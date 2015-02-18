@@ -26,6 +26,7 @@
 #include "TTree.h"
 #include "TCanvas.h"
 #include "TH1F.h"
+#include "TH2F.h"
 #include "TFile.h"
 #include "TStyle.h"
 #include <fstream>
@@ -165,6 +166,9 @@ CrateInfo* read_config(const char* filename,const char* prefix,const char* suffi
 namespace Utility {
 TTree* convert_mwdc(const char* infile,const char* name,const char* title)
 {
+  TH1F* h1=new TH1F("h1","h1",200,-99.5,100.5);
+  TH2F* h2=new TH2F("h2","h2",1025,-0.5,1024.5,1025,-0.5,1024.5);
+  //
   UInt_t hptdc_index[128]={0,1,63,62,61,2,3,60,59,4,58,5,57,6,56,7,55,8,9,54,53,52,51,11,10,12,50,13,49,48,14,15,
                           16,17,47,46,45,18,19,44,43,20,42,21,41,22,40,23,39,24,25,38,37,36,35,27,26,28,34,29,33,32,30,31,
                           64,65,127,126,125,66,67,124,123,68,122,69,121,70,120,71,119,72,73,118,117,116,115,75,74,76,114,77,113,112,78,79,
@@ -247,9 +251,11 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
     
     event_len=event_len/4;
     word_count=buffer[event_len-1]&0xFF;
-    if(event_len != word_count){
-      //printf("event_len != word_count: %d_%d\n",event_len,word_count);
-    }
+    //if(event_len != word_count){
+      printf("(packet_%u): event_len != word_count: %d_%d\n",packet_num,event_len,word_count);
+      h1->Fill(event_len-word_count);
+      h2->Fill(event_len,word_count);
+    //}
     type_id=buffer[0]>>28;
     if(type_id==0){
       tdc_index=(buffer[0]>>24)&0xF;
@@ -310,8 +316,16 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
   free(buffer);
   fclose(file_in);
   printf("\n%s packet_num: %d\n",infile,packet_num);
+  //
+  TCanvas* can=new TCanvas("can","can",800,400);
+  can->Divide(2,1);
+  can->cd(1);
+  h1->Draw();
+  can->cd(2);
+  h2->Draw("colz");
   
   return tree_out;
+  
 }
 
 TTree* convert_tof(const char* infile,const char* name,const char* title)
