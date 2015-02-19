@@ -1494,13 +1494,14 @@ namespace Utility
 	}
       }
       //Expand Buffer size in case of large events
-      if((*event_len)>(*buffer_len)){
+      if((*event_len)==(*buffer_len)){
 	new_buffer=(unsigned int*)malloc(((*buffer_len)+1024)*4);
 	memcpy(new_buffer,buffer,(*buffer_len)*4);
 	(*buffer_len)+=1024;
 	free(buffer);
 	buffer=new_buffer;
 	(*old_buffer)=new_buffer;
+	printf("buffer expanded(new buffer_len:%d,event_len:%d)\n",*buffer_len,*event_len);
       }
     }
     //
@@ -1539,6 +1540,7 @@ namespace Utility
     char event_flag=1;//0 eof; 1 event complete;2 event incomplete
     int eventid_pre=0;
     unsigned int packet_num=0;
+    unsigned int total_words=0;
     ChannelMap leading_raw;
     ChannelMap trailing_raw;
     UInt_t tdc_index,channel_index,tdc_value;
@@ -1558,7 +1560,7 @@ namespace Utility
       event_flag=_GetNextEvent_ungrouped(file_in,&buffer,&buffer_len,&event_len,&bunch_id,&event_id,&word_count);
       if(event_flag>0){
 	packet_num++;
-	if(packet_num%5000==0){
+	if(packet_num%20000==0){
 	  printf("%d packets converted\n",packet_num);
 	}
 	//
@@ -1579,8 +1581,11 @@ namespace Utility
 	leading_raw.clear();
 	trailing_raw.clear();
 	//
+	if(event_len>=1024){
+	  printf("(packet_%u,total_words %u already read)large packet,event_len=%d\n",packet_num,total_words,event_len);
+	}
 	for(i=0;i<event_len;i++){
-	  type_id=buffer[i]>>28;
+	  type_id=(buffer[i]>>28);
 	  switch(type_id){
 	    case 0x4:
 	      tdc_index=(buffer[i]>>24)&0xF;
@@ -1606,12 +1611,15 @@ namespace Utility
 	}
 	switch (event_flag) {
 	  case 2:
+	    total_words+=(event_len+1);
 	    printf("(packet_%u)no GroupTrailer,eventlen=%d\n",packet_num,event_len+1);
 	    break;
 	  case 3:
+	    total_words+=(event_len+2);
 	    printf("(packet_%u)unmatched eventid in GH and GT \n",packet_num);
 	    break;
 	  default:
+	    total_words+=(event_len+2);
 	    break;
 	}
 	//
@@ -1688,7 +1696,7 @@ namespace Utility
       event_flag=_GetNextEvent_ungrouped(file_in,&buffer,&buffer_len,&event_len,&bunch_id,&event_id,&word_count);
       if(event_flag>0){
 	packet_num++;
-	if(packet_num%5000==0){
+	if(packet_num%20000==0){
 	  printf("%d packets converted\n",packet_num);
 	}
 	//
@@ -1841,7 +1849,7 @@ namespace Utility
   {
     TH1F* hbunch_mwdc=new TH1F("hbunch_mwdc","hbunch_mwdc",6,-0.5,5.5);
     TH1F* hbunch_tof=new TH1F("hbunch_tof","hbunch_tof",6,-0.5,5.5);
-    TH1F* hbunch_all=new TH1F("hbunch_all","hbunch_all",6,2.5,8.5);
+    TH1F* hbunch_all=new TH1F("hbunch_all","hbunch_all",6,-0.5,5.5);
     //readin the config file which include channelmapping info
     TString file_config=TString(datadir)+"/crate.json";
     CrateInfo* info=read_config(file_config.Data(),"mapping");
@@ -1937,7 +1945,7 @@ namespace Utility
     Int_t matched_bunch=0;
     //start merge loop
     for(int i=0;i<entries;i++){
-      if(!((i+1)%5000)){
+      if(!((i+1)%20000)){
 	printf("%d events checked\n",i+1);
       }
       //
@@ -1950,7 +1958,7 @@ namespace Utility
       max_bunchid=TMath::MaxElement(mwdcnum,mwdc_bunchid);
       min_bunchid=TMath::MinElement(mwdcnum,mwdc_bunchid);
       if(max_eventid!=min_eventid){
-	printf("ERROR event_%d:unmatched event_id between MWDC boards(T:%d,%d)\n",i+1,max_eventid,min_eventid);
+	//printf("ERROR event_%d:unmatched event_id between MWDC boards(T:%d,%d)\n",i+1,max_eventid,min_eventid);
       }
       else{
 	temp_eventid=max_eventid;
@@ -1969,15 +1977,15 @@ namespace Utility
       max_bunchid=TMath::MaxElement(tofnum,tof_bunchid);
       min_bunchid=TMath::MinElement(tofnum,tof_bunchid);
       if((max_eventid!=min_eventid)){
-	printf("ERROR event_%d:unmatched event_id between TOF boards(T:%d,%d)\n",i+1,max_eventid,min_eventid);
+	//printf("ERROR event_%d:unmatched event_id between TOF boards(T:%d,%d)\n",i+1,max_eventid,min_eventid);
       }
       else if((temp_eventid != max_eventid)){
-	printf("ERROR event_%d:unmatched event_id between MWDC and TOF boards(T:%d,%d)\n",i+1,max_eventid,temp_eventid);
+	//printf("ERROR event_%d:unmatched event_id between MWDC and TOF boards(T:%d,%d)\n",i+1,max_eventid,temp_eventid);
       }
       if(max_bunchid != min_bunchid){
 	unmatched_bunch_tof++;
       }
-      else if((temp_bunchid != -1) && (TMath::Abs(temp_bunchid-max_bunchid)==6)){ //|| temp_bunchid==max_bunchid) ){
+      else if((temp_bunchid != -1) && (TMath::Abs(temp_bunchid-max_bunchid)==0)){ //|| temp_bunchid==max_bunchid) ){
 	  matched_bunch++;
       }
       hbunch_tof->Fill(max_bunchid-min_bunchid);
