@@ -1432,31 +1432,35 @@ namespace Utility {
 
 namespace Utility
 {
-  //return value:
+  /*return value:
     1) 1: complete event GroupHead and GroupTrailer found
     2) 2: no GroupTrailer
+    3) 3: unmatched eventid in Gheader and Gtrailer
     3) -1:file stream error
     4) -2:not GroupHeader
     5) -3:some other data in packet
     5) 0:EOF
-  char _GetNextEvent_ungrouped(FILE*fp,unsigned int* buffer,int* buffer_len,int* event_len,int* bunch_id,int* event_id)
+  */
+  char _GetNextEvent_ungrouped(FILE*fp,unsigned int** old_buffer,int* buffer_len,int* event_len,int* bunch_id,int* event_id,int* word_count)
   {
-    unsigned int* new_buffer;
+    unsigned int* new_buffer,*buffer;
+    buffer=*old_buffer;
     unsigned int gheader,gtrailer;
-    int type_id;
-    event_len=0;
+    int type_id,eventid_trailer;
+    *event_len=0;
+    *word_count=-1;
     //GroupHeader
     if(fread(&gheader,4,1,fp) <1){
-      if(feof())
+      if(feof(fp))
 	return 0;
       else
 	return -1;
     }
     else{
       type_id=gheader>>28;
-      if(type_id=0x0){
-	bunch_id=gheader&0xFFF;
-	event_id=(gheader>>12)&0xFFF;
+      if(type_id==0x0){
+	*bunch_id=gheader&0xFFF;
+	*event_id=(gheader>>12)&0xFFF;
       }
       else{
 	return -2;
@@ -1464,24 +1468,51 @@ namespace Utility
     }
     //
     while(type_id!=0x1){
-      if(fread(buffer+event_len,4,1,fp) <1){
-	if(feof())
+      //Read next word
+      if(fread(buffer+(*event_len),4,1,fp) <1){
+	if(feof(fp))
 	  return 0;
 	else
 	  return -1;
       }
       else{
-	type_id=buffer[event_len]>>28;
-	
+	type_id=buffer[*event_len]>>28;
+	if(type_id==0x4 || type_id==0x5 || type_id==0x6){
+	  (*event_len)++;
+	}
+	else if(type_id==0x1){
+	  *word_count=buffer[*event_len]&0xFFF;
+	  eventid_trailer=(buffer[*event_len]>>12)&0xFFF;
+	  continue;
+	}
+	else if(type_id==0x0){
+	  fseek(fp,-4,SEEK_CUR);
+	  break;
+	}
+	else{
+	  return -3;
+	}
       }
-      //
-      if(event_len>buffer_len){
-	new_buffer=malloc((buffer_len+1024)*4);
-	memcpy(new_buffer,buffer,buffer_len*4);
-	buffer_len+=1024;
+      //Expand Buffer size in case of large events
+      if((*event_len)>(*buffer_len)){
+	new_buffer=(unsigned int*)malloc(((*buffer_len)+1024)*4);
+	memcpy(new_buffer,buffer,(*buffer_len)*4);
+	(*buffer_len)+=1024;
 	free(buffer);
 	buffer=new_buffer;
+	(*old_buffer)=new_buffer;
       }
+    }
+    //
+    if(type_id==0x0){
+      *word_count=-1;
+      return 2;
+    }
+    else if((*event_id)!=eventid_trailer){
+      return 3;
+    }
+    else{
+      return 1;
     }
   }
   //
@@ -1504,7 +1535,7 @@ namespace Utility
       exit(EXIT_FAILURE);
     }
     //
-    int event_len,event_id=0,bunch_id=0;
+    int event_len,word_count,event_id=0,bunch_id=0;
     char event_flag=1;//0 eof; 1 event complete;2 event incomplete
     int eventid_pre=0;
     unsigned int packet_num=0;
@@ -1524,10 +1555,10 @@ namespace Utility
     int type_id;
     int i;
     while(event_flag>0){
-      event_flag=_GetNextEvent_ungrouped(file_in,buffer,buffer_len,event_len,bunch_id,event_id);
+      event_flag=_GetNextEvent_ungrouped(file_in,&buffer,&buffer_len,&event_len,&bunch_id,&event_id,&word_count);
       if(event_flag>0){
 	packet_num++;
-	if(packet_num%5000){
+	if(packet_num%5000==0){
 	  printf("%d packets converted\n",packet_num);
 	}
 	//
@@ -1573,6 +1604,16 @@ namespace Utility
 	      printf("(packet_%u)unexpected type_id(0x%x) in packet\n",packet_num,type_id);
 	  }	
 	}
+	switch (event_flag) {
+	  case 2:
+	    printf("(packet_%u)no GroupTrailer,eventlen=%d\n",packet_num,event_len+1);
+	    break;
+	  case 3:
+	    printf("(packet_%u)unmatched eventid in GH and GT \n",packet_num);
+	    break;
+	  default:
+	    break;
+	}
 	//
 	tree_out->Fill();
       }
@@ -1580,9 +1621,17 @@ namespace Utility
     
     switch(event_flag){
       case -1:
+	perror("fread()");
+	break;
+      case -2:
+	printf("(packet_%u)the first word is not group header\n",packet_num++);
+	break;
+      case -3:
+	printf("(packet_%u)unexpected type_id in packet\n",packet_num++);
 	break;
       default:
-	printf("\n%s EOF reached,packet_num: %d\n",infile,packet_num);
+	printf("\n%s EOF reached,total packet_num: %d\n",infile,packet_num);
+	break;
     }
     //
     free(buffer);
@@ -1590,4 +1639,612 @@ namespace Utility
     //
     return tree_out;
   }
+  
+  TTree* convert_tof_ungrouped(const char* infile,TDirectory* dir,const char* name,const char* title)
+  {
+    UInt_t time_index[16]={8,9,10,11,12,13,14,15,
+		       0,1,2,3,4,5,6,7};
+    UInt_t tot_index[32]={0,1,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,2,0xFFFFFFFF,3
+		    ,0xFFFFFFFF,0xFFFFFFFF,4,5,6,8,7,0xFFFFFFFF,9,10
+		    ,11,0xFFFFFFFF,12,13,14,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF
+		    ,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,15,0xFFFFFFFF};
+    //
+    unsigned int* buffer;
+    int buffer_len=1024;
+    //IMPORTANT: buffer should be large enough to hold an event,otherwise fread error may occur.
+    buffer=(unsigned int*)malloc(sizeof(unsigned int)*buffer_len);
+    //
+    FILE* file_in=fopen(infile,"rb");
+    if(!file_in){
+      perror("fopen");
+      fprintf(stderr,"fopen() failed in file %s at line # %d\n", __FILE__,__LINE__);
+      exit(EXIT_FAILURE);
+    }
+    //
+    int event_len,word_count,event_id=0,bunch_id=0;
+    char event_flag=1;//0 eof; 1 event complete;2 event incomplete;3 eveid incontinuous
+    int eventid_pre=0;
+    unsigned int packet_num=0;
+    ChannelMap time_leading_raw;
+    ChannelMap time_trailing_raw;
+    ChannelMap tot_leading_raw;
+    ChannelMap tot_trailing_raw;
+    UInt_t tdc_index,channel_index,tdc_value;
+    UInt_t global_channel;
+    
+    TTree* tree_out=new TTree(name,title);
+    tree_out->SetDirectory(dir);
+    tree_out->Branch("event_flag",&event_flag,"event_flag/B");
+    tree_out->Branch("bunch_id",&bunch_id,"bunch_id/I");
+    tree_out->Branch("event_id",&event_id,"event_id/I");
+    tree_out->Branch("time_leading_raw",&time_leading_raw);
+    tree_out->Branch("time_trailing_raw",&time_trailing_raw);
+    tree_out->Branch("tot_leading_raw",&tot_leading_raw);
+    tree_out->Branch("tot_trailing_raw",&tot_trailing_raw);
+    //
+    int type_id;
+    int i;
+    while(event_flag>0){
+      event_flag=_GetNextEvent_ungrouped(file_in,&buffer,&buffer_len,&event_len,&bunch_id,&event_id,&word_count);
+      if(event_flag>0){
+	packet_num++;
+	if(packet_num%5000==0){
+	  printf("%d packets converted\n",packet_num);
+	}
+	//
+	if(packet_num!=1){
+	  if(eventid_pre==0xFFF){
+	    eventid_pre=0;
+	  }
+	  else{
+	    eventid_pre++;
+	  }
+	}
+	if(eventid_pre != event_id){
+	  printf("(packet_%u)incontinuous event_id(pre=%d,cur=%d)\n",packet_num,eventid_pre-1,event_id);
+	  eventid_pre=event_id;
+	}
+	
+	//
+	time_leading_raw.clear();
+	time_trailing_raw.clear();
+	tot_leading_raw.clear();
+	tot_trailing_raw.clear();
+	//
+	for(i=0;i<event_len;i++){
+	  type_id=buffer[i]>>28;
+	  switch(type_id){
+	    case 0x4:
+	      tdc_index=(buffer[i]>>24)&0xF;
+	      if(tdc_index == 2){
+		channel_index=(buffer[i]>>19)&0x1F;
+		tdc_value=buffer[i]&0x7FFFF;
+		global_channel=tot_index[channel_index];
+		tot_leading_raw[global_channel].push_back(tdc_value);
+	      }
+	      else if((tdc_index == 0) || (tdc_index == 1)){
+		channel_index=(buffer[i]>>21)&0x7;
+		tdc_value=((buffer[i]&0x7FFFF)<<2) + ((buffer[i]>>19)&0x3);
+		global_channel=time_index[tdc_index*8+channel_index];
+		time_leading_raw[global_channel].push_back(tdc_value);
+	      }
+	      else{
+		printf("(packet_%u)unexpected tdc_index in packet\n",packet_num);
+	      }
+	      break;
+	    case 0x5:
+	      tdc_index=(buffer[i]>>24)&0xF;
+	      if(tdc_index == 2){
+		channel_index=(buffer[i]>>19)&0x1F;
+		tdc_value=buffer[i]&0x7FFFF;
+		global_channel=tot_index[channel_index];
+		tot_trailing_raw[global_channel].push_back(tdc_value);
+	      }
+	      else if((tdc_index == 0) || (tdc_index == 1)){
+		channel_index=(buffer[i]>>21)&0x7;
+		tdc_value=((buffer[i]&0x7FFFF)<<2) + ((buffer[i]>>19)&0x3);
+		global_channel=time_index[tdc_index*8+channel_index];
+		time_trailing_raw[global_channel].push_back(tdc_value);
+	      }
+	      else{
+		printf("(packet_%u)unexpected tdc_index in packet\n",packet_num);
+	      }
+	      break;
+	    case 0x6:
+	      tdc_index=(buffer[i]>>24)&0xF;
+	      printf("(packet_%u)data error_flag: tdc%d(0x%x)\n",packet_num,tdc_index,buffer[i]&0x7FFF);
+	      if(i!=(event_len-1)){
+		printf("someother data in packet\n");
+	      }
+	      break;
+	    default:
+	      printf("(packet_%u)unexpected type_id in packet\n",packet_num);
+	  }	
+	}
+	switch (event_flag) {
+	  case 2:
+	    printf("(packet_%u)no GroupTrailer,eventlen=%d\n",packet_num,event_len+1);
+	    break;
+	  case 3:
+	    printf("(packet_%u)unmatched eventid in GH and GT \n",packet_num);
+	    break;
+	  default:
+	    break;
+	}
+	//
+	tree_out->Fill();
+      }
+    }
+    
+    switch(event_flag){
+      case -1:
+	perror("fread()");
+	break;
+      case -2:
+	printf("(packet_%u)the first word is not group header\n",packet_num++);
+	break;
+      case -3:
+	printf("(packet_%u)unexpected type_id in packet\n",packet_num++);
+	break;
+      default:
+	printf("\n%s EOF reached,total packet_num: %d\n",infile,packet_num);
+	break;
+    }
+    //
+    free(buffer);
+    fclose(file_in);
+    //
+    return tree_out;
+  }
+  
+  int convert_hptdc_ungrouped(const char* datadir,const char* outfile,const char* prefix,const char* suffix)
+  {
+    TString file_config=TString(datadir)+"/crate.json";
+    CrateInfo* info=read_config(file_config.Data(),prefix,suffix);
+    info->Print();
+    
+    TString file_data=TString(datadir)+"/"+outfile;  
+    TTree* tree_out;
+    TFile* file_out=new TFile(file_data,"recreate");
+    TDirectory* raw_dir=file_out->mkdir("raw");
+    
+    int boardnum=info->GetBoardNum();
+    for(int i=0;i<boardnum;i++){
+      file_data=TString(datadir)+"/"+info->GetFilename(i);
+      if(info->GetBoardtype(i) == "mwdc"){
+	tree_out=convert_mwdc_ungrouped(file_data.Data(),raw_dir,info->GetBoardname(i).Data(),info->GetBoardtitle(i).Data());
+      }
+      else if(info->GetBoardtype(i) == "tof"){
+	tree_out=convert_tof_ungrouped(file_data.Data(),raw_dir,info->GetBoardname(i).Data(),info->GetBoardtitle(i).Data());
+      }
+      else{
+	printf("error: unrecognized board type %s\n",info->GetBoardtype(i).Data());
+	exit(1);
+      }
+      
+      raw_dir->cd();
+      tree_out->Write();
+      delete tree_out;
+    }
+    delete file_out;
+    delete info;
+    return 0;
+
+  }
+  
+  int print_info_ungrouped(const char* datadir, const char* rootfile,const char* logfile,int bunchid_diff,const char* prefix,const char* suffix)
+  {
+    
+  }
+  
+  int check_ungrouped(const char* datadir,const char* outfile)
+  {
+    TH1F* hbunch_mwdc=new TH1F("hbunch_mwdc","hbunch_mwdc",6,-0.5,5.5);
+    TH1F* hbunch_tof=new TH1F("hbunch_tof","hbunch_tof",6,-0.5,5.5);
+    TH1F* hbunch_all=new TH1F("hbunch_all","hbunch_all",6,2.5,8.5);
+    //readin the config file which include channelmapping info
+    TString file_config=TString(datadir)+"/crate.json";
+    CrateInfo* info=read_config(file_config.Data(),"mapping");
+    info->Print();
+    //check the structure of root file,check the consitency between root file and config file
+    TString file_data=TString(datadir)+"/"+outfile;  
+    TFile* file_out=new TFile(file_data);
+    if(!file_out){
+      printf("open file error: %s\n",outfile);
+      exit(1);
+    }
+    TDirectory* raw_dir=file_out->GetDirectory("raw");
+    if(!raw_dir){
+      printf("dir \"raw\" not exist in this file.invoke convert_hptdc first\n");
+      exit(1);
+    }
+    
+    TList* keys=raw_dir->GetListOfKeys();
+    int boardnum=info->GetBoardNum();
+    int mwdcnum=0;
+    int tofnum=0;
+    BoardInfo** boardinfo=new BoardInfo*[boardnum]{};
+    for(int i=0;i<boardnum;i++){
+      boardinfo[i]=info->GetBoardInfo(i);
+      switch (boardinfo[i]->GetType()) {
+	case EMWDC:
+	  mwdcnum++;
+	  break;
+	case ETOF:
+	  tofnum++;
+	default:
+	  break;
+      }
+      if(!keys->FindObject(boardinfo[i]->GetName())){
+	printf("error missing raw tree: you may not use the same config file\n");
+	exit(1);
+      }
+    }
+    //init and get corresponding tree from root file
+    TTree** 	tree_in_mwdc=new TTree*[mwdcnum]{};
+    BoardInfo**	mwdc_boardinfo=new BoardInfo*[mwdcnum]{};
+    Int_t*	mwdc_eventid=new Int_t[mwdcnum]{};
+    Int_t*	mwdc_bunchid=new Int_t[mwdcnum]{};
+    
+    TTree** 	tree_in_tof=new TTree*[tofnum]{};
+    BoardInfo**	tof_boardinfo=new BoardInfo*[tofnum]{};
+    Int_t*	tof_eventid=new Int_t[tofnum]{};
+    Int_t*	tof_bunchid=new Int_t[tofnum]{};
+    
+    TTree** 	tree_in=new TTree*[boardnum]{};
+    mwdcnum=0;tofnum=0;
+    for(int i=0;i<boardnum;i++){
+      switch (boardinfo[i]->GetType()){
+	case EMWDC:
+	  raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_mwdc[mwdcnum++]);
+	  mwdc_boardinfo[mwdcnum-1]=boardinfo[i];
+	  tree_in[i]=tree_in_mwdc[mwdcnum-1];
+	  
+	  tree_in[i]->SetBranchAddress("event_id",&mwdc_eventid[mwdcnum-1]);
+	  tree_in[i]->SetBranchAddress("bunch_id",&mwdc_bunchid[mwdcnum-1]);
+	  /*tree_in[i]->Print();
+	   */
+	  mwdc_boardinfo[mwdcnum-1]->Print();
+	  break;
+	case ETOF:
+	  raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_tof[tofnum++]);
+	  tof_boardinfo[tofnum-1]=boardinfo[i];
+	  tree_in[i]=tree_in_tof[tofnum-1];
+	  
+	  tree_in[i]->SetBranchAddress("event_id",&tof_eventid[tofnum-1]);
+	  tree_in[i]->SetBranchAddress("bunch_id",&tof_bunchid[tofnum-1]);
+	  /*tree_in[i]->Print();
+	   */
+	  tof_boardinfo[tofnum-1]->Print();
+	  break;
+	default:
+	  break;
+      }
+    }
+    
+    //
+    Int_t temp_entries;
+    Int_t entries=tree_in[0]->GetEntriesFast();
+    for(int i=0;i<boardnum;i++){
+      temp_entries=tree_in[i]->GetEntriesFast();
+      if(temp_entries<entries){
+	entries=temp_entries;
+      }
+    }
+    Int_t max_eventid,min_eventid,temp_eventid;
+    Int_t max_bunchid,min_bunchid,temp_bunchid;
+    Int_t unmatched_event=0,unmatched_bunch_mwdc=0,unmatched_bunch_tof=0;
+    Int_t matched_bunch=0;
+    //start merge loop
+    for(int i=0;i<entries;i++){
+      if(!((i+1)%5000)){
+	printf("%d events checked\n",i+1);
+      }
+      //
+      for(int j=0;j<boardnum;j++){
+	tree_in[j]->GetEntry(i);
+      }
+      //check trigger_id and bunch_id
+      max_eventid=TMath::MaxElement(mwdcnum,mwdc_eventid);
+      min_eventid=TMath::MinElement(mwdcnum,mwdc_eventid);
+      max_bunchid=TMath::MaxElement(mwdcnum,mwdc_bunchid);
+      min_bunchid=TMath::MinElement(mwdcnum,mwdc_bunchid);
+      if(max_eventid!=min_eventid){
+	printf("ERROR event_%d:unmatched event_id between MWDC boards(T:%d,%d)\n",i+1,max_eventid,min_eventid);
+      }
+      else{
+	temp_eventid=max_eventid;
+      }
+      if(max_bunchid != min_bunchid){
+	unmatched_bunch_mwdc++;
+	temp_bunchid=-1;
+      }
+      else{
+	temp_bunchid=max_bunchid;
+      }
+      hbunch_mwdc->Fill(max_bunchid-min_bunchid);
+      //
+      max_eventid=TMath::MaxElement(tofnum,tof_eventid);
+      min_eventid=TMath::MinElement(tofnum,tof_eventid);
+      max_bunchid=TMath::MaxElement(tofnum,tof_bunchid);
+      min_bunchid=TMath::MinElement(tofnum,tof_bunchid);
+      if((max_eventid!=min_eventid)){
+	printf("ERROR event_%d:unmatched event_id between TOF boards(T:%d,%d)\n",i+1,max_eventid,min_eventid);
+      }
+      else if((temp_eventid != max_eventid)){
+	printf("ERROR event_%d:unmatched event_id between MWDC and TOF boards(T:%d,%d)\n",i+1,max_eventid,temp_eventid);
+      }
+      if(max_bunchid != min_bunchid){
+	unmatched_bunch_tof++;
+      }
+      else if((temp_bunchid != -1) && (TMath::Abs(temp_bunchid-max_bunchid)==6)){ //|| temp_bunchid==max_bunchid) ){
+	  matched_bunch++;
+      }
+      hbunch_tof->Fill(max_bunchid-min_bunchid);
+      //
+      hbunch_all->Fill(TMath::MaxElement(tofnum,tof_bunchid)-TMath::MinElement(mwdcnum,mwdc_bunchid));
+    }
+    printf("total events %d\n",entries);
+    printf("total mathced bunch events %d\n",matched_bunch);
+    printf("MWDC unmatched bunch events: %d\n",unmatched_bunch_mwdc);
+    printf("TOF unmatched bunch events: %d\n",unmatched_bunch_tof);
+    //
+    gStyle->SetOptStat(111111);
+    TCanvas *c1=new TCanvas("c1","c1",1200,400);
+    c1->Divide(3,1);
+    c1->cd(1);
+    hbunch_mwdc->Draw();
+    c1->cd(2);
+    hbunch_tof->Draw();
+    c1->cd(3);
+    hbunch_all->Draw();
+    //
+    delete file_out;
+    delete [] tree_in_mwdc;
+    delete [] mwdc_boardinfo;
+    delete [] mwdc_eventid;
+    delete [] mwdc_bunchid;
+    
+    delete [] tree_in_tof;
+    delete [] tof_boardinfo;
+    delete [] tof_eventid;
+    delete [] tof_bunchid;
+    
+    delete [] tree_in;
+    delete [] boardinfo;
+    //
+    return 0;
+  }
+  
+  int merge_hptdc_ungrouped(const char* datadir,const char* outfile)
+  {
+    //readin the config file which include channelmapping info
+    TString file_config=TString(datadir)+"/crate.json";
+    CrateInfo* info=read_config(file_config.Data(),"mapping");
+    info->Print();
+    //check the structure of root file,check the consitency between root file and config file
+    TString file_data=TString(datadir)+"/"+outfile;  
+    TFile* file_out=new TFile(file_data,"update");
+    if(!file_out){
+      printf("open file error: %s\n",outfile);
+    exit(1);
+    }
+    TDirectory* raw_dir=file_out->GetDirectory("raw");
+    if(!raw_dir){
+      printf("dir \"raw\" not exist in this file.invoke convert_hptdc first\n");
+    exit(1);
+    }
+    
+    TList* keys=raw_dir->GetListOfKeys();
+    int boardnum=info->GetBoardNum();
+    int mwdcnum=0;
+    int tofnum=0;
+    BoardInfo** boardinfo=new BoardInfo*[boardnum]{};
+    for(int i=0;i<boardnum;i++){
+      boardinfo[i]=info->GetBoardInfo(i);
+      switch (boardinfo[i]->GetType()) {
+	case EMWDC:
+	  mwdcnum++;
+	  break;
+	case ETOF:
+	  tofnum++;
+	default:
+	  break;
+      }
+      if(!keys->FindObject(boardinfo[i]->GetName())){
+	printf("error missing raw tree: you may not use the same config file\n");
+	exit(1);
+      }
+    }
+    //init and get corresponding tree from root file
+    TTree** 	tree_in_mwdc=new TTree*[mwdcnum]{};
+    BoardInfo**	mwdc_boardinfo=new BoardInfo*[mwdcnum]{};
+    Int_t*	mwdc_eventid=new Int_t[mwdcnum]{};
+    Int_t*	mwdc_bunchid=new Int_t[mwdcnum]{};
+    ChannelMap** 	mwdc_leading_raw=new ChannelMap*[mwdcnum]{};
+    ChannelMap** 	mwdc_trailing_raw=new ChannelMap*[mwdcnum]{};
+    
+    TTree** 	tree_in_tof=new TTree*[tofnum]{};
+    BoardInfo**	tof_boardinfo=new BoardInfo*[tofnum]{};
+    Int_t*	tof_eventid=new Int_t[tofnum]{};
+    Int_t*	tof_bunchid=new Int_t[tofnum]{};
+    ChannelMap** 	tof_timeleading_raw=new ChannelMap*[tofnum]{};
+    ChannelMap** 	tof_timetrailing_raw=new ChannelMap*[tofnum]{};
+    ChannelMap** 	tof_totleading_raw=new ChannelMap*[tofnum]{};
+    ChannelMap** 	tof_tottrailing_raw=new ChannelMap*[tofnum]{};
+    
+    TTree** 	tree_in=new TTree*[boardnum]{};
+    mwdcnum=0;tofnum=0;
+    for(int i=0;i<boardnum;i++){
+      switch (boardinfo[i]->GetType()){
+	case EMWDC:
+	  raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_mwdc[mwdcnum++]);
+	  mwdc_boardinfo[mwdcnum-1]=boardinfo[i];
+	  tree_in[i]=tree_in_mwdc[mwdcnum-1];
+	  
+	  tree_in[i]->SetBranchAddress("event_id",&mwdc_eventid[mwdcnum-1]);
+	  tree_in[i]->SetBranchAddress("bunch_id",&mwdc_bunchid[mwdcnum-1]);
+	  tree_in[i]->SetBranchAddress("leading_raw",&mwdc_leading_raw[mwdcnum-1]);
+	  tree_in[i]->SetBranchAddress("trailing_raw",&mwdc_trailing_raw[mwdcnum-1]);
+	  /*tree_in[i]->Print();
+	   */
+	  mwdc_boardinfo[mwdcnum-1]->Print();
+	  break;
+	case ETOF:
+	  raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_tof[tofnum++]);
+	  tof_boardinfo[tofnum-1]=boardinfo[i];
+	  tree_in[i]=tree_in_tof[tofnum-1];
+	  
+	  tree_in[i]->SetBranchAddress("event_id",&tof_eventid[tofnum-1]);
+	  tree_in[i]->SetBranchAddress("bunch_id",&tof_bunchid[tofnum-1]);
+	  tree_in[i]->SetBranchAddress("time_leading_raw",&tof_timeleading_raw[tofnum-1]);
+	  tree_in[i]->SetBranchAddress("time_trailing_raw",&tof_timetrailing_raw[tofnum-1]);
+	  tree_in[i]->SetBranchAddress("tot_leading_raw",&tof_totleading_raw[tofnum-1]);
+	  tree_in[i]->SetBranchAddress("tot_trailing_raw",&tof_tottrailing_raw[tofnum-1]);
+	  /*tree_in[i]->Print();
+	   */
+	  tof_boardinfo[tofnum-1]->Print();
+	  break;
+	default:
+	  break;
+      }
+    }
+    //init output variables
+    TDirectory* dir_out=file_out->GetDirectory("merge");
+    if(!dir_out){
+      dir_out=file_out->mkdir("merge");
+      if(!dir_out){
+	printf("error!can't mkdir \"merge\" in %s\n",outfile);
+	exit(1);
+      }
+    }
+    dir_out->cd();
+    
+    ChannelMap mwdc_leading,mwdc_trailing;
+    ChannelMap tof_timeleading,tof_timetrailing,tof_totleading,tof_tottrailing;
+    TTree* tree_out_mwdc=new TTree("mwdc","mwdc");
+    tree_out_mwdc->Branch("leading_raw",&mwdc_leading);
+    tree_out_mwdc->Branch("trailing_raw",&mwdc_trailing);
+    TTree* tree_out_tof=new TTree("tof","tof");
+    tree_out_tof->Branch("time_leading_raw",&tof_timeleading);
+    tree_out_tof->Branch("time_trailing_raw",&tof_timetrailing);
+    tree_out_tof->Branch("tot_leading_raw",&tof_totleading);
+    tree_out_tof->Branch("tot_trailing_raw",&tof_tottrailing);
+    
+    Int_t temp_entries;
+    Int_t entries=tree_in[0]->GetEntriesFast();
+    for(int i=0;i<boardnum;i++){
+      temp_entries=tree_in[i]->GetEntriesFast();
+      if(temp_entries<entries){
+	entries=temp_entries;
+      }
+    }
+    ChannelMap::iterator it;
+    Int_t max_eventid,min_eventid,temp_eventid;
+    Int_t max_bunchid,min_bunchid,temp_bunchid;
+    
+    //start merge loop
+    for(int i=0;i<entries;i++){
+      if(!((i+1)%5000)){
+	printf("%d events merged\n",i+1);
+      }
+      //
+      for(int j=0;j<boardnum;j++){
+	tree_in[j]->GetEntry(i);
+      }
+      //check trigger_id and bunch_id
+      max_eventid=TMath::MaxElement(mwdcnum,mwdc_eventid);
+      min_eventid=TMath::MinElement(mwdcnum,mwdc_eventid);
+      max_bunchid=TMath::MaxElement(mwdcnum,mwdc_bunchid);
+      min_bunchid=TMath::MinElement(mwdcnum,mwdc_bunchid);
+      if((max_eventid!=min_eventid) || TMath::Abs(max_bunchid-min_bunchid)>1){
+	printf("event_%d:unmatched event_id/bunch_id between MWDC boards(T:%d,%d|B:%d,%d)\n",i+1,max_eventid,min_eventid,max_bunchid,min_bunchid);
+      }
+      else{
+	temp_bunchid=max_bunchid;
+	temp_eventid=max_eventid;
+      }
+      max_eventid=TMath::MaxElement(tofnum,tof_eventid);
+      min_eventid=TMath::MinElement(tofnum,tof_eventid);
+      max_bunchid=TMath::MaxElement(tofnum,tof_bunchid);
+      min_bunchid=TMath::MinElement(tofnum,tof_bunchid);
+      if((max_eventid!=min_eventid) || TMath::Abs(max_bunchid-min_bunchid)>1){
+	printf("event_%d:unmatched event_id/bunch_id between TOF boards(T:%d,%d|B:%d,%d)\n",i+1,max_eventid,min_eventid,max_bunchid,min_bunchid);
+      }
+      else if((temp_eventid != max_eventid) || ((TMath::Abs(max_bunchid-temp_bunchid)!=1) && (max_bunchid!=temp_bunchid))){
+	printf("event_%d:unmatched event_id/bunch_id between TOF and MWDC boards(B:%d,%d)\n",i+1,temp_bunchid,max_bunchid);
+      }
+      
+      //main merge process
+      mwdc_leading.clear();mwdc_trailing.clear();
+      for(int j=0;j<mwdcnum;j++){
+	for(it=mwdc_leading_raw[j]->begin();it!=mwdc_leading_raw[j]->end();it++){
+	  if(mwdc_boardinfo[j]->IsChannelValid(it->first)){
+	    mwdc_leading[mwdc_boardinfo[j]->GetEncodedID(it->first)]=it->second;
+	  }
+	}
+	for(it=mwdc_trailing_raw[j]->begin();it!=mwdc_trailing_raw[j]->end();it++){
+	  if(mwdc_boardinfo[j]->IsChannelValid(it->first)){
+	    mwdc_trailing[mwdc_boardinfo[j]->GetEncodedID(it->first)]=it->second;
+	  }
+	}
+      }
+      tof_timeleading.clear();tof_timetrailing.clear();
+      tof_totleading.clear();tof_tottrailing.clear();
+      for(int j=0;j<tofnum;j++){
+	for(it=tof_timeleading_raw[j]->begin();it!=tof_timeleading_raw[j]->end();it++){
+	  if(tof_boardinfo[j]->IsChannelValid(it->first)){
+	    tof_timeleading[tof_boardinfo[j]->GetEncodedID(it->first)]=it->second;
+	  }
+	}
+	for(it=tof_timetrailing_raw[j]->begin();it!=tof_timetrailing_raw[j]->end();it++){
+	  if(tof_boardinfo[j]->IsChannelValid(it->first)){
+	    tof_timetrailing[tof_boardinfo[j]->GetEncodedID(it->first)]=it->second;
+	  }
+	}
+	for(it=tof_totleading_raw[j]->begin();it!=tof_totleading_raw[j]->end();it++){
+	  if(tof_boardinfo[j]->IsChannelValid(it->first)){
+	    tof_totleading[tof_boardinfo[j]->GetEncodedID(it->first)]=it->second;
+	  }
+	}
+	for(it=tof_tottrailing_raw[j]->begin();it!=tof_tottrailing_raw[j]->end();it++){
+	  if(tof_boardinfo[j]->IsChannelValid(it->first)){
+	    tof_tottrailing[tof_boardinfo[j]->GetEncodedID(it->first)]=it->second;
+	  }
+	}
+      }
+      //
+      tree_out_mwdc->Fill();
+      tree_out_tof->Fill();
+    }
+    
+    printf("%d events merged!\n",entries);
+	
+	tree_out_mwdc->Write(0,TObject::kOverwrite);
+	tree_out_tof->Write(0,TObject::kOverwrite);
+	//
+	delete file_out;
+	delete [] tree_in_mwdc;
+	delete [] mwdc_boardinfo;
+	delete [] mwdc_eventid;
+	delete [] mwdc_bunchid;
+	delete [] mwdc_leading_raw;
+	delete [] mwdc_trailing_raw;
+	
+	delete [] tree_in_tof;
+	delete [] tof_boardinfo;
+	delete [] tof_eventid;
+	delete [] tof_bunchid;
+	delete [] tof_timeleading_raw;
+	delete [] tof_timetrailing_raw;
+	delete [] tof_totleading_raw;
+	delete [] tof_tottrailing_raw;
+	
+	delete [] tree_in;
+	delete [] boardinfo;
+	//
+	delete info;
+	return 0;
+  }
+
 }
