@@ -2172,7 +2172,7 @@ namespace Utility
 	printf("event_%d:unmatched event_id/bunch_id between TOF boards(T:%d,%d|B:%d,%d)\n",i+1,max_eventid,min_eventid,max_bunchid,min_bunchid);
       }
       else if((temp_eventid != max_eventid) || ((TMath::Abs(max_bunchid-temp_bunchid)!=1) && (max_bunchid!=temp_bunchid))){
-	printf("event_%d:unmatched event_id/bunch_id between TOF and MWDC boards(B:%d,%d)\n",i+1,temp_bunchid,max_bunchid);
+	printf("event_%d:unmatched event_id/bunch_id between TOF and MWDC boards(T:%d,%d|B:%d,%d)\n",i+1,temp_eventid,max_eventid,temp_bunchid,max_bunchid);
       }
       
       //main merge process
