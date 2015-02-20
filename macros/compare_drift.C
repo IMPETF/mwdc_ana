@@ -36,7 +36,9 @@ int compare_drift(const char* file1,const char* file2)
   for(int i=0;i<ny;i++){
     for(int j=0;j<nx;j++){
       can1->cd(nx*i+j+1);
+      hcompare1[i][j]->Scale(10./hcompare1[i][j]->Integral());
       hcompare1[i][j]->DrawCopy();
+      hcompare2[i][j]->Scale(10./hcompare2[i][j]->Integral());
       hcompare2[i][j]->DrawCopy("same");
     }
   }
