@@ -1325,10 +1325,10 @@ namespace Utility {
         TH1F *hypos[90];
         TH1F *hyneg[90];
         for(int i=0;i<90;i++){
-            hxpos[i]=new TH1F(Form("xpos_%d",i+1),Form("xpos_%d",i+1),400,0,4000);
-            hxneg[i]=new TH1F(Form("xneg_%d",i+1),Form("xneg_%d",i+1),400,0,4000);
-            hypos[i]=new TH1F(Form("ypos_%d",i+1),Form("ypos_%d",i+1),400,0,4000);
-            hyneg[i]=new TH1F(Form("yneg_%d",i+1),Form("yneg_%d",i+1),400,0,4000);
+            hxpos[i]=new TH1F(Form("xpos_%d",i+1),Form("xpos_%d",i+1),4000,-0.5,3999.5);
+            hxneg[i]=new TH1F(Form("xneg_%d",i+1),Form("xneg_%d",i+1),4000,-0.5,3999.5);
+            hypos[i]=new TH1F(Form("ypos_%d",i+1),Form("ypos_%d",i+1),4000,-0.5,3999.5);
+            hyneg[i]=new TH1F(Form("yneg_%d",i+1),Form("yneg_%d",i+1),4000,-0.5,3999.5);
         }
 
         TTree *tree = new TTree("PSD","PSD Testing event mode");
@@ -1573,7 +1573,10 @@ namespace Utility
 	  }
 	}
 	if(eventid_pre != event_id){
-	  printf("(packet_%u)incontinuous event_id(pre=%d,cur=%d)\n",packet_num,eventid_pre-1,event_id);
+	  if(packet_num==1)
+	    printf("(packet_%u)init event_id is not )(cur=%d)\n",packet_num,event_id);
+	  else
+	    printf("(packet_%u)incontinuous event_id(pre=%d,cur=%d)\n",packet_num,eventid_pre-1,event_id);
 	  eventid_pre=event_id;
 	}
 	
