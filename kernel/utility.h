@@ -52,9 +52,9 @@ namespace Utility {
   char _GetNextEvent_ungrouped(FILE*fp,unsigned int** buffer,int* buffer_len,int* event_len,int* bunch_id,int* event_id,int* word_count);
   TTree* convert_mwdc_ungrouped(const char* infile,TDirectory* dir,const char* name,const char* title);
   TTree* convert_tof_ungrouped(const char* infile,TDirectory* dir,const char* name,const char* title);
-  int convert_hptdc_ungrouped(const char* datadir,const char* outfile,const char* prefix,const char* suffix=".at1");
-  int print_info_ungrouped(const char* datadir, const char* rootfile,const char* logfile,int bunchid_diff=3,const char* prefix="fuck",const char* suffix=".at1");
-  int check_ungrouped(const char* datadir,const char* outfile);
-  int merge_hptdc_ungrouped(const char* datadir,const char* outfile);
+  int convert_hptdc_ungrouped(const char* datadir,const char* outfile,const char* prefix,const char* configdir=0,const char* suffix=".at1");
+  int print_info_ungrouped(const char* datadir, const char* rootfile,const char* logfile,int bunchid_diff=1,const char* prefix="fuck",const char* suffix=".at1");
+  int check_ungrouped(const char* datadir,const char* outfile,const char* configdir=0);
+  int merge_hptdc_ungrouped(const char* datadir,const char* outfile,const char* configdir=0);
 }
 #endif // _Utility_h_

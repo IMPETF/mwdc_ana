@@ -1808,9 +1808,13 @@ namespace Utility
     return tree_out;
   }
   
-  int convert_hptdc_ungrouped(const char* datadir,const char* outfile,const char* prefix,const char* suffix)
+  int convert_hptdc_ungrouped(const char* datadir,const char* outfile,const char* prefix,const char* configdir,const char* suffix)
   {
-    TString file_config=TString(datadir)+"/crate.json";
+    TString file_config;
+    if(!configdir)
+      file_config=TString(datadir)+"/crate.json";
+    else
+      file_config=TString(configdir)+"/crate.json";
     CrateInfo* info=read_config(file_config.Data(),prefix,suffix);
     info->Print();
     
@@ -1848,13 +1852,17 @@ namespace Utility
     
   }
   
-  int check_ungrouped(const char* datadir,const char* outfile)
+  int check_ungrouped(const char* datadir,const char* outfile,const char* configdir)
   {
     TH1F* hbunch_mwdc=new TH1F("hbunch_mwdc","hbunch_mwdc",6,-0.5,5.5);
     TH1F* hbunch_tof=new TH1F("hbunch_tof","hbunch_tof",6,-0.5,5.5);
     TH1F* hbunch_all=new TH1F("hbunch_all","hbunch_all",6,-0.5,5.5);
     //readin the config file which include channelmapping info
-    TString file_config=TString(datadir)+"/crate.json";
+    TString file_config;
+    if(!configdir)
+      file_config=TString(datadir)+"/crate.json";
+    else
+      file_config=TString(configdir)+"/crate.json";
     CrateInfo* info=read_config(file_config.Data(),"mapping");
     info->Print();
     //check the structure of root file,check the consitency between root file and config file
@@ -2009,6 +2017,8 @@ namespace Utility
     hbunch_tof->Draw();
     c1->cd(3);
     hbunch_all->Draw();
+    TString bunchvalid=TString(datadir)+"/bunchvalidation.pdf";
+    c1->Print(bunchvalid.Data());
     //
     delete file_out;
     delete [] tree_in_mwdc;
@@ -2024,13 +2034,22 @@ namespace Utility
     delete [] tree_in;
     delete [] boardinfo;
     //
-    return 0;
+    if(((float)matched_bunch)/entries > 0.9){
+      printf("all boards synchronized successfully!\n");
+      return 0;
+    }
+    else
+      return -1;
   }
   
-  int merge_hptdc_ungrouped(const char* datadir,const char* outfile)
+  int merge_hptdc_ungrouped(const char* datadir,const char* outfile,const char* configdir)
   {
     //readin the config file which include channelmapping info
-    TString file_config=TString(datadir)+"/crate.json";
+    TString file_config;
+    if(!configdir)
+      file_config=TString(datadir)+"/crate.json";
+    else
+      file_config=TString(configdir)+"/crate.json";
     CrateInfo* info=read_config(file_config.Data(),"mapping");
     info->Print();
     //check the structure of root file,check the consitency between root file and config file
@@ -2143,13 +2162,18 @@ namespace Utility
     tree_out_tof->Branch("tot_trailing_raw",&tof_tottrailing);
     
     Int_t temp_entries;
+    Bool_t flag_syn=true;
     Int_t entries=tree_in[0]->GetEntriesFast();
     for(int i=0;i<boardnum;i++){
       temp_entries=tree_in[i]->GetEntriesFast();
-      if(temp_entries<entries){
-	entries=temp_entries;
+      if(temp_entries!=entries){
+	flag_syn=false;
+	if(temp_entries<entries){
+	  entries=temp_entries;
+	}
       }
     }
+    //
     ChannelMap::iterator it;
     Int_t max_eventid,min_eventid,temp_eventid;
     Int_t max_bunchid,min_bunchid,temp_bunchid;
@@ -2164,6 +2188,7 @@ namespace Utility
 	tree_in[j]->GetEntry(i);
       }
       //check trigger_id and bunch_id
+      /*
       max_eventid=TMath::MaxElement(mwdcnum,mwdc_eventid);
       min_eventid=TMath::MinElement(mwdcnum,mwdc_eventid);
       max_bunchid=TMath::MaxElement(mwdcnum,mwdc_bunchid);
@@ -2185,7 +2210,7 @@ namespace Utility
       else if((temp_eventid != max_eventid) || ((TMath::Abs(max_bunchid-temp_bunchid)!=1) && (max_bunchid!=temp_bunchid))){
 	printf("event_%d:unmatched event_id/bunch_id between TOF and MWDC boards(T:%d,%d|B:%d,%d)\n",i+1,temp_eventid,max_eventid,temp_bunchid,max_bunchid);
       }
-      
+      */
       //main merge process
       mwdc_leading.clear();mwdc_trailing.clear();
       for(int j=0;j<mwdcnum;j++){
@@ -2255,7 +2280,7 @@ namespace Utility
 	delete [] boardinfo;
 	//
 	delete info;
-	return 0;
+	return flag_syn;
   }
 
 }
