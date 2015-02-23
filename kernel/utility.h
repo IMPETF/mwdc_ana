@@ -29,6 +29,9 @@ class BoardInfo;
 class CrateInfo;
 class TTree;
 class TDirectory;
+class TF1;
+class TH1F;
+class TProfile;
 
 namespace Utility {
   //
@@ -47,7 +50,16 @@ namespace Utility {
   //For PSD
   int convert_eventblock(char* data,Int_t *Xpos,Int_t *Ypos,Int_t *Xneg,Int_t *Yneg);
   int convert_psd(const Char_t* parentDir,const Char_t* infile,const Char_t* outDir,const Char_t* outfile="raw.root");
-
+  TF1* langaus( TH1F *poHist,float& mpv,float& fwhm,float ped_mean,float ped_sigma);
+  Double_t langaufun(Double_t *x, Double_t *par);
+  TF1 *langaufit(TH1F *his, Double_t *fitrange, Double_t *startvalues, Double_t *parlimitslo, Double_t *parlimitshi, Double_t *fitparams, Double_t *fiterrors, Double_t *ChiSqr, Int_t *NDF);
+  TF1* pedfit(TH1F* poHist,float ped_mean,float ped_sigma,float& pedout_mean,float& pedout_sigma);
+  TF1* linear_fit(TProfile* hprofile,Double_t *fitrange);
+  int draw_channels(const char* pardir,const char* filename,const char* outDir,const char* outName);
+  int draw_relp(const Char_t* testfile,const Char_t* reffile,const Char_t* outdir,const char* outName);
+  int draw_mip(const char* mipfile,const char* pedfile,const char* outDir,const char* outName);
+  int draw_mapping(const char* pardir,const char* filename,const char* outDir,unsigned int max=600000);
+  int fit_dy58(const char* infile,const char* pedfile,const char* outdir,const char* outfile,int pedcut=5,float range=200.0);
   //For ungrouped MWDC rawdata
   char _GetNextEvent_ungrouped(FILE*fp,unsigned int** buffer,int* buffer_len,int* event_len,int* bunch_id,int* event_id,int* word_count);
   TTree* convert_mwdc_ungrouped(const char* infile,TDirectory* dir,const char* name,const char* title);
