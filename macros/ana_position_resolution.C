@@ -23,10 +23,34 @@
 #include "TMath.h"
 #include "TH1F.h"
 #include "TH2F.h"
+#include "TStyle.h"
+#include "TCanvas.h"
 
-
-int ana_position_resolution(char* infile)
+int ana_position_resolution(char* infile,float psdoffset_x=6.35,float psdoffset_y=-2.21)
 {
+    float x_psd_position[41]={374.28,354.28,334.28,314.28,294.28,274.28,254.28,234.28,214.28,194.28,174.28,154.28,134.28,114.28,94.28,74.28,54.28,34.28,14.28,-5.72,-25.72,-45.72,-65.72,-85.72,-105.72,-125.72,-145.72,-165.72,-185.72,-205.72,-225.72,-245.72,-265.72,-285.72,-305.72,-325.72,-345.72,-365.72,-385.72,-405.72,-425.72};
+    float y_psd_position[41]={407.96,387.96,367.96,347.96,327.96,307.96,287.96,267.96,247.96,227.96,207.96,187.96,167.96,147.96,127.96,107.96,87.96,67.96,47.96,27.96,7.96,-12.04,-32.04,-52.04,-72.04,-92.04,-112.04,-132.04,-152.04,-172.04,-192.04,-212.04,-232.04,-252.04,-272.04,-292.04,-312.04,-332.04,-352.04,-372.04,-392.04};
+
+    for(int i=0;i<41;i++){
+      x_psd_position[i]+=psdoffset_x;
+      y_psd_position[i]+=psdoffset_y;
+    }
+    
+    float gap[2]={8.0,12.0};
+    float x_limit[84],y_limit[84];
+    
+    x_limit[0]=x_psd_position[40]-21.0;x_limit[1]=x_psd_position[40]-11.0;x_limit[2]=x_psd_position[40]+6.0;
+    for(int i=0;i<79;i++){
+      x_limit[3+i]=x_limit[2+i]+gap[i%2];
+    }
+    x_limit[82]=x_limit[81]+17.0;x_limit[83]=x_limit[82]+10.0;
+    
+    y_limit[0]=y_psd_position[40]-21.0;y_limit[1]=y_psd_position[40]-11.0;y_limit[2]=y_psd_position[40]+6.0;
+    for(int i=0;i<79;i++){
+      y_limit[3+i]=y_limit[2+i]+gap[i%2];
+    }
+    y_limit[82]=y_limit[81]+17.0;y_limit[83]=y_limit[82]+10.0;
+    //
     TFile *f_in=new TFile(infile,"update");
     TTree *tree_final=(TTree*)f_in->Get("event_simple");
 
@@ -73,9 +97,11 @@ int ana_position_resolution(char* infile)
     TH1F* hy=new TH1F("hy_resolution","Y position resolution",400,-200,200);
     TH2F* hup=new TH2F("hmwdc_up","MWDC_up Hit Distribution ",82,-430.5,430.5,82,-430.5,430.5);
     TH2F* hdown=new TH2F("hmwdc_down","MWDC_down Hit Distribution",82,-445.5,415.5,82,-430.5,430.5);
-    TH2F* hpsd_true=new TH2F("hpsd_true","PSD recontructed Hit Distribution",180,-435.3,434.7,180,-424,436);
-    TH2F* hpsd_expected=new TH2F("hpsd_expected","PSD expected hit distribution",180,-435.3,434.7,180,-424,436);
-
+    //TH2F* hpsd_true=new TH2F("hpsd_true","PSD recontructed Hit Distribution",86,-449.37,410.63,86,-424.25,435.75);
+    //TH2F* hpsd_true=new TH2F("hpsd_true","PSD recontructed Hit Distribution",83,-434.37,395.63,83,-409.25,420.75);
+    TH2F* hpsd_true=new TH2F("hpsd_true","PSD recontructed Hit Distribution",83,x_limit,83,y_limit);
+    TH2F* hpsd_expected=new TH2F("hpsd_expected","PSD expected hit distribution",488,-449.37,410.63,488,-424.25,435.75);
+    
     float x_truehit,y_truehit;
     float x_expected,y_expected;
     int x_flag,y_flag;
@@ -143,4 +169,32 @@ int ana_position_resolution(char* infile)
     delete f_in;
 
     return 0;
+}
+
+void draw_pos_resolution(const char* infile,const char* outfile)
+{
+    gStyle->SetOptFit(1);
+    gStyle->SetOptStat(1);
+    //
+    TFile* file_in=new TFile(infile);
+    
+    TH1F* hx=(TH1F*)file_in->Get("hx_resolution");
+    TH1F* hy=(TH1F*)file_in->Get("hy_resolution");
+    hx->SetDirectory(0);
+    hy->SetDirectory(0);
+    
+    
+    TCanvas* can=new TCanvas("cpos_res","cpos_res",800,400);
+    can->Divide(2,1);
+    can->cd(1);
+    
+    hx->Draw();
+    hx->Fit("gaus","RB","",-25,25);
+    can->cd(2);
+    hy->Draw();
+    hy->Fit("gaus","RB","",-25,25);
+    //can->Print(Form("%s/pos_resolution.png",outdir));
+    can->Print(outfile);
+    
+    delete file_in;
 }

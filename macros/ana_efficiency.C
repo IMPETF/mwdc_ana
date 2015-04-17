@@ -23,12 +23,16 @@
 #include "TH1F.h"
 
 //--------------------------------------------
-int ana_efficiency(char *infile, char *outfile,float mwdc_range=13.0)//mwdc_range >8.0
+int ana_efficiency(char *infile, char *outfile,float psdoffset_x=6.35,float psdoffset_y=-2.21,float mwdc_range=13.0)//mwdc_range >8.0
 {
     float x_psd_position[41]={374.28,354.28,334.28,314.28,294.28,274.28,254.28,234.28,214.28,194.28,174.28,154.28,134.28,114.28,94.28,74.28,54.28,34.28,14.28,-5.72,-25.72,-45.72,-65.72,-85.72,-105.72,-125.72,-145.72,-165.72,-185.72,-205.72,-225.72,-245.72,-265.72,-285.72,-305.72,-325.72,-345.72,-365.72,-385.72,-405.72,-425.72};
 
     float y_psd_position[41]={407.96,387.96,367.96,347.96,327.96,307.96,287.96,267.96,247.96,227.96,207.96,187.96,167.96,147.96,127.96,107.96,87.96,67.96,47.96,27.96,7.96,-12.04,-32.04,-52.04,-72.04,-92.04,-112.04,-132.04,-152.04,-172.04,-192.04,-212.04,-232.04,-252.04,-272.04,-292.04,-312.04,-332.04,-352.04,-372.04,-392.04};
 
+    for(int i=0;i<41;i++){
+      x_psd_position[i]+=psdoffset_x;
+      y_psd_position[i]+=psdoffset_y;
+    }
     //----------------------------------------------------------------------------------------------
     TFile *f_in=new TFile(infile,"update");
     TTree *tree_final=(TTree*)f_in->Get("event_simple");
@@ -186,7 +190,7 @@ int ana_efficiency(char *infile, char *outfile,float mwdc_range=13.0)//mwdc_rang
                 }
             }
         }
-        if((xpsdhit_position[2]+mwdc_cell)<(x_psd_position[0]+14) && (xpsdhit_position[2]-mwdc_cell)>(x_psd_position[0]-11)
+        if((xpsdhit_position[2]+mwdc_cell)<(x_psd_position[0]+11) && (xpsdhit_position[2]-mwdc_cell)>(x_psd_position[0]-14)
                 && (ypsdhit_position[2]+mwdc_cell)<(y_psd_position[0]+11) && (ypsdhit_position[2]-mwdc_cell)>(y_psd_position[40]-11))
         {
             xpsd_hitted[0]++;
@@ -210,7 +214,7 @@ int ana_efficiency(char *infile, char *outfile,float mwdc_range=13.0)//mwdc_rang
                 }
             }
         }
-        if((xpsdhit_position[2]+mwdc_cell)<(x_psd_position[40]+11) && (xpsdhit_position[2]-mwdc_cell)>(x_psd_position[40]-14)
+        if((xpsdhit_position[2]+mwdc_cell)<(x_psd_position[40]+14) && (xpsdhit_position[2]-mwdc_cell)>(x_psd_position[40]-11)
                 && (ypsdhit_position[2]+mwdc_cell)<(y_psd_position[0]+11) && (ypsdhit_position[2]-mwdc_cell)>(y_psd_position[40]-11))
         {
             xpsd_hitted[40]++;

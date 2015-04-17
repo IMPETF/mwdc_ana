@@ -18,7 +18,7 @@
 #include "TMultiGraph.h"
 #include <algorithm>
 
-int extract_event(const char* datadir,int testindex,const char* outdir,const char* psd_pedfile,int ped_cut=5)
+int extract_event(const char* datadir,int testindex,const char* outdir,const char* psd_pedfile,float psdoffset_x=6.35,float psdoffset_y=-2.21,int ped_cut=5)
 {
     //COMMENT: 
     TString outfile=TString::Format("%s/run_simple_%d.root",outdir,testindex);
@@ -301,7 +301,7 @@ int extract_event(const char* datadir,int testindex,const char* outdir,const cha
 	    || x_dy8_neg[j] > (xpedmean_dy8_neg[j]+ped_cut*xpedsigma_dy8_neg[j]))
 	  {
 	    xpsd_ch[xpsd_num]=j+1;
-	    xpsd_x[xpsd_num]=x_psd_position[j];
+	    xpsd_x[xpsd_num]=x_psd_position[j]+psdoffset_x;
 	    xpsd_z[xpsd_num]=x_psd_z[j];
 	    xpsd_energy_pos[xpsd_num]=x_dy8_pos[j]-xpedmean_dy8_pos[j];
 	    xpsd_energy_neg[xpsd_num]=x_dy8_neg[j]-xpedmean_dy8_neg[j];
@@ -314,7 +314,7 @@ int extract_event(const char* datadir,int testindex,const char* outdir,const cha
 	    || y_dy8_neg[j] > (ypedmean_dy8_neg[j]+ped_cut*ypedsigma_dy8_neg[j]))
 	  {
 	    ypsd_ch[ypsd_num]=j+1;
-	    ypsd_y[ypsd_num]=y_psd_position[j];
+	    ypsd_y[ypsd_num]=y_psd_position[j]+psdoffset_y;
 	    ypsd_z[ypsd_num]=y_psd_z[j];
 	    ypsd_energy_pos[ypsd_num]=y_dy8_pos[j]-ypedmean_dy8_pos[j];
 	    ypsd_energy_neg[ypsd_num]=y_dy8_neg[j]-ypedmean_dy8_neg[j];

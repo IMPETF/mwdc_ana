@@ -28,6 +28,8 @@
 #include "TCanvas.h"
 #include "TROOT.h"
 #include "TAxis.h"
+#include "TString.h"
+#include "TSystem.h"
 
 Double_t langaufun(Double_t *x, Double_t *par) {
 
@@ -134,7 +136,7 @@ TF1 *langaufit(TH1F *his, Double_t *fitrange, Double_t *startvalues, Double_t *p
 }
 
 
-TF1* langaus( TH1F *poHist,float& mpv,float& fwhm)
+TF1* langaus( TH1F *poHist,float& mpv,float& fwhm,bool gflag=false)
 {
     poHist->Rebin(30);
 
@@ -144,8 +146,8 @@ TF1* langaus( TH1F *poHist,float& mpv,float& fwhm)
     Double_t chisqr;
     Int_t ndf;
 
-    paramlow[0]=0.0;paramlow[1]=100.0;paramlow[2]=10;paramlow[3]=0.0;
-    paramhigh[0]=150.0;paramhigh[1]=800.0;paramhigh[2]=100000.0;paramhigh[3]=200.0;
+    paramlow[0]=0.0;paramlow[1]=100.0;paramlow[2]=1;paramlow[3]=0.0;
+    paramhigh[0]=150.0;paramhigh[1]=800.0;paramhigh[2]=100000000.0;paramhigh[3]=200.0;
 
     if(poHist->GetEntries()<100){
         fr[0]=poHist->GetMean()*0.3;
@@ -162,6 +164,14 @@ TF1* langaus( TH1F *poHist,float& mpv,float& fwhm)
     mpv=fparam[1];
     fwhm=fparam[0];
 
+    if(gflag){
+      TCanvas can("can","can",500,500);
+      poHist->Draw();
+      fit->Draw("lsame");
+      can.Update();
+      gSystem->Sleep(300);
+    }
+    
     return fit;
 }
 
@@ -196,7 +206,7 @@ TF1* landau(TH1F *hist,float& mpv,float& fwhm)
     return ffit;
 }
 
-int draw_x_mips_u(char* infile,int strip_id,int segment_id,TH1F* hpos,TH1F* hneg,float psdoffset_x=6,float psdoffset_y=-2,float segment_limit=10)
+int draw_x_mips_u(char* infile,int strip_id,int segment_id,TH1F* hpos,TH1F* hneg,float psdoffset_x=6.35,float psdoffset_y=-2.21,float segment_limit=10)
 {
 
     float x_psd_position[41]={374.28,354.28,334.28,314.28,294.28,274.28,254.28,234.28,214.28,194.28,174.28,154.28,134.28,114.28,94.28,74.28,54.28,34.28,14.28,-5.72,-25.72,-45.72,-65.72,-85.72,-105.72,-125.72,-145.72,-165.72,-185.72,-205.72,-225.72,-245.72,-265.72,-285.72,-305.72,-325.72,-345.72,-365.72,-385.72,-405.72,-425.72};
@@ -255,14 +265,14 @@ int draw_x_mips_u(char* infile,int strip_id,int segment_id,TH1F* hpos,TH1F* hneg
     return 0;
 }
 
-int draw_x_mips(char *infile, int strip_id, int segment_id, float segment_limit=10)
+int draw_x_mips(char *infile, int strip_id, int segment_id, float psdoffset_x=6.35,float psdoffset_y=-2.21,float segment_limit=10)
 {
 
     TH1F* hpos=new TH1F(Form("hx%d_%d_pos",strip_id,segment_id),Form("Strip_X%d,Segment_%d,Positive_Side",strip_id,segment_id),3000,0,3000);
     TH1F* hneg=new TH1F(Form("hx%d_%d_neg",strip_id,segment_id),Form("Strip_X%d,Segment_%d,Negative_Side",strip_id,segment_id),3000,0,3000);
     hpos->SetDirectory(0);
     hneg->SetDirectory(0);
-    draw_x_mips_u(infile,strip_id,segment_id,hpos,hneg,segment_limit);
+    draw_x_mips_u(infile,strip_id,segment_id,hpos,hneg,psdoffset_x,psdoffset_y,segment_limit);
 
 /////////////////////////////////////////////////////////////////////////////////////////
     float mpv,fwhm;
@@ -338,7 +348,7 @@ int draw_y_mips_u(char* infile,int strip_id,int segment_id,TH1F* hpos,TH1F* hneg
     return 0;
 }
 
-int draw_y_mips(char *infile, int strip_id, int segment_id, float segment_limit=10)
+int draw_y_mips(char *infile, int strip_id, int segment_id, float psdoffset_x=6.35,float psdoffset_y=-2.21,float segment_limit=10)
 {
 
     TH1F* hpos=new TH1F(Form("hy%d_%d_pos",strip_id,segment_id),Form("Strip_Y%d,Segment_%d,Positive_Side",strip_id,segment_id),3000,0,3000);
@@ -346,7 +356,7 @@ int draw_y_mips(char *infile, int strip_id, int segment_id, float segment_limit=
     hpos->SetDirectory(0);
     hneg->SetDirectory(0);
 
-    draw_y_mips_u(infile,strip_id,segment_id,hpos,hneg,segment_limit);
+    draw_y_mips_u(infile,strip_id,segment_id,hpos,hneg,psdoffset_x,psdoffset_y,segment_limit);
     //------------------------------------------------------------------
     float mpv,fwhm;
     TF1* fitpos=landau(hpos,mpv,fwhm);
@@ -364,7 +374,7 @@ int draw_y_mips(char *infile, int strip_id, int segment_id, float segment_limit=
     return 0;
 }
 
-int draw_mips(char* infile,char* outfile,float segment_limit=10)
+int draw_mips(char* infile,char* outfile,float psdoffset_x=6,float psdoffset_y=-2,float segment_limit=10)
 {
     TFile *f_out=new TFile(outfile,"recreate");
 
@@ -391,11 +401,11 @@ int draw_mips(char* infile,char* outfile,float segment_limit=10)
 
     for(int i=0;i<41;i++){
         for(int j=0;j<41;j++){
-            draw_x_mips_u(infile,i+1,segment_index[j],hxpos[i][j],hxneg[i][j],segment_limit);
+            draw_x_mips_u(infile,i+1,segment_index[j],hxpos[i][j],hxneg[i][j],psdoffset_x,psdoffset_y,segment_limit);
             f_out->cd();
             hxpos[i][j]->Write(0,TObject::kOverwrite);
             hxneg[i][j]->Write(0,TObject::kOverwrite);
-            draw_y_mips_u(infile,i+1,segment_index[j],hypos[i][j],hyneg[i][j],segment_limit);
+            draw_y_mips_u(infile,i+1,segment_index[j],hypos[i][j],hyneg[i][j],psdoffset_x,psdoffset_y,segment_limit);
             f_out->cd();
             hypos[i][j]->Write(0,TObject::kOverwrite);
             hyneg[i][j]->Write(0,TObject::kOverwrite);
@@ -409,73 +419,7 @@ int draw_mips(char* infile,char* outfile,float segment_limit=10)
     return 0;
 }
 
-int draw_mips_new(char* infile,char* outfile,float segment_limit=10)
-{
-
-    float x_psd_position[41]={374.28,354.28,334.28,314.28,294.28,274.28,254.28,234.28,214.28,194.28,174.28,154.28,134.28,114.28,94.28,74.28,54.28,34.28,14.28,-5.72,-25.72,-45.72,-65.72,-85.72,-105.72,-125.72,-145.72,-165.72,-185.72,-205.72,-225.72,-245.72,-265.72,-285.72,-305.72,-325.72,-345.72,-365.72,-385.72,-405.72,-425.72};
-
-    float y_psd_position[41]={407.96,387.96,367.96,347.96,327.96,307.96,287.96,267.96,247.96,227.96,207.96,187.96,167.96,147.96,127.96,107.96,87.96,67.96,47.96,27.96,7.96,-12.04,-32.04,-52.04,-72.04,-92.04,-112.04,-132.04,-152.04,-172.04,-192.04,-212.04,-232.04,-252.04,-272.04,-292.04,-312.04,-332.04,-352.04,-372.04,-392.04};
-
-    //########################################################################################33
-
-    TFile *f_in =new TFile(infile);
-    TTree *tree_final=(TTree*)f_in->Get("event_simple");
-
-    float xpsdhit_position[4],ypsdhit_position[4];
-    int xpsd_num,ypsd_num;
-    int xpsd_ch[41],ypsd_ch[41];
-    float xpsd_energy_pos[41],xpsd_energy_neg[41];
-    float ypsd_energy_pos[41],ypsd_energy_neg[41];
-    float track_angle;
-
-    tree_final->SetBranchAddress("xpsdhit_x",xpsdhit_position);
-    tree_final->SetBranchAddress("xpsd_num",&xpsd_num);
-    tree_final->SetBranchAddress("xpsd_ch",xpsd_ch);
-    tree_final->SetBranchAddress("xpsd_energy_pos",xpsd_energy_pos);
-    tree_final->SetBranchAddress("xpsd_energy_neg",xpsd_energy_neg);
-    tree_final->SetBranchAddress("track_angle",&track_angle);
-    tree_final->SetBranchAddress("ypsdhit_y",ypsdhit_position);
-    tree_final->SetBranchAddress("ypsd_num",&ypsd_num);
-    tree_final->SetBranchAddress("ypsd_ch",ypsd_ch);
-    tree_final->SetBranchAddress("ypsd_energy_pos",ypsd_energy_pos);
-    tree_final->SetBranchAddress("ypsd_energy_neg",ypsd_energy_neg);
-
-//----------------------------------------------------------------------
-    TFile *f_out=new TFile(outfile,"recreate");
-
-    //int segment_index[5]={5,13,21,29,37};
-    int segment_index[41];
-    for(int i=0;i<41;i++){
-        segment_index[i]=i+1;
-    }
-    //float segment_position[5]={91,251,411,571,731};
-
-    TH1F* hxpos[41][41];
-    TH1F* hxneg[41][41];
-    TH1F* hypos[41][41];
-    TH1F* hyneg[41][41];
-
-    for(int i=0;i<41;i++){
-        for(int j=0;j<41;j++){
-            hxpos[i][j]=new TH1F(Form("hx%d_%d_pos",i+1,segment_index[j]),Form("Strip_X%d,Segment_%d,Positive_Side",i+1,segment_index[j]),3000,0,3000);
-            hxneg[i][j]=new TH1F(Form("hx%d_%d_neg",i+1,segment_index[j]),Form("Strip_X%d,Segment_%d,Negative_Side",i+1,segment_index[j]),3000,0,3000);
-            hypos[i][j]=new TH1F(Form("hy%d_%d_pos",i+1,segment_index[j]),Form("Strip_Y%d,Segment_%d,Positive_Side",i+1,segment_index[j]),3000,0,3000);
-            hyneg[i][j]=new TH1F(Form("hy%d_%d_neg",i+1,segment_index[j]),Form("Strip_Y%d,Segment_%d,Negative_Side",i+1,segment_index[j]),3000,0,3000);
-        }
-    }
-//--------------------------
-    int entries=tree_final->GetEntries();
-    
-    for(int i=0;i<entries;i++){
-        tree_final->GetEntry(i);
-
-
-  }
-
-    return 0;
-}
-
-int fit_mips(char* infile,char* outfile)
+int fit_mips(char* infile,char* outfile,bool gflag=false)
 {
     float strip_position[41];
     for(int i=0;i<41;i++)
@@ -494,25 +438,25 @@ int fit_mips(char* infile,char* outfile)
     for(int i=0;i<41;i++){
         for(int j=0;j<41;j++){
             hxpos=(TH1F*)f_in->Get(Form("hx%d_%d_pos",i+1,j+1));
-            fxpos=langaus(hxpos,xpos_MPV[i][j],xpos_FWHM[i][j]);
+            fxpos=langaus(hxpos,xpos_MPV[i][j],xpos_FWHM[i][j],gflag);
             //fxpos=landau(hxpos,xpos_MPV[i][j],xpos_FWHM[i][j]);
             xpos_MPV_error[i][j]=fxpos->GetParError(1);
             delete fxpos;
 
             hxneg=(TH1F*)f_in->Get(Form("hx%d_%d_neg",i+1,j+1));
-            fxneg=langaus(hxneg,xneg_MPV[i][j],xneg_FWHM[i][j]);
+            fxneg=langaus(hxneg,xneg_MPV[i][j],xneg_FWHM[i][j],gflag);
             //fxneg=landau(hxneg,xneg_MPV[i][j],xneg_FWHM[i][j]);
             xneg_MPV_error[i][j]=fxneg->GetParError(1);
             delete fxneg;
 
             hypos=(TH1F*)f_in->Get(Form("hy%d_%d_pos",i+1,j+1));
-            fypos=langaus(hypos,ypos_MPV[i][j],ypos_FWHM[i][j]);
+            fypos=langaus(hypos,ypos_MPV[i][j],ypos_FWHM[i][j],gflag);
             //fypos=landau(hypos,ypos_MPV[i][j],ypos_FWHM[i][j]);
             ypos_MPV_error[i][j]=fypos->GetParError(1);
             delete fypos;
 
             hyneg=(TH1F*)f_in->Get(Form("hy%d_%d_neg",i+1,j+1));
-            fyneg=langaus(hyneg,yneg_MPV[i][j],yneg_FWHM[i][j]);
+            fyneg=langaus(hyneg,yneg_MPV[i][j],yneg_FWHM[i][j],gflag);
             //fyneg=landau(hyneg,yneg_MPV[i][j],yneg_FWHM[i][j]);
             yneg_MPV_error[i][j]=fyneg->GetParError(1);
             delete fyneg;
@@ -637,9 +581,9 @@ int draw_energy_resolution(char* infile,char* outfile)
     TH1F* hxneg_reslution=new TH1F("hxneg_res","X Layer Negative Side: Energy Resolution VS Strip",41,0.5,41.5);
     TH1F* hypos_reslution=new TH1F("hypos_res","Y Layer Positive Side: Energy Resolution VS Strip",41,0.5,41.5);
     TH1F* hyneg_reslution=new TH1F("hyneg_res","Y Layer Negative Side: Energy Resolution VS Strip",41,0.5,41.5);
+    TH1F* hres_dist=new TH1F("henergy_res_dist","Distribution of Enery Resolution(From Z=1 MIP)",280,0.07,0.14);
 
-
-    FILE *fp=fopen("energy_res.csv","w");
+    FILE *fp=fopen(Form("%s/energy_res.csv",gSystem->DirName(outfile)),"w");
     for(int i=0;i<41;i++){
         hxpos_reslution->SetBinContent(i+1,xpos_FWHM[i]/xpos_MPV[i]);
         hxneg_reslution->SetBinContent(i+1,xneg_FWHM[i]/xneg_MPV[i]);
@@ -648,9 +592,11 @@ int draw_energy_resolution(char* infile,char* outfile)
         hyneg_reslution->SetBinContent(i+1,yneg_FWHM[i]/yneg_MPV[i]);
 
         fprintf(fp,"x%d_pos:%.3f\tx%d_neg:%.3f\t##\ty%d_pos:%.3f\ty%d_neg:%.3f\n",i+1,xpos_FWHM[i]/xpos_MPV[i],i+1,xneg_FWHM[i]/xneg_MPV[i],
-                i+1,ypos_FWHM[i]/ypos_MPV[i],i+1,yneg_FWHM[i]/ypos_MPV[i]);
+                i+1,ypos_FWHM[i]/ypos_MPV[i],i+1,yneg_FWHM[i]/yneg_MPV[i]);
+	
+	hres_dist->Fill(xpos_FWHM[i]/xpos_MPV[i]);hres_dist->Fill(xneg_FWHM[i]/xneg_MPV[i]);
+	hres_dist->Fill(ypos_FWHM[i]/ypos_MPV[i]);hres_dist->Fill(yneg_FWHM[i]/yneg_MPV[i]);
     }
-    hypos_reslution->SetBinContent(1,0.099);//manual fit for ypos_1
     fclose(fp);
 
     hxpos_reslution->GetYaxis()->SetRangeUser(0,0.25);
@@ -663,7 +609,7 @@ int draw_energy_resolution(char* infile,char* outfile)
     hxneg_reslution->Write(0,TObject::kOverwrite);
     hypos_reslution->Write(0,TObject::kOverwrite);
     hyneg_reslution->Write(0,TObject::kOverwrite);
-
+    hres_dist->Write(0,TObject::kOverwrite);
     //----------------end-----------------------
     delete f_in;
     delete f_out;
@@ -684,28 +630,41 @@ int draw_consistency(char* infile,char* outfile)
 //-----------------Fitting----------------------------------------------
     TH1F *hxpos,*hxneg,*hypos,*hyneg;
     TF1 *fxpos,*fxneg,*fypos,*fyneg;
-
+    
+    TCanvas* can=new TCanvas("can","can",800,800);
+    can->Divide(2,2);
+    can->Print(Form("%s/consist_fitting.pdf[",gSystem->DirName(outfile)));
     for(int i=0;i<41;i++){
             hxpos=(TH1F*)f_in->Get(Form("hx%d_%d_pos",i+1,21));
-            //fxpos=langaus(hxpos,xpos_MPV[i],xpos_FWHM[i]);
-            fxpos=landau(hxpos,xpos_MPV[i],xpos_FWHM[i]);
-            delete fxpos;
-
+            fxpos=langaus(hxpos,xpos_MPV[i],xpos_FWHM[i]);
+            //fxpos=landau(hxpos,xpos_MPV[i],xpos_FWHM[i]);
+	    can->cd(1);
+	    hxpos->Draw();fxpos->Draw("lsame");
+            
             hxneg=(TH1F*)f_in->Get(Form("hx%d_%d_neg",i+1,21));
-            //fxneg=langaus(hxneg,xneg_MPV[i],xneg_FWHM[i]);
-            fxneg=landau(hxneg,xneg_MPV[i],xneg_FWHM[i]);
-            delete fxneg;
+            fxneg=langaus(hxneg,xneg_MPV[i],xneg_FWHM[i]);
+            //fxneg=landau(hxneg,xneg_MPV[i],xneg_FWHM[i]);
+            can->cd(2);
+	    hxneg->Draw();fxneg->Draw("lsame");
 
             hypos=(TH1F*)f_in->Get(Form("hy%d_%d_pos",i+1,21));
-            //fypos=langaus(hypos,ypos_MPV[i],ypos_FWHM[i]);
-            fypos=landau(hypos,ypos_MPV[i],ypos_FWHM[i]);
-            delete fypos;
+            fypos=langaus(hypos,ypos_MPV[i],ypos_FWHM[i]);
+            //fypos=landau(hypos,ypos_MPV[i],ypos_FWHM[i]);
+            can->cd(3);
+	    hypos->Draw();fypos->Draw("lsame");
 
             hyneg=(TH1F*)f_in->Get(Form("hy%d_%d_neg",i+1,21));
-            //fyneg=langaus(hyneg,yneg_MPV[i],yneg_FWHM[i]);
-            fyneg=landau(hyneg,yneg_MPV[i],yneg_FWHM[i]);
-            delete fyneg;
+            fyneg=langaus(hyneg,yneg_MPV[i],yneg_FWHM[i]);
+            //fyneg=landau(hyneg,yneg_MPV[i],yneg_FWHM[i]);
+	    can->cd(4);
+	    hyneg->Draw();fyneg->Draw("lsame");
+	    
+	    can->Print(Form("%s/consist_fitting.pdf",gSystem->DirName(outfile)));
+	    delete fxpos;delete fxneg;
+            delete fypos;delete fyneg;
     }
+    can->Print(Form("%s/consist_fitting.pdf]",gSystem->DirName(outfile)));
+    delete can;
 
     //---------------Draw Energy Resolution in the middle of each strip---------------------
     TH1F* hxpos_consistency=new TH1F("hxpos_cons","X Layer Positive Side",41,0.5,41.5);
@@ -714,7 +673,7 @@ int draw_consistency(char* infile,char* outfile)
     TH1F* hyneg_consistency=new TH1F("hyneg_cons","Y Layer Negative Side",41,0.5,41.5);
     TH1F* hdist=new TH1F("h1","MIPs Distribution",200,350.0,550.0);
 
-    FILE *fp=fopen("consistency.csv","w");
+    FILE *fp=fopen(Form("%s/consistency.csv",gSystem->DirName(outfile)),"w");
     for(int i=0;i<41;i++){
         hxpos_consistency->SetBinContent(i+1,xpos_MPV[i]);
         hxneg_consistency->SetBinContent(i+1,xneg_MPV[i]);
@@ -751,7 +710,7 @@ int draw_consistency(char* infile,char* outfile)
 int draw_consistency_dist(char* infile)
 {
     FILE *fp=fopen(infile,"r");
-    TH1F* h1=new TH1F("h1","MIPs Distribution",200,300.0,500.0);
+    TH1F* h1=new TH1F("h1","MIPs Distribution",250,250.0,500.0);
     int ch_id[4];
     float mips[4];
     for(int i=0;i<41;i++){

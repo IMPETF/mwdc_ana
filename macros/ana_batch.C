@@ -132,7 +132,7 @@ void batch_ana_dy58(const char* configfile,char* outdir)
 }
 
 //int extract_event(const char* datadir,int testindex,const char* outdir,const char* psd_pedfile,int ped_cut=5);
-void batch_extract_event(const char* configfile,const char* outdir,float psdoffset_x=6,float psdoffset_y=-2,int ped_cut=5)
+void batch_extract_event(const char* configfile,const char* outdir,float psdoffset_x=6.35,float psdoffset_y=-2.21,int ped_cut=5)
 {
   gROOT->ProcessLine(".L extract_event.C+");
   //
@@ -156,4 +156,34 @@ void batch_extract_event(const char* configfile,const char* outdir,float psdoffs
   fprintf(fp,"psdoffset_x:\t%.2f mm\n",psdoffset_x);
   fprintf(fp,"psdoffset_y:\t%.2f mm\n",psdoffset_y);
   fclose(fp);
+}
+
+void batch_ana_efficiency(const char* configfile,const char* indir,const char* outdir,float psdoffset_x=6.35,float psdoffset_y=-2.21)
+{
+  gROOT->ProcessLine(".L ana_efficiency.C+");
+  //
+  std::map<TString,int> filelist;
+  filelist=read_filelist(configfile);
+  //
+  std::map<TString,int>::iterator it;  
+  for(it=filelist.begin();it!=filelist.end();it++){
+    printf("ana_efficiency(\"%s/run_simple_%d.root\",\"%s/eff_%d.txt\",%.4f,%.4f)\n",indir,it->second,outdir,it->second,psdoffset_x,psdoffset_y);
+    gROOT->ProcessLine(Form("ana_efficiency(\"%s/run_simple_%d.root\",\"%s/eff_%d.txt\",%.4f,%.4f)",indir,it->second,outdir,it->second,psdoffset_x,psdoffset_y));  
+  }
+  
+}
+
+void batch_ana_position_res(const char* configfile,const char* indir)
+{
+  gROOT->ProcessLine(".L ana_position_resolution.C+");
+  //
+  std::map<TString,int> filelist;
+  filelist=read_filelist(configfile);
+  //
+  std::map<TString,int>::iterator it;  
+  for(it=filelist.begin();it!=filelist.end();it++){
+    printf("ana_position_resolution(\"%s/run_simple_%d.root\")\n",indir,it->second);
+    gROOT->ProcessLine(Form("ana_position_resolution(\"%s/run_simple_%d.root\")",indir,it->second));  
+  }
+  
 }
