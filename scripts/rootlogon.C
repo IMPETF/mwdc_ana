@@ -15,6 +15,13 @@ gROOT->ProcessLine(".L draw_trajectory.C+");
 gROOT->ProcessLine(".L compare_drift.C+");
 
 gROOT->ProcessLine(".L process.C");
+
+gROOT->ProcessLine(".L extract_event.C+");
+gROOT->ProcessLine(".L ana_efficiency.C+");
+gROOT->ProcessLine(".L ana_dy58.C+");
+gROOT->ProcessLine(".L ana_mips.C+");
+gROOT->ProcessLine(".L ana_position_resolution.C+");
+gROOT->ProcessLine(".L ana_batch.C+");
 //
 printf("Load MWDC analysis library!\n");
 }

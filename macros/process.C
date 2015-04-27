@@ -24,9 +24,9 @@ void process(const char* datadir,const char* outfile)
 }
 */
 
-int process_mwdc(const char* datadir,const char* outfile,const char* prefix)
+int process_mwdc(const char* datadir,const char* outfile,const char* prefix,const char* jsondir)
 {
-  TString configdir=TString(datadir)+"/../../";
+  TString configdir(jsondir)
   Utility::convert_hptdc_ungrouped(datadir,outfile,prefix,configdir.Data());
   int mwdc_synflag=Utility::check_ungrouped(datadir,outfile,configdir.Data());
   int mwdc_eventsamenum;

@@ -374,7 +374,7 @@ int draw_y_mips(char *infile, int strip_id, int segment_id, float psdoffset_x=6.
     return 0;
 }
 
-int draw_mips(char* infile,char* outfile,float psdoffset_x=6,float psdoffset_y=-2,float segment_limit=10)
+int draw_mips(char* infile,char* outfile,float psdoffset_x=6.35,float psdoffset_y=-2.21,float segment_limit=10)
 {
     TFile *f_out=new TFile(outfile,"recreate");
 
