@@ -4,6 +4,7 @@ project(mwdc_ana)
 add_subdirectory(kernel)
 #add_subdirectory(scripts)
 
+#---------------------
 set(SCRIPTS
   maketemplate
   rootlogon.C
@@ -16,4 +17,10 @@ foreach(_script ${SCRIPTS})
     )
 endforeach()
 
-add_custom_target(basic DEPENDS kernel scripts)
+#--------------------------
+FILE(GLOB macros ${CMAKE_SOURCE_DIR}/macros/*.C)
+foreach(_macro ${macros})
+  install(FILES ${_macro} DESTINATION ./)
+endforeach()
+
+#add_custom_target(basic DEPENDS kernel scripts)
