@@ -118,7 +118,7 @@ public:
   }
     virtual int GetChannelNum(){return 128;}
 private:
-  UInt_t fEncodedID[128];
+  UInt_t fEncodedID[128];//index is global channel in utility.cxx(convert_mwdc)
   
   ClassDef(MWDCBoard,1)
 };

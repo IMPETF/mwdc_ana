@@ -308,6 +308,7 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
 	    tdc_index=(buffer[i]>>24)&0xF;
 	    channel_index=(buffer[i]>>19)&0x1F;
 	    tdc_value=buffer[i]&0x7FFFF;
+      // global_channle here is actually the board front-panel channel index 
 	    global_channel=hptdc_index[tdc_index*32+channel_index];
 	    leading_raw[global_channel].push_back(tdc_value);
 	    break;

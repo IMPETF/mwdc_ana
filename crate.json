@@ -25,8 +25,9 @@ JSON is a light-weight data exchange format,which is simple and human-readable.
 	  {"fileid":16,"boardtype":"tof", "boardname":"tof4" ,"boardtitle":"TOF4" }
 	],
 /*Mapping between the detector channels and the board front_panel input channels are provided here.
-* The mapping between the front_panel inputs and the HPTDC chip channel is fixed,please refer to 
-* specific documents for the information.
+* The mapping between the front_panel inputs and the HPTDC chip channel is fixed and hard-coded in this program,
+* please refer to specific documents for the information.
+* 
 * For MWDC boards:
 *	There are 4 connectors in the front_panel.Each connector has 32 inputs.connector1-4 corresponding
 *	to connector label"I,II,III,IV".connector1 covers 0-31,connector2 covers 31-63,connector3 convers
@@ -35,6 +36,7 @@ JSON is a light-weight data exchange format,which is simple and human-readable.
 * For TOF boards:
 *	There are 16 independent input channels in the front pannel.The array should be filled with corresponding
 *	16 detector global channel number.
+* 
 * The key string should be one of the "boardname" defined in the board section.Parser will use the unique boardname
 * to get the corresponding channel mapping relation.
 * The coding mechanism of the global detector channel number is specific for different detectors,and should be defined
