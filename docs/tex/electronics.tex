@@ -1,0 +1,22 @@
+\chapter{电子学部分}
+\section{PXI获取系统与HPTDC简介}
+
+\section{MWDC读出电子学}
+
+\subsection{通道对应关系}
+
+\section{塑闪板读出电子学}
+
+\subsection{通道对应关系}
+
+\section{触发板与时钟板}
+
+\section{数据格式}
+\subsection{Ungrouped格式}
+在2015年2、3月份间的测试过程中，原先设计的事件打包逻辑有bug存在，因此正式的宇宙线测试中使用了Ungrouped格式，即使用HPTDC原始的打包格式。具体如下：
+\begin{itemize}
+	\item 每块获取卡对应一个独立的原始数据文件，文件具有相同的前缀，和后缀“atl”，并使用获取卡所在的槽位编号。
+	\item 数据逐事件存储。每个Event的数据由一个Group Header和一个Group Trailer组成的数据段组成，Header和Trailer中间是各块HPTDC的测量数据，具体参考HPTDC说明书。
+\end{itemize}
+
+

@@ -1,0 +1,20 @@
+{
+	"folders":
+	[
+		{
+			"path": "./",
+			"name": "source",
+			"file_include_patterns":"*.tex"
+
+		}
+	],
+	"settings":{
+		"TEXroot":"main.tex",
+		"builder_settings":{
+			"program":"xelatex",
+			// "options":["--shell-escape"]
+		},
+	"hide_build_panel": "never"	,
+	"image_types": ["png", "pdf", "jpg", "jpeg", "eps", "tiff"]
+	}
+}

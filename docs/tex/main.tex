@@ -1,0 +1,39 @@
+\documentclass[a4paper,12pt]{ctexrep}
+
+\begin{document}
+	% top matter
+	\title{\textbf{MWDC宇宙线标定测试平台用户指南}}
+	\author{周勇，唐述文\\
+	次级束物理研究组\\
+	中国科学院近代物理研究所\\
+	\texttt{yong@impcas.ac.cn, zyong06@gmail.com}}
+
+	\maketitle
+
+	% article and report can have an abstract
+	\begin{abstract}
+	MWDC宇宙线标定测试平台是一套完整的宇宙线刻度系统，它由以下几个部分组成：大真空靶室及其辅助真空设备，径迹探测器分系统，触发探测器分系统，数据获取分系统（DAQ）以及离线分析软件。
+
+	该测试平台最初是基于暗物质粒子探测卫星（DAMPE）塑闪阵列探测器的地面宇宙线刻度而设计和搭建的，因此其主体框架是一套大真空靶室以及相应的辅助真空设备。测试时，被测探测器放置在真空靶室内部。
+
+	径迹探测器分系统由两个多丝漂移室（MWDC）构成，分别放置在靶室上部和下部，用于确定入射宇宙线的径迹。根据测得的径迹，可以反推出其在被测探测器上的击中位置，从而准确得到探测器的位置响应。
+
+	触发探测器分系统由两个大面积的塑闪板探测器构成，分别放置在上MWDC的上部和下MWDC的下部。它用于标记入射宇宙线事例，为整个平台提供快触发信号和起始时间信号。
+
+	离线分析软件基于ROOT和C++，用于原始数据的解码，数据质量的校验以及数据分析。
+	\end{abstract}
+
+	\tableofcontents
+	\listoffigures
+	\listoftables
+	
+	\input{detectors.tex}
+
+	\input{electronics.tex}
+
+	\input{software.tex}
+
+	\input{calibration.tex}
+
+
+\end{document}
