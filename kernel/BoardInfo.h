@@ -118,7 +118,8 @@ public:
   }
     virtual int GetChannelNum(){return 128;}
 private:
-  UInt_t fEncodedID[128];//index is global channel in utility.cxx(convert_mwdc)
+  UInt_t fEncodedID[128];//index is global channel in utility.cxx(convert_mwdc),
+                         //i.e. the channel index in the front-panel of the board.
   
   ClassDef(MWDCBoard,1)
 };
@@ -162,7 +163,8 @@ public:
   }
   virtual int GetChannelNum(){return 16;}
 private:
-  UInt_t fEncodedID[16];
+  UInt_t fEncodedID[16];//index is global channel in utility.cxx(convert_tof),
+                        //i.e. the channel index in the front-panel of the board.
   
   ClassDef(TOFBoard,1)
 };

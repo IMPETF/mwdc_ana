@@ -34,11 +34,12 @@ class TH1F;
 class TProfile;
 
 namespace Utility {
-  //
+  // Read channel mapping info(front-panel channel--> detector channel) from json configuration file
   void read_mwdcinfo(BoardInfo* boardinfo,Json::Value& board);
   void read_tofinfo(BoardInfo* boardinfo,Json::Value& board);
   CrateInfo* read_config(const char* filename,const char* prefix,const char* suffix=".at1");
-  //
+  
+  //Deprecated: For MWDC grouped raw format decoding, merging and validation
   TTree* convert_mwdc(const char* infile,const char* name,const char* title);
   TTree* convert_tof(const char* infile,const char* name,const char* title);
   int convert_hptdc(const char* datadir,const char* outfile,const char* prefix,const char* suffix=".at1");
@@ -47,7 +48,8 @@ namespace Utility {
   //
   int merge_hptdc(const char* datadir,const char* outfile);
   void mapping_validation(const char* datadir,const char* outfile);
-  //For PSD
+  
+  //For PSD decoding, fitting and validation
   int convert_eventblock(char* data,Int_t *Xpos,Int_t *Ypos,Int_t *Xneg,Int_t *Yneg);
   int convert_psd(const Char_t* parentDir,const Char_t* infile,const Char_t* outDir,const Char_t* outfile="raw.root");
   TF1* langaus( TH1F *poHist,float& mpv,float& fwhm,float ped_mean,float ped_sigma);
@@ -60,7 +62,8 @@ namespace Utility {
   int draw_mip(const char* mipfile,const char* pedfile,const char* outDir,const char* outName);
   int draw_mapping(const char* pardir,const char* filename,const char* outDir,unsigned int max=600000);
   int fit_dy58(const char* infile,const char* pedfile,const char* outdir,const char* outfile,int pedcut=5,float range=200.0);
-  //For ungrouped MWDC rawdata
+  
+  //For ungrouped MWDC rawdata decoding, merging and validation
   char _GetNextEvent_ungrouped(FILE*fp,unsigned int** buffer,int* buffer_len,int* event_len,int* bunch_id,int* event_id,int* word_count);
   TTree* convert_mwdc_ungrouped(const char* infile,TDirectory* dir,const char* name,const char* title);
   TTree* convert_tof_ungrouped(const char* infile,TDirectory* dir,const char* name,const char* title);

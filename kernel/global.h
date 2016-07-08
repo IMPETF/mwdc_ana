@@ -24,8 +24,8 @@
 #include <vector>
 #include <map>
 //
-typedef std::map< UInt_t,std::vector<int> > ChannelMap;
-typedef std::vector<int> TDCContainer;
+typedef std::map< UInt_t,std::vector<int> > ChannelMap;//The Key is the global "encoded_wireid" in merged data and the front-panel channel id in raw data; the value is TDCContainer
+typedef std::vector<int> TDCContainer;//All the measured leading/trailing ADC counts of the corresponding "encoded_wireid"
 //
 enum EBoardType {
     EMWDC=0,
@@ -41,6 +41,15 @@ enum EDirection {
   EY,
   EU
 };
+
+// The Encoding namespace contains the utility functions for "encoded_wireid" encoding and decoding.
+// Both the MWDC and TOF detector readout channels are encoded as unique global 32-bits word, which will
+// reperent its corresponding detector channel in the data.
+// The rules are as follows:
+//    1) Detector Type(8 bits,24-31): MWDC=0, TOF=1, NULL=0xFF (NULL represents invalid/unconnected front-panel channel)
+//    2) Detector Location(4 bits, 20-23): Up=1, Down=0
+//    3) Wire Plane(4 bits,16-19, this field is only valid for MWDC): X=0, Y=1, U=2
+//    4) Channel Index(8 bits,0-15): MWDC X/Y plane: 0-79, MWDC U plane: 0-105, TOF cornet PMT: 0-3    
 namespace Encoding {
     inline UInt_t EncodeType(UChar_t type){
       return (type&0xFF)<<24;
@@ -75,6 +84,6 @@ namespace Encoding {
     }
 }
 //
-const int g_range_precision=524288;
-const int g_range_highprecision=2097152;
+const int g_range_precision=524288;//2^19,the maximum ADC value of high resolution mode, the unit is 25us/256
+const int g_range_highprecision=2097152;//2^21, the maximum ADC value of very high resolution mode, the unit is 25us/256/4
 #endif // _global_h_

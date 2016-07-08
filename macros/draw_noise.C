@@ -378,7 +378,7 @@ int draw_noise_merge(const char* datadir,const char* outfile)
       histrepo_mwdc_ratio[i][j]->Divide(histrepo_mwdc_weight[i][j],histrepo_mwdc[i][j]);
       htemp=histrepo_mwdc_ratio[i][j]->DrawCopy();
       htemp->SetMinimum(0.95);
-      htemp->SetMaximum(1.45);
+      htemp->SetMaximum(2.);
       //htemp->GetYaxis()->SetRangeUser(1.05,1.25);
       histrepo_mwdc_ratio[i][j]->Write(0,TObject::kOverwrite);
       histrepo_mwdc[i][j]->Write(0,TObject::kOverwrite);

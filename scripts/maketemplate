@@ -19,7 +19,7 @@ EOF
 NewTemplateRaw(){
 #-------------------------------------------------------------------
 cat > $1.C <<EOF
-/*   \$Id: $1.h, $date MWDC_ana $
+/*   \$Id: $1.h, $date MWDC_ana Raw$
  *--------------------------------------------------------
  *  Author(s):
  *
@@ -85,14 +85,16 @@ int $1(const char* datadir,const char* outfile)
   //init and get corresponding tree from root file
   TTree** 	tree_in_mwdc=new TTree*[mwdcnum]{};
   BoardInfo**	mwdc_boardinfo=new BoardInfo*[mwdcnum]{};
-  UInt_t*	mwdc_triggerid=new UInt_t[mwdcnum]{};
+  Int_t*	mwdc_eventid=new Int_t[mwdcnum]{};
   Int_t*	mwdc_bunchid=new Int_t[mwdcnum]{};
+  Char_t* mwdc_eventflag=new Char_t[mwdcnum]{};
   ChannelMap** 	mwdc_leading_raw=new ChannelMap*[mwdcnum]{};
   ChannelMap** 	mwdc_trailing_raw=new ChannelMap*[mwdcnum]{};
   
   TTree** 	tree_in_tof=new TTree*[tofnum]{};
   BoardInfo**	tof_boardinfo=new BoardInfo*[tofnum]{};
-  UInt_t*	tof_triggerid=new UInt_t[tofnum]{};
+  Char_t* tof_eventflag=new Char_t[tofnum]{};
+  Int_t*	tof_eventid=new Int_t[tofnum]{};
   Int_t*	tof_bunchid=new Int_t[tofnum]{};
   ChannelMap** 	tof_timeleading_raw=new ChannelMap*[tofnum]{};
   ChannelMap** 	tof_timetrailing_raw=new ChannelMap*[tofnum]{};
@@ -106,11 +108,19 @@ int $1(const char* datadir,const char* outfile)
       case EMWDC:
 	raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_mwdc[mwdcnum++]);
 	mwdc_boardinfo[mwdcnum-1]=boardinfo[i];
-	tree_in[i]=tree_in_mwdc[mwdcnum-1];	
-	tree_in[i]->SetBranchAddress("trigger_id",&mwdc_triggerid[mwdcnum-1]);
+	tree_in[i]=tree_in_mwdc[mwdcnum-1];
+  tree_in[i]->SetBranchAddress("event_flag",&mwdc_eventflag[mwdcnum-1]);	
+	tree_in[i]->SetBranchAddress("event_id",&mwdc_eventid[mwdcnum-1]);
 	tree_in[i]->SetBranchAddress("bunch_id",&mwdc_bunchid[mwdcnum-1]);
 	tree_in[i]->SetBranchAddress("leading_raw",&mwdc_leading_raw[mwdcnum-1]);
 	tree_in[i]->SetBranchAddress("trailing_raw",&mwdc_trailing_raw[mwdcnum-1]);
+  // Activate the referenced branches
+  tree_in[i]->SetBranchStatus("*",0);
+  //tree_in[i]->SetBranchStatus("event_flag",1);
+  //tree_in[i]->SetBranchStatus("event_id",1);
+  //tree_in[i]->SetBranchStatus("bunch_id",1);
+  //tree_in[i]->SetBranchStatus("leading_raw",1);
+  //tree_in[i]->SetBranchStatus("trailing_raw",1);
 
 	mwdc_boardinfo[mwdcnum-1]->Print();
 	break;
@@ -118,12 +128,22 @@ int $1(const char* datadir,const char* outfile)
 	raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_tof[tofnum++]);
 	tof_boardinfo[tofnum-1]=boardinfo[i];
 	tree_in[i]=tree_in_tof[tofnum-1];	
-	tree_in[i]->SetBranchAddress("trigger_id",&tof_triggerid[tofnum-1]);
+  tree_in[i]->SetBranchAddress("event_flag",&tof_eventflag[tofnum-1]);
+	tree_in[i]->SetBranchAddress("event_id",&tof_eventid[tofnum-1]);
 	tree_in[i]->SetBranchAddress("bunch_id",&tof_bunchid[tofnum-1]);
 	tree_in[i]->SetBranchAddress("time_leading_raw",&tof_timeleading_raw[tofnum-1]);
 	tree_in[i]->SetBranchAddress("time_trailing_raw",&tof_timetrailing_raw[tofnum-1]);
 	tree_in[i]->SetBranchAddress("tot_leading_raw",&tof_totleading_raw[tofnum-1]);
 	tree_in[i]->SetBranchAddress("tot_trailing_raw",&tof_tottrailing_raw[tofnum-1]);
+  // Activate the referenced branches
+  tree_in[i]->SetBranchStatus("*",0);
+  //tree_in[i]->SetBranchStatus("event_flag",1);
+  //tree_in[i]->SetBranchStatus("event_id",1);
+  //tree_in[i]->SetBranchStatus("bunch_id",1);
+  //tree_in[i]->SetBranchStatus("time_leading_raw",1);
+  //tree_in[i]->SetBranchStatus("time_trailing_raw",1);
+  //tree_in[i]->SetBranchStatus("tot_leading_raw",1);
+  //tree_in[i]->SetBranchStatus("tot_trailing_raw",1);
 
 	tof_boardinfo[tofnum-1]->Print();
 	break;
@@ -206,14 +226,16 @@ int $1(const char* datadir,const char* outfile)
   delete file_out;
   delete [] tree_in_mwdc;
   delete [] mwdc_boardinfo;
-  delete [] mwdc_triggerid;
+  delete [] mwdc_eventflag;
+  delete [] mwdc_eventid;
   delete [] mwdc_bunchid;
   delete [] mwdc_leading_raw;
   delete [] mwdc_trailing_raw;
   
   delete [] tree_in_tof;
   delete [] tof_boardinfo;
-  delete [] tof_triggerid;
+  delete [] tof_eventflag;
+  delete [] tof_eventid;
   delete [] tof_bunchid;
   delete [] tof_timeleading_raw;
   delete [] tof_timetrailing_raw;
@@ -234,7 +256,7 @@ EOF
 NewTemplateMerge()
 {
 cat > $1.C << EOF
-/*   \$Id: $1.h, $date MWDC_ana $
+/*   \$Id: $1.h, $date MWDC_ana Merge$
  *--------------------------------------------------------
  *  Author(s):
  *
@@ -284,11 +306,23 @@ int $1(const char* datadir,const char* outfile)
   ChannelMap *mwdc_leading=0,*mwdc_trailing=0;
   tree_mwdc->SetBranchAddress("leading_raw",&mwdc_leading);
   tree_mwdc->SetBranchAddress("trailing_raw",&mwdc_trailing);
+  // Activate the referenced branches
+  tree_mwdc->SetBranchStatus("*",0);
+  //tree_mwdc->SetBranchStatus("leading_raw",1);
+  //tree_mwdc->SetBranchStatus("trailing_raw",1);
+
   ChannelMap *tof_timeleading=0,*tof_timetrailing=0,*tof_totleading=0,*tof_tottrailing=0;
   tree_tof->SetBranchAddress("time_leading_raw",&tof_timeleading);
   tree_tof->SetBranchAddress("time_trailing_raw",&tof_timetrailing);
   tree_tof->SetBranchAddress("tot_leading_raw",&tof_totleading);
   tree_tof->SetBranchAddress("tot_trailing_raw",&tof_tottrailing);
+  // Activate the referenced branches
+  tree_tof->SetBranchStatus("*",0);
+  //tree_tof->SetBranchStatus("time_leading_raw",1);
+  //tree_tof->SetBranchStatus("time_trailing_raw",1);
+  //tree_tof->SetBranchStatus("tot_leading_raw",1);
+  //tree_tof->SetBranchStatus("tot_trailing_raw",1);
+
   //
   int entries=tree_mwdc->GetEntriesFast();
   ChannelMap::iterator it;

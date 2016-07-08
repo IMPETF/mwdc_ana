@@ -178,7 +178,8 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
 {
   //TH1F* h1=new TH1F("h1","h1",200,-99.5,100.5);
   //TH2F* h2=new TH2F("h2","h2",1025,-0.5,1024.5,1025,-0.5,1024.5);
-  //
+  
+  //channel map in the mwdc board: from hptdc electronic channel id(index) to board front-panel channel id(value) 
   UInt_t hptdc_index[128]={0,1,63,62,61,2,3,60,59,4,58,5,57,6,56,7,55,8,9,54,53,52,51,11,10,12,50,13,49,48,14,15,
                           16,17,47,46,45,18,19,44,43,20,42,21,41,22,40,23,39,24,25,38,37,36,35,27,26,28,34,29,33,32,30,31,
                           64,65,127,126,125,66,67,124,123,68,122,69,121,70,120,71,119,72,73,118,117,116,115,75,74,76,114,77,113,112,78,79,
@@ -352,6 +353,9 @@ TTree* convert_mwdc(const char* infile,const char* name,const char* title)
 
 TTree* convert_tof(const char* infile,const char* name,const char* title)
 {
+  // TOF has 3 hptdc and 16 front-panel inputs: tdc 0 and 1 are in very high resolution mode, and tdc 3 are in high resolution mode.
+  // In very high resolution mode, each hptdc has 8 valid measurement channel; while in high resolution mode, each hptdc has 32 valid measurement channel.
+  // Thus, tdc 3 has 16 spare channels which are not ustilzed in measurement.   
   UInt_t time_index[16]={8,9,10,11,12,13,14,15,
 		       0,1,2,3,4,5,6,7};
   UInt_t tot_index[32]={0,1,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,2,0xFFFFFFFF,3
@@ -473,13 +477,13 @@ TTree* convert_tof(const char* infile,const char* name,const char* title)
 	    tdc_index=(buffer[i]>>24)&0xF;
 	    if(tdc_index == 2){
 	      channel_index=(buffer[i]>>19)&0x1F;
-	      tdc_value=buffer[i]&0x7FFFF;
+	      tdc_value=buffer[i]&0x7FFFF;// low,medium and high resolution has the same data format, with the ADC count unit as 25us/256
 	      global_channel=tot_index[channel_index];
 	      tot_leading_raw[global_channel].push_back(tdc_value);
 	    }
 	    else if((tdc_index == 0) || (tdc_index == 1)){
 	      channel_index=(buffer[i]>>21)&0x7;
-	      tdc_value=((buffer[i]&0x7FFFF)<<2) + ((buffer[i]>>19)&0x3);
+	      tdc_value=((buffer[i]&0x7FFFF)<<2) + ((buffer[i]>>19)&0x3);// very high resolution has different data format, with the ADCc count unit as 25us/256/4
 	      global_channel=time_index[tdc_index*8+channel_index];
 	      time_leading_raw[global_channel].push_back(tdc_value);
 	    }
