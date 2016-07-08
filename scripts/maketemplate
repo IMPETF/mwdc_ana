@@ -37,17 +37,11 @@ cat > $1.C <<EOF
 
 int $1(const char* datadir,const char* outfile)
 {
-/*
-  std::vector<TH1F*> histrepo;
-  TH1* htemp;
-  htemp=(TH1*)gROOT->FindObject("histname");
-  if(htemp)	delete htemp;
-  histrepo.push_back(new TH1F("histname","histtitle",binnum,initbin,finalbin));
-*/  
-  //readin the config file which include channelmapping info
+  //read the config file which include channelmapping info
   TString file_config=TString(datadir)+"/crate.json";
   CrateInfo* info=Utility::read_config(file_config.Data(),"mapping");
   info->Print();
+
   //check the structure of root file,check the consitency between root file and config file
   TString file_data=TString(datadir)+"/"+outfile;  
   TFile* file_out=new TFile(file_data,"update");
@@ -67,21 +61,22 @@ int $1(const char* datadir,const char* outfile)
   int tofnum=0;
   BoardInfo** boardinfo=new BoardInfo*[boardnum]{};
   for(int i=0;i<boardnum;i++){
-      boardinfo[i]=info->GetBoardInfo(i);
-      switch (boardinfo[i]->GetType()) {
-	case EMWDC:
-	  mwdcnum++;
-	  break;
-	case ETOF:
-	  tofnum++;
-	default:
-	  break;
-      }
-      if(!keys->FindObject(boardinfo[i]->GetName())){
-	printf("error missing raw tree: you may not use the same config file\n");
-	exit(1);
-      }
+    boardinfo[i]=info->GetBoardInfo(i);
+    switch (boardinfo[i]->GetType()) {
+	  case EMWDC:
+	    mwdcnum++;
+	    break;
+	  case ETOF:
+	    tofnum++;
+	  default:
+	    break;
+    }
+    if(!keys->FindObject(boardinfo[i]->GetName())){
+	    printf("error missing raw tree: you may not use the same config file\n");
+	    exit(1);
+    }
   }
+
   //init and get corresponding tree from root file
   TTree** 	tree_in_mwdc=new TTree*[mwdcnum]{};
   BoardInfo**	mwdc_boardinfo=new BoardInfo*[mwdcnum]{};
@@ -198,6 +193,7 @@ int $1(const char* datadir,const char* outfile)
   }
   
   printf("%d events processed totally!\n",entries);
+  
   //dir "histogram"
   TDirectory* dir_hist=file_out->GetDirectory("raw/histogram");
   if(!dir_hist){
@@ -209,19 +205,6 @@ int $1(const char* datadir,const char* outfile)
     dir_hist=file_out->GetDirectory("raw/histogram");
   }
   dir_hist->cd();
-  //
-  const Int_t nx=1,ny=1;
-  TCanvas *can = (TCanvas*) gROOT->FindObject("can");
-  if(can) delete can;
-  can=new TCanvas("can","can",300*nx,300*ny);
-  can->Divide(nx,ny,0,0,3);
-  for(int i=0;i<ny;i++){
-    for(int j=0;j<nx;j++){
-      can->cd(nx*i+j+1);
-      //histrepo[i]->DrawCopy();
-      //histrepo[i]->Write(0,TObject::kOverwrite);
-    }
-  }
   //
   delete file_out;
   delete [] tree_in_mwdc;
