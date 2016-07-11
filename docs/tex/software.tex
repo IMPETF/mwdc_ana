@@ -12,23 +12,21 @@
 			\hline
 			\texttt{event\_flag} &  \texttt{Char\_t}(B) & 1,2,3 & 代表该Event格式是否正确，1是正常情况，2是有Header无Trailer（一般是文件最后一个不完整的事件），3是Header中的EventID不等于Trailer中的EventID \\ 
 			\hline
-			\texttt{event\_id} & \texttt{Int\_t}(B) & 12 bits & 代表该Event的事件号，是直接从数据中解码出来的。由于Group Header和Trailer中都包含EventID，若\texttt{event\_flag=3}，则该字段是来自Header\\ 
+			\texttt{event\_id} & \texttt{Int\_t}(B) & 12 bits & 代表该Event的事件号（来自Master TDC），是直接从数据中解码出来的。由于Group Header和Trailer中都包含EventID，若\texttt{event\_flag=3}，则该字段是来自Header\\ 
 			\hline
-			\texttt{bunch\_id} & \texttt{Int\_t} & 12 bits & 直接从Group Header中解码得到。\\
+			\texttt{bunch\_id} & \texttt{Int\_t} & 12 bits & 直接从Group Header中解码得到（来自Master TDC）。\\
 			\hline
-			\texttt{leadin\_raw} & \texttt{std::map<Uint\_t,std::vector<int>} & 19 bits & MWDC/TOF板的高精度TOT前沿时间测量值，key是面板上的通道编号\\
+			\texttt{leading\_raw} & \texttt{std::map<Uint\_t,std::vector<int>} & 19 bits & MWDC板的高精度TOT后沿时间测量值，key是面板上的通道编号\\
 			\hline
 			\texttt{trailing\_raw} & \texttt{std::map<Uint\_t,std::vector<int>} & 19 bits & MWDC板的高精度TOT前沿时间测量值，key是面板上的通道编号 \\
 			\hline
-			\texttt{leadin\_raw} & \texttt{std::map<Uint\_t,std::vector<int>} & 19 bits & MWDC板的高精度TOT前沿时间测量值，key是面板上的通道编号\\
-			\hline
 			\texttt{time\_leading\_raw} & \texttt{std::map<Uint\_t,std::vector<int>} & 21 bits & TOF板甚高精度TOT前沿时间测量值，key是面板上的通道编号 \\
 			\hline
-			\texttt{time\_trailing\_raw} & \texttt{std::map<Uint\_t,std::vector<int>} & 21 bits & TOF板的甚高精度TOT前沿时间测量值，key是面板上的通道编号 \\
+			\texttt{time\_trailing\_raw} & \texttt{std::map<Uint\_t,std::vector<int>} & 21 bits & TOF板的甚高精度TOT后沿时间测量值，key是面板上的通道编号 \\
 			\hline
 			\texttt{tot\_leading\_raw} & \texttt{std::map<Uint\_t,std::vector<int>} & 19 bits & TOF板的高精度TOT前沿时间测量值，key是面板上的通道编号 \\
 			\hline
-			\texttt{tot\_trailing\_raw} & \texttt{std::map<Uint\_t,std::vector<int>} & 19 bits & TOF板的高精度TOT前沿时间测量值，key是面板上的通道编号 \\
+			\texttt{tot\_trailing\_raw} & \texttt{std::map<Uint\_t,std::vector<int>} & 19 bits & TOF板的高精度TOT后沿时间测量值，key是面板上的通道编号 \\
 			\hline
 		\end{tabular}
 		\caption{每块MWDC卡/TOF卡解码后得到的TTree格式}

@@ -1,6 +1,27 @@
 \chapter{电子学部分}
 \section{PXI获取系统与HPTDC简介}
 
+\subsection{HPTDC基本参数}
+HPTDC基本参数如表\ref{tbl:hptdc_parameters}所示：
+\begin{table}
+	\centering
+		\begin{tabular}{|l|l|l|p{6cm}|}
+			\hline
+			参数 & 意义 & 数值 & 备注 \\ 
+			\hline
+			Bunch ID & 触发信号的时间戳 & 用12 bits存储，单位25ns，范围102.4us &  \\ 
+			\hline
+			高精度测量的精度 & High Precision Mode & 19 bits, 单位$25/256 ns\simeq 100 ps$，范围51.2us &  \\ 
+			\hline
+			超高精度测量的精度 & Very High Precision Mode & 21 bits, 单位$25/256/4 ns \simeq 25 ps$ ,范围51.2us & \\
+			\hline
+		\end{tabular}
+		\caption{HPTDC基本性能参数}
+		\label{tbl:hptdc_parameters}
+\end{table}
+
+\subsection{HPTDC使用要点}
+
 \section{MWDC读出电子学}
 
 \subsection{通道对应关系}
@@ -12,11 +33,25 @@
 \section{触发板与时钟板}
 
 \section{数据格式}
+
 \subsection{Ungrouped格式}
 在2015年2、3月份间的测试过程中，原先设计的事件打包逻辑有bug存在，因此正式的宇宙线测试中使用了Ungrouped格式，即使用HPTDC原始的打包格式。具体如下：
 \begin{itemize}
 	\item 每块获取卡对应一个独立的原始数据文件，文件具有相同的前缀，和后缀“atl”，并使用获取卡所在的槽位编号。
-	\item 数据逐事件存储。每个Event的数据由一个Group Header和一个Group Trailer组成的数据段组成，Header和Trailer中间是各块HPTDC的测量数据，具体参考HPTDC说明书。
+	\item 数据逐事件存储。每个Event的数据由一个Group Header和一个Group Trailer组成的数据段组成；Header和Trailer中间是各块HPTDC的测量数据，且只是各通道的测量数据，而不包含HPTDC的Header和Trailer。每个word的具体格式参考HPTDC说明书。
+	\item 对于MWDC来说，获取板上四片HPTDC从0-3编号，读取顺序为3-2-1-0;\textbf{出于未知的原因，MWDC的信号前沿是原始数据中的Trailing Time，而信号后沿是原始数据中的Leading Time。}。
+	\item 对于TOF获取板来说，其信号前后沿与原始数据中的Leading/Trailing Time是一致的。
+	\item Bunch ID的决定值是与trigger latency相关的，当所有获取卡的trigger latency一致时，同一事件的Bunch ID也应该是一致的；若trigger latency不一致，则Bunch ID的差值就是Trigger Latency的大小。这是因为trigger time tag是要减去trigger latency后才存入Trigger FIFO中的。
 \end{itemize}
+
+已知问题：
+\begin{enumerate}
+	\item 对于单个事例来讲，MWDC获取板上的最大读出数据长度为$256\times4=1024$个word（根据HPTDC的Readout FIFO存储深度计算）。实际测试中发现，偶尔会出现大事例，此时数据长度超过1024个word，但不影响数据格式。
+	\item 在正确使用触发板的条件下，不同获取卡间的bunch id基本能够对齐，偶尔会出现$\pm 1$的浮动，但会恢复。
+	\item 在正确使用触发板的条件下，每块获取卡内的event id是连续的；但不同获取卡之间的初始event id偶尔会出现不一致，且可能不从0开始。
+	\item Group Trailer中的word count是不准确的
+	\item Group Header和Group Trailer中的event id是一致的。
+\end{enumerate}
+
 
 
