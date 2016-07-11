@@ -34,9 +34,11 @@ cat > $1.C <<EOF
 #include "CrateInfo.h"
 #include "BoardInfo.h"
 #include "utility.h"
+#include "TStyle.h"
 
 int $1(const char* datadir,const char* outfile)
 {
+  gStyle->SetOptStat(111111);
   //read the config file which include channelmapping info
   TString file_config=TString(datadir)+"/crate.json";
   CrateInfo* info=Utility::read_config(file_config.Data(),"mapping");
@@ -146,6 +148,9 @@ int $1(const char* datadir,const char* outfile)
 	break;
     }
   }
+
+  // make new histogram here
+
   //init
   Int_t temp_entries;
   Int_t entries=tree_in[0]->GetEntriesFast();
@@ -322,38 +327,38 @@ int $1(const char* datadir,const char* outfile)
     for(it=mwdc_leading->begin();it!=mwdc_leading->end();it++){
       Encoding::Decode(it->first,type,location,direction,index);
       if (type!=EMWDC) {
-	printf("event_%d:MWDC unmatched type\n",i+1);
+	       printf("event_%d:MWDC unmatched type\n",i+1);
       }
     }
     for(it=mwdc_trailing->begin();it!=mwdc_trailing->end();it++){
       Encoding::Decode(it->first,type,location,direction,index);
       if (type!=EMWDC) {
-	printf("event_%d:MWDC unmatched type\n",i+1);
+	       printf("event_%d:MWDC unmatched type\n",i+1);
       }
     }
     //
     for(it=tof_timeleading->begin();it!=tof_timeleading->end();it++){
       Encoding::Decode(it->first,type,location,direction,index);
       if (type!=ETOF) {
-	printf("event_%d:TOF unmatched type\n",i+1);
+	       printf("event_%d:TOF unmatched type\n",i+1);
       }
     }
     for(it=tof_timetrailing->begin();it!=tof_timetrailing->end();it++){
       Encoding::Decode(it->first,type,location,direction,index);
       if (type!=ETOF) {
-	printf("event_%d:TOF unmatched type\n",i+1);
+	       printf("event_%d:TOF unmatched type\n",i+1);
       }
     }
     for(it=tof_totleading->begin();it!=tof_totleading->end();it++){
       Encoding::Decode(it->first,type,location,direction,index);
       if (type!=ETOF) {
-	printf("event_%d:TOF unmatched type\n",i+1);
+	       printf("event_%d:TOF unmatched type\n",i+1);
       }
     }
     for(it=tof_tottrailing->begin();it!=tof_tottrailing->end();it++){
       Encoding::Decode(it->first,type,location,direction,index);
       if (type!=ETOF) {
-	printf("event_%d:TOF unmatched type\n",i+1);
+	       printf("event_%d:TOF unmatched type\n",i+1);
       }
     }
   }
@@ -415,9 +420,12 @@ case $1 in
   --merge)
     NewTemplateMerge $2
     ;;
-  --event)
-    NewTemplateEvent $2
-    ;;
+  # --merge --tof)
+    # NewTemplateMergeTOF $2
+    # ;;
+  # --merge --mwdc)
+    # NewTemplateMergeMWDC $2
+    # ;;
   --help)
     Help
     ;;

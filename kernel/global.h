@@ -48,8 +48,8 @@ enum EDirection {
 // The rules are as follows:
 //    1) Detector Type(8 bits,24-31): MWDC=0, TOF=1, NULL=0xFF (NULL represents invalid/unconnected front-panel channel)
 //    2) Detector Location(4 bits, 20-23): Up=1, Down=0
-//    3) Wire Plane(4 bits,16-19, this field is only valid for MWDC): X=0, Y=1, U=2
-//    4) Channel Index(8 bits,0-15): MWDC X/Y plane: 0-79, MWDC U plane: 0-105, TOF cornet PMT: 0-3    
+//    3) Wire Plane(4 bits,16-19, this field is only valid for MWDC): X=0, Y=1, U=2 ; TOF is 0
+//    4) Channel Index(8 bits,0-15): MWDC X/Y plane: 0-79, MWDC U plane: 0-105, TOF corner PMT: 0-3    
 namespace Encoding {
     inline UInt_t EncodeType(UChar_t type){
       return (type&0xFF)<<24;
@@ -86,4 +86,18 @@ namespace Encoding {
 //
 const int g_range_precision=524288;//2^19,the maximum ADC value of high resolution mode, the unit is 25us/256
 const int g_range_highprecision=2097152;//2^21, the maximum ADC value of very high resolution mode, the unit is 25us/256/4
+const int g_range_bunchid=4096;
+const int g_range_eventid=4096;
+
+//
+const int g_mwdc_location=2;
+const int g_mwdc_wireplane=3;
+const int g_mwdc_wireindex[3]={80,80,106};
+
+const int g_tof_location=2;
+const int g_tof_wireindex=4;
+
+const char g_str_location[2][10]={"Down","Up"};
+const char g_str_plane[3][10]={"X","Y","U"};
+
 #endif // _global_h_
