@@ -117,12 +117,14 @@ int draw_interval(const char* datadir,const char* outfile)
         gid=Encoding::Encode(ETOF,i,0,j);
         it=tof_timeleading->find(gid);
         if(it!=tof_timeleading->end()){
-          if(it->second.at(0) >= previous_time[i][j]){
-            histrepo_tof[i][j]->Fill(it->second.at(0) - previous_time[i][j]);
-          }
-          else{
-            histrepo_tof[i][j]->Fill(it->second.at(0) - previous_time[i][j] + g_range_highprecision);
-          }
+          histrepo_tof[i][j]->Fill(it->second.at(0));
+          // //
+          // if(it->second.at(0) >= previous_time[i][j]){
+          //   histrepo_tof[i][j]->Fill(it->second.at(0) - previous_time[i][j]);
+          // }
+          // else{
+          //   histrepo_tof[i][j]->Fill(it->second.at(0) - previous_time[i][j] + g_range_highprecision);
+          // }
           //
           histrepo2d_tof[i][j]->Fill(it->second.at(0),previous_time[i][j]);
           //
