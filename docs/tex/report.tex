@@ -129,7 +129,21 @@ P(X)&=1, X\in [-R,0]
 \underline{上述两种解释是否可以统一?}
 
 \section{TOF获取卡Bunch ID与Leading Time之差}
+四块TOF获取卡的Bunch ID与Leading Time之间的差值基本都稳定在$10*25=250ns$左右。
 
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{fig/tof_leadingtime_bunchid_diff.eps}
+        \caption{TOF板Leading Time与Bunch ID之差的典型分布}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{fig/tof_leadingtime_vs_bunchid.eps}
+        \caption{TOF板Leading Time与Bunch ID的关联图}
+    \end{subfigure}
+	\caption{Leading Time与Bunch ID的关系}
+	\label{fig:tof_leadingtime_bunchid}
+\end{figure}
 \section{获取卡间的时间同步(Time and event synchronization among different DAQ cards)}
 
 \section{单通道的多击中数(Multi-hits in a single channel)}
