@@ -15,6 +15,10 @@ HPTDC基本参数如表\ref{tbl:hptdc_parameters}所示：
 			\hline
 			超高精度测量的精度 & Very High Precision Mode & 21 bits, 单位$25/256/4 ns \simeq 25 ps$ ,范围51.2us & \\
 			\hline
+			Coarse Time Counter & 用于拓展时间测量量程 & 时钟源来自PLL（40，160，320Hz），共15 bits & 40Hz是使用低12位，160Hz使用低14位，320Hz使用全部15位 \\
+			\hline
+			DLL & 用于精细时间测量 & 时钟源来自PLL(40,160,320Hz)，将一个周期时钟分为32份，等效于5 bits & \\
+			\hline
 		\end{tabular}
 		\caption{HPTDC基本性能参数}
 		\label{tbl:hptdc_parameters}
@@ -48,7 +52,7 @@ HPTDC基本参数如表\ref{tbl:hptdc_parameters}所示：
 \begin{enumerate}
 	\item 对于单个事例来讲，MWDC获取板上的最大读出数据长度为$256\times4=1024$个word（根据HPTDC的Readout FIFO存储深度计算）。实际测试中发现，偶尔会出现大事例，此时数据长度超过1024个word，但不影响数据格式。
 	\item 在正确使用触发板的条件下，不同获取卡间的bunch id基本能够对齐，偶尔会出现$\pm 1$的浮动，但会恢复。
-	\item 在正确使用触发板的条件下，每块获取卡内的event id是连续的；但不同获取卡之间的初始event id偶尔会出现不一致，且可能不从0开始。
+	\item 在正确使用触发板的条件下，每块获取卡内的event id是连续的；基本都能从0开始计数，偶尔会有若干获取卡可能不从0开始。
 	\item Group Trailer中的word count是不准确的
 	\item Group Header和Group Trailer中的event id是一致的。
 \end{enumerate}

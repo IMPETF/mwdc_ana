@@ -144,7 +144,16 @@ P(X)&=1, X\in [-R,0]
 	\caption{Leading Time与Bunch ID的关系}
 	\label{fig:tof_leadingtime_bunchid}
 \end{figure}
+
 \section{获取卡间的时间同步(Time and event synchronization among different DAQ cards)}
+\subsection{结果}
+\subsubsection*{Event ID}
+每块获取卡的Event ID是连续的，没有出现丢事件的情况。
+大部分获取卡的起始Event ID为零，但偶尔会出现不为零的情况。此时，获取卡间的事件应该仍然是同步的。
+
+\subsubsection*{Bunch ID}
+
+\section{TOF板的无信号通道数}
 
 \section{单通道的多击中数(Multi-hits in a single channel)}
 
