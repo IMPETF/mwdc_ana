@@ -17,7 +17,7 @@
 #include "TMath.h"
 #include "TH2F.h"
 
-int check_bunchid(const char* datadir,const char* outfile)
+int check_simulate_bunchid(const char* datadir,const char* outfile)
 {
   gStyle->SetOptStat(111111);
 
@@ -30,10 +30,7 @@ int check_bunchid(const char* datadir,const char* outfile)
   TH1F* h1bunchdist=new TH1F("h1bunchdist","BunchID Unsync MeanBunchID Dist",4096,-0.5,4095.5);
   TH2F* h2bunchdiff_vs_cardnum=new TH2F("h2bunchdiff_vs_cardnum","BunchID Unsync Event: BunchID Offset VS Cards",12,0.5,12.5,11,-5.5,5.5);
   TH1F* h1bunchmaxoffset=new TH1F("h1bunchmaxoffset","BunchID Unsync Event Max BunchID Offset",4096,-0.5,4095.5);
-  //read the config file which include channelmapping info
-  TString file_config=TString(datadir)+"../crate.json";
-  CrateInfo* info=Utility::read_config(file_config.Data(),"mapping");
-  info->Print();
+
 
   //check the structure of root file,check the consitency between root file and config file
   TString file_data=TString(datadir)+"/"+outfile;  
@@ -42,138 +39,42 @@ int check_bunchid(const char* datadir,const char* outfile)
     printf("open file error: %s\n",outfile);
     exit(1);
   }
-  TDirectory* raw_dir=file_out->GetDirectory("raw");
-  if(!raw_dir){
-    printf("dir \"raw\" not exist in this file.invoke convert_hptdc first\n");
-    exit(1);
-  }
-  
-  TList* keys=raw_dir->GetListOfKeys();
-  int boardnum=info->GetBoardNum();
-  int mwdcnum=0;
-  int tofnum=0;
-  BoardInfo** boardinfo=new BoardInfo*[boardnum]{};
-  for(int i=0;i<boardnum;i++){
-    boardinfo[i]=info->GetBoardInfo(i);
-    switch (boardinfo[i]->GetType()) {
-	  case EMWDC:
-	    mwdcnum++;
-	    break;
-	  case ETOF:
-	    tofnum++;
-	  default:
-	    break;
-    }
-    if(!keys->FindObject(boardinfo[i]->GetName())){
-	    printf("error missing raw tree: you may not use the same config file\n");
-	    exit(1);
-    }
-  }
 
-  // // read merge ttree
-  // TTree *tree_mwdc,*tree_tof;
-  // file_out->GetObject("merge/mwdc",tree_mwdc);
-  // file_out->GetObject("merge/tof",tree_tof);
-  
-  // ChannelMap *mwdc_leading=0,*mwdc_trailing=0;
-  // tree_mwdc->SetBranchAddress("leading_raw",&mwdc_leading);
-  // tree_mwdc->SetBranchAddress("trailing_raw",&mwdc_trailing);
-  // // Activate the referenced branches
-  // tree_mwdc->SetBranchStatus("*",0);
-  // //tree_mwdc->SetBranchStatus("leading_raw",1);
-  // //tree_mwdc->SetBranchStatus("trailing_raw",1);
+  const Int_t mwdcnum=5;
+  const Int_t tofnum=4;
+  const Int_t boardnum=9;
+  TString mwdcname[5]={"mwdc_a","mwdc_b","mwdc_c","mwdc_d","mwdc_e"};
+  TString tofname[4]={"tof1","tof2","tof3","tof4"};
 
-  // ChannelMap *tof_timeleading=0,*tof_timetrailing=0,*tof_totleading=0,*tof_tottrailing=0;
-  // tree_tof->SetBranchAddress("time_leading_raw",&tof_timeleading);
-  // tree_tof->SetBranchAddress("time_trailing_raw",&tof_timetrailing);
-  // tree_tof->SetBranchAddress("tot_leading_raw",&tof_totleading);
-  // tree_tof->SetBranchAddress("tot_trailing_raw",&tof_tottrailing);
-  // // Activate the referenced branches
-  // tree_tof->SetBranchStatus("*",0);
-  // //tree_tof->SetBranchStatus("time_leading_raw",1);
-  // //tree_tof->SetBranchStatus("time_trailing_raw",1);
-  // //tree_tof->SetBranchStatus("tot_leading_raw",1);
-  // //tree_tof->SetBranchStatus("tot_trailing_raw",1);
-  
   //read raw ttree
-  TTree** 	tree_in_mwdc=new TTree*[mwdcnum]{};
-  BoardInfo**	mwdc_boardinfo=new BoardInfo*[mwdcnum]{};
-  Int_t*	mwdc_eventid=new Int_t[mwdcnum]{};
-  Int_t*	mwdc_bunchid=new Int_t[mwdcnum]{};
-  Char_t* mwdc_eventflag=new Char_t[mwdcnum]{};
-  ChannelMap** 	mwdc_leading_raw=new ChannelMap*[mwdcnum]{};
-  ChannelMap** 	mwdc_trailing_raw=new ChannelMap*[mwdcnum]{};
-  
-  TTree** 	tree_in_tof=new TTree*[tofnum]{};
-  BoardInfo**	tof_boardinfo=new BoardInfo*[tofnum]{};
-  Char_t* tof_eventflag=new Char_t[tofnum]{};
-  Int_t*	tof_eventid=new Int_t[tofnum]{};
-  Int_t*	tof_bunchid=new Int_t[tofnum]{};
-  ChannelMap** 	tof_timeleading_raw=new ChannelMap*[tofnum]{};
-  ChannelMap** 	tof_timetrailing_raw=new ChannelMap*[tofnum]{};
-  ChannelMap** 	tof_totleading_raw=new ChannelMap*[tofnum]{};
-  ChannelMap** 	tof_tottrailing_raw=new ChannelMap*[tofnum]{};
-  
-  TTree** 	tree_in=new TTree*[boardnum]{};
-  mwdcnum=0;tofnum=0;
-  for(int i=0;i<boardnum;i++){
-    switch (boardinfo[i]->GetType()){
-      case EMWDC:
-	raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_mwdc[mwdcnum++]);
-	mwdc_boardinfo[mwdcnum-1]=boardinfo[i];
-	tree_in[i]=tree_in_mwdc[mwdcnum-1];
-  tree_in[i]->SetBranchAddress("event_flag",&mwdc_eventflag[mwdcnum-1]);	
-	tree_in[i]->SetBranchAddress("event_id",&mwdc_eventid[mwdcnum-1]);
-	tree_in[i]->SetBranchAddress("bunch_id",&mwdc_bunchid[mwdcnum-1]);
-	tree_in[i]->SetBranchAddress("leading_raw",&mwdc_leading_raw[mwdcnum-1]);
-	tree_in[i]->SetBranchAddress("trailing_raw",&mwdc_trailing_raw[mwdcnum-1]);
-  // Activate the referenced branches
-  tree_in[i]->SetBranchStatus("*",0);
-  //tree_in[i]->SetBranchStatus("event_flag",1);
-  //tree_in[i]->SetBranchStatus("event_id",1);
-  tree_in[i]->SetBranchStatus("bunch_id",1);
-  //tree_in[i]->SetBranchStatus("leading_raw",1);
-  //tree_in[i]->SetBranchStatus("trailing_raw",1);
+  Int_t*  mwdc_bunchid=new Int_t[mwdcnum]{};
+  Int_t*  tof_bunchid=new Int_t[tofnum]{};
 
-	mwdc_boardinfo[mwdcnum-1]->Print();
-	break;
-      case ETOF:
-	raw_dir->GetObject(boardinfo[i]->GetName(),tree_in_tof[tofnum++]);
-	tof_boardinfo[tofnum-1]=boardinfo[i];
-	tree_in[i]=tree_in_tof[tofnum-1];	
-  tree_in[i]->SetBranchAddress("event_flag",&tof_eventflag[tofnum-1]);
-	tree_in[i]->SetBranchAddress("event_id",&tof_eventid[tofnum-1]);
-	tree_in[i]->SetBranchAddress("bunch_id",&tof_bunchid[tofnum-1]);
-	tree_in[i]->SetBranchAddress("time_leading_raw",&tof_timeleading_raw[tofnum-1]);
-	tree_in[i]->SetBranchAddress("time_trailing_raw",&tof_timetrailing_raw[tofnum-1]);
-	tree_in[i]->SetBranchAddress("tot_leading_raw",&tof_totleading_raw[tofnum-1]);
-	tree_in[i]->SetBranchAddress("tot_trailing_raw",&tof_tottrailing_raw[tofnum-1]);
-  // Activate the referenced branches
-  tree_in[i]->SetBranchStatus("*",0);
-  //tree_in[i]->SetBranchStatus("event_flag",1);
-  //tree_in[i]->SetBranchStatus("event_id",1);
-  tree_in[i]->SetBranchStatus("bunch_id",1);
-  //tree_in[i]->SetBranchStatus("time_leading_raw",1);
-  //tree_in[i]->SetBranchStatus("time_trailing_raw",1);
-  //tree_in[i]->SetBranchStatus("tot_leading_raw",1);
-  //tree_in[i]->SetBranchStatus("tot_trailing_raw",1);
+  TTree* tree_in[boardnum];
+  TTree* tree_in_mwdc[mwdcnum];
+  for(int i=0;i<mwdcnum;i++){
+    tree_in_mwdc[i]=(TTree*)file_out->Get(mwdcname[i].Data());
+    tree_in[i]=tree_in_mwdc[i];
 
-	tof_boardinfo[tofnum-1]->Print();
-	break;
-      default:
-	break;
-    }
+    tree_in[i]->SetBranchAddress("bunch_id",&mwdc_bunchid[i]);
+  }
+  TTree* tree_in_tof[tofnum];
+  for(int i=0;i<tofnum;i++){
+    tree_in_tof[i]=(TTree*)file_out->Get(tofname[i].Data());
+    tree_in[i+mwdcnum]=tree_in_tof[i];
+
+    tree_in[i+mwdcnum]->SetBranchAddress("bunch_id",&tof_bunchid[i]);
   }
 
   // make new histogram here
   std::vector<TH1F*> histrepo1d_mwdc;
   for(int i=0;i<mwdcnum;i++){
-    histrepo1d_mwdc.push_back(new TH1F(TString("h")+boardinfo[i]->GetName()+TString("unsync_bunchid_eventindex_separation"),boardinfo[i]->GetTitle()+TString("unsync_bunchid_eventindex_separation"),500,-0.5,499.5));
+    histrepo1d_mwdc.push_back(new TH1F(TString("h")+mwdcname[i]+TString("unsync_bunchid_eventindex_separation"),mwdcname[i]+TString("unsync_bunchid_eventindex_separation"),500,-0.5,499.5));
     histrepo1d_mwdc[i]->SetDirectory(0);
   }
   std::vector<TH1F*> histrepo1d_tof;
   for(int i=0;i<tofnum;i++){
-    histrepo1d_tof.push_back(new TH1F(TString("h")+boardinfo[mwdcnum+i]->GetName()+TString("unsync_bunchid_eventindex_separation"),boardinfo[mwdcnum+i]->GetTitle()+TString("unsync_bunchid_eventindex_separation"),500,-0.5,499.5));
+    histrepo1d_tof.push_back(new TH1F(TString("h")+tofname[i]+TString("unsync_bunchid_eventindex_separation"),tofname[i]+TString("unsync_bunchid_eventindex_separation"),500,-0.5,499.5));
     histrepo1d_tof[i]->SetDirectory(0);
   }
   //
@@ -432,58 +333,49 @@ int check_bunchid(const char* datadir,const char* outfile)
   }
   printf("\n");
   //dir "histogram"
-  TDirectory* dir_hist=file_out->GetDirectory("raw/histogram");
+  TDirectory* dir_hist=file_out->GetDirectory("histogram");
   if(!dir_hist){
-    dir_hist=file_out->mkdir("raw/histogram");
+    dir_hist=file_out->mkdir("histogram");
     if(!dir_hist){
-      printf("error!can't mkdir \"raw/hitogram\" in %s\n",outfile);
+      printf("error!can't mkdir \"hitogram\" in %s\n",outfile);
       exit(1);
     }
-    dir_hist=file_out->GetDirectory("raw/histogram");
+    dir_hist=file_out->GetDirectory("histogram");
   }
-  TDirectory* dir_bunchid=file_out->GetDirectory("raw/histogram/bunchid_validation");
-  if(!dir_bunchid){
-    dir_bunchid=file_out->mkdir("raw/histogram/bunchid_validation");
-    if(!dir_bunchid){
-      printf("error!can't mkdir \"raw/hitogram/bunchid_validation\" in %s\n",outfile);
-      exit(1);
-    }
-    dir_bunchid=file_out->GetDirectory("raw/histogram/bunchid_validation");
-  }
-  dir_bunchid->cd();
+  dir_hist->cd();
   //
   TCanvas* c=new TCanvas("c1","c1",600,600);
-  h1eventsep->Draw();h1eventsep->Write();
+  h1eventsep->Draw();c->Write();
   c=new TCanvas("c2","c2",600,600);
-  h1bunchsep->Draw();h1bunchsep->Write();
+  h1bunchsep->Draw();c->Write();
   c=new TCanvas("c3","c3",600,600);
-  h1bunchsep_uncontinuous->Draw();h1bunchsep_uncontinuous->Write();
+  h1bunchsep_uncontinuous->Draw();c->Write();
   c=new TCanvas("c4","c4",600,600);
-  h1eventindex->Draw();h1eventindex->Write();
+  h1eventindex->Draw();c->Write();
   c=new TCanvas("c5","c5",600,600);
-  h1continuousevents_length->Draw();h1continuousevents_length->Write();
+  h1continuousevents_length->Draw();c->Write();
   c=new TCanvas("c6","c6",600,600);
-  h1bunchdist->Draw();h1bunchdist->Write();
+  h1bunchdist->Draw();c->Write();
   c=new TCanvas("c7","c7",600,600);
-  h2bunchdiff_vs_cardnum->Draw("colz");h2bunchdiff_vs_cardnum->Write();
+  h2bunchdiff_vs_cardnum->Draw("colz");c->Write();
   c=new TCanvas("c8","c8",600,600);
-  h1bunchmaxoffset->Draw();h1bunchmaxoffset->Write();
+  h1bunchmaxoffset->Draw();c->Write();
   for(int i=0;i<mwdcnum;i++){
     TCanvas *can = (TCanvas*) gROOT->FindObject(Form("canmwdc_%d",i+1));
     if(can) delete can;
     can=new TCanvas(Form("canmwdc_%d",i+1),Form("canmwdc_%d",i+1),500,500);
     can->SetLogy();
-    histrepo1d_mwdc[i]->Draw();histrepo1d_mwdc[i]->Write();
+    histrepo1d_mwdc[i]->Draw();c->Write();
   }
   for(int i=0;i<tofnum;i++){
     TCanvas *can = (TCanvas*) gROOT->FindObject(Form("cantof_%d",i+1));
     if(can) delete can;
     can=new TCanvas(Form("cantof_%d",i+1),Form("cantof_%d",i+1),500,500);
     can->SetLogy();
-    histrepo1d_tof[i]->Draw();histrepo1d_tof[i]->Write();
+    histrepo1d_tof[i]->Draw();c->Write();
   }
   c=new TCanvas("c9","c9",600,600);
-  h2eventsep_vs_bunchsep->Draw("colz");h2eventsep_vs_bunchsep->Write();
+  h2eventsep_vs_bunchsep->Draw("colz");c->Write();
   //
   delete [] init_mwdc_bunchid;
   delete [] init_tof_bunchid;
@@ -496,28 +388,9 @@ int check_bunchid(const char* datadir,const char* outfile)
   delete [] tof_init_unsync_flag;
 
   delete file_out;
-  delete [] tree_in_mwdc;
-  delete [] mwdc_boardinfo;
-  delete [] mwdc_eventflag;
-  delete [] mwdc_eventid;
-  delete [] mwdc_bunchid;
-  delete [] mwdc_leading_raw;
-  delete [] mwdc_trailing_raw;
-  
-  delete [] tree_in_tof;
-  delete [] tof_boardinfo;
-  delete [] tof_eventflag;
-  delete [] tof_eventid;
+  delete [] mwdc_bunchid;  
   delete [] tof_bunchid;
-  delete [] tof_timeleading_raw;
-  delete [] tof_timetrailing_raw;
-  delete [] tof_totleading_raw;
-  delete [] tof_tottrailing_raw;
-  
-  delete [] tree_in;
-  delete [] boardinfo;
-  //
-  delete info;
+    //
   
   return 0;
 }
