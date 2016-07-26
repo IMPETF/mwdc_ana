@@ -31,9 +31,12 @@ cat > $1.C <<EOF
 #include "TROOT.h"
 #include "TCanvas.h"
 #include "TH1F.h"
+#include "TH2F.h"
 #include "CrateInfo.h"
 #include "BoardInfo.h"
 #include "utility.h"
+#include "TStyle.h"
+#include "TMath.h"
 #include "TStyle.h"
 
 int $1(const char* datadir,const char* outfile)
@@ -256,29 +259,16 @@ cat > $1.C << EOF
 #include "TROOT.h"
 #include "TCanvas.h"
 #include "TH1F.h"
+#include "TH2F.h"
 #include "CrateInfo.h"
 #include "BoardInfo.h"
 #include "utility.h"
+#include "TMath.h"
+#include "TStyle.h"
 
 int $1(const char* datadir,const char* outfile)
 {
-  //
-  TString label_location[2]={"Down","Up"};
-  TString label_direction[3]={"X","Y","U"};
-/*
-  //define histogram
-  std::vector<TH1F*> histrepo[2];
-  TH1* htemp;
-  for(int i=0;i<2;i++){
-    for(int j=0;j<3;j++){
-      htemp=(TH1*)gROOT->FindObject("h"+label_direction[j]+"_"+label_location[i]+"_"+"multihit");
-      if(htemp)	{
-	delete htemp;
-      }
-      histrepo[i].push_back(new TH1F("h"+label_direction[j]+"_"+label_location[i]+"_"+"multihit",label_direction[j]+"_"+label_location[i]+"_"+"multihit",11,-0.5,10.5));
-    }
-  }
-*/
+  gStyle->SetOptStat(111111);
   //
   TString file_data=TString(datadir)+"/"+outfile;  
   TFile* file_out=new TFile(file_data,"update");
@@ -375,21 +365,8 @@ int $1(const char* datadir,const char* outfile)
     dir_hist=file_out->GetDirectory("merge/histogram");
   }
   dir_hist->cd();
-  //
-  const Int_t nx=1,ny=1;
-  TCanvas *can = (TCanvas*) gROOT->FindObject("can");
-  if(can) delete can;
-  can=new TCanvas("can","can",300*nx,300*ny);
-  can->Divide(nx,ny,0,0,3);
-  for(int i=0;i<ny;i++){
-    for(int j=0;j<nx;j++){
-      can->cd(nx*i+j+1);
-      /*
-      histrepo[i][j]->DrawCopy();
-      histrepo[i][j]->Write(0,TObject::kOverwrite);
-      */
-    }
-  }
+  // drawing 
+  
   //
   delete file_out;
   

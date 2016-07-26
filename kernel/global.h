@@ -82,6 +82,14 @@ namespace Encoding {
       direction = (encoded_id>>16)&0xF;
       index = encoded_id&0xFFFF;
     }
+
+    inline Bool_t IsChannelValid(UInt_t encoded_id){
+      UChar_t type=Encoding::DecodeType(encoded_id);
+      if(type == 0xFF){
+        return false;
+      }
+      return true;
+    }
 }
 //
 const int g_range_precision=524288;//2^19,the maximum ADC value of high resolution mode, the unit is 25us/256
@@ -89,6 +97,8 @@ const int g_range_highprecision=2097152;//2^21, the maximum ADC value of very hi
 const int g_range_bunchid=4096;
 const int g_range_eventid=4096;
 
+const double g_timeunit_precision=25000./256;
+const double g_timeunit_highprecision=25000./256/4;
 //
 const int g_mwdc_location=2;
 const int g_mwdc_wireplane=3;

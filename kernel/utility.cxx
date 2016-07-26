@@ -3604,4 +3604,19 @@ namespace Utility
 	return flag_syn;
   }
 
+  Double_t calc_starttime(Int_t* timetag,Double_t v_eff)
+  {
+    Double_t a=TMath::Sqrt(2)/2*82.5;//half diagonal length
+    // Double_t v_eff=15;//light effective velocity 15 cm/ns
+    Double_t unit=25./256/4;// hptdc least bin
+    Double_t starttime,tmptime[4];
+    for(int i=0;i<4;i++){
+      tmptime[i]=timetag[i]*unit;
+    }
+
+    starttime = TMath::Mean(4,tmptime) + v_eff/16/a*(TMath::Power(tmptime[0]-tmptime[2],2)+TMath::Power(tmptime[1]-tmptime[3],2));
+    
+    return starttime;
+  }
+
 }

@@ -71,5 +71,7 @@ namespace Utility {
   int print_info_ungrouped(const char* datadir, const char* rootfile,const char* logfile,int bunchid_diff=1,const char* prefix="fuck",const char* suffix=".at1");
   int check_ungrouped(const char* datadir,const char* outfile,const char* configdir=0);
   int merge_hptdc_ungrouped(const char* datadir,const char* outfile,const char* configdir=0);
+
+  Double_t calc_starttime(Int_t* timetag,Double_t v_eff=15);
 }
 #endif // _Utility_h_
