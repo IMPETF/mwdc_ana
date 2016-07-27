@@ -6,4 +6,6 @@
 #pragma link C++ enum EDirection;
 #pragma link C++ class std::vector<int>+;
 #pragma link C++ class std::map<UInt_t,std::vector<int> >+;
+#pragma link C++ global g_range_highprecision;
+#pragma link C++ global g_range_precision;
 #endif

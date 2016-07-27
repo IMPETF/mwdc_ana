@@ -24,4 +24,7 @@ gROOT->ProcessLine(".L ana_position_resolution.C+");
 gROOT->ProcessLine(".L ana_batch.C+");
 //
 printf("Load MWDC analysis library!\n");
+
+gStyle->SetOptStat(111111);
+
 }

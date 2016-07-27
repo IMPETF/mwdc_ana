@@ -3610,6 +3610,20 @@ namespace Utility
     // Double_t v_eff=15;//light effective velocity 15 cm/ns
     Double_t unit=25./256/4;// hptdc least bin
     Double_t starttime,tmptime[4];
+
+    Int_t limit=g_range_highprecision/2;
+    Int_t index[4];
+    TMath::Sort(4,timetag,index,false);//increasing order
+    if((timetag[index[3]]-timetag[index[0]])> limit){
+      timetag[index[0]]+=g_range_highprecision;
+      if((timetag[index[3]]-timetag[index[1]]) > limit){
+        timetag[index[1]]+=g_range_highprecision;
+        if((timetag[index[3]]-timetag[index[2]]) > limit){
+          timetag[index[2]]+=g_range_highprecision;
+        }
+      }
+    }
+
     for(int i=0;i<4;i++){
       tmptime[i]=timetag[i]*unit;
     }

@@ -110,4 +110,5 @@ const int g_tof_wireindex=4;
 const char g_str_location[2][10]={"Down","Up"};
 const char g_str_plane[3][10]={"X","Y","U"};
 
+const UInt_t g_invalid_channel=Encoding::Encode(0xFF,0,0,0);
 #endif // _global_h_
