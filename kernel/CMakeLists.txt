@@ -24,6 +24,7 @@ ROOT_LINKER_LIBRARY(mwdc global.h global_Dict.cxx BoardInfo.h BoardInfo_Dict.cxx
 		    utility_Dict.cxx utility.cxx
 		    GeometryInfo_Dict.cxx GeometryInfo.cxx
 		    DriftInfo_Dict.cxx DriftInfo.cxx
+		    TrackFit.h
 		    LIBRARIES Core Cint RIO Hist Gpad Tree Rint MathCore)
 		    
 #-------------------------------------------------------

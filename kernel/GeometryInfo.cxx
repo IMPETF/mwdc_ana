@@ -24,44 +24,44 @@ void GeometryInfo::Init()
 	InitDownZ();	
 }
 
-void GeometryInfo::GetPoint(UInt_t gid,TVector3& point)
+TVector3 GeometryInfo::GetPoint(UInt_t gid) const
 {
-	std::map<UInt_t, TVector3>::iterator it;
+	std::map<UInt_t, TVector3>::const_iterator it;
 	it=fPointMap.find(gid);
 	if(it!=fPointMap.end())
-		point=fPointMap[gid];
+		return it->second;
 	else
 		exit;
 }
 
-void GeometryInfo::GetDirection(UInt_t gid, TVector3& direction)
+TVector3 GeometryInfo::GetDirection(UInt_t gid) const
 {
-	std::map<UInt_t, TVector3>::iterator it;
+	std::map<UInt_t, TVector3>::const_iterator it;
 	it=fDirectionMap.find(gid);
 	if(it!=fDirectionMap.end())
-		direction=fDirectionMap[gid];
+		return it->second;
 	else
 		exit;
 }
 
-TVector3 GeometryInfo::GetPoint(UChar_t location,UChar_t direction,UShort_t index)
+TVector3 GeometryInfo::GetPoint(UChar_t location,UChar_t direction,UShort_t index) const
 {
 	UInt_t gid=Encoding::Encode(EMWDC,location,direction,index);
-	std::map<UInt_t, TVector3>::iterator it;
+	std::map<UInt_t, TVector3>::const_iterator it;
 	it=fPointMap.find(gid);
 	if(it!=fPointMap.end())
-		return fPointMap[gid];
+		return it->second;
 	else
 		exit;
 }
 
-TVector3 GeometryInfo::GetDirection(UChar_t location,UChar_t direction,UShort_t index)
+TVector3 GeometryInfo::GetDirection(UChar_t location,UChar_t direction,UShort_t index) const
 {
 	UInt_t gid=Encoding::Encode(EMWDC,location,direction,index);
-	std::map<UInt_t, TVector3>::iterator it;
+	std::map<UInt_t, TVector3>::const_iterator it;
 	it=fDirectionMap.find(gid);
 	if(it!=fDirectionMap.end())
-		return fDirectionMap[gid];
+		return it->second;
 	else
 		exit;
 }

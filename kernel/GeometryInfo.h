@@ -7,10 +7,10 @@ public:
 	GeometryInfo();
 	~GeometryInfo();
 
-	void GetPoint(UInt_t gid,TVector3& point);
-	void GetDirection(UInt_t gid, TVector3& direction);
-	TVector3 GetPoint(UChar_t location,UChar_t direction,UShort_t index);
-	TVector3 GetDirection(UChar_t location,UChar_t direction,UShort_t index);
+	TVector3 GetPoint(UInt_t gid) const;
+	TVector3 GetDirection(UInt_t gid) const;
+	TVector3 GetPoint(UChar_t location,UChar_t direction,UShort_t index) const;
+	TVector3 GetDirection(UChar_t location,UChar_t direction,UShort_t index) const;
 
 protected:
 	void Init();
