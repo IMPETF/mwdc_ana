@@ -9,18 +9,27 @@
 #include "TMath.h"
 #include "TStyle.h"
 #include "TH2F.h"
+#include "DriftInfo.h"
 
 void draw_drifttime(const char* datadir,const char* outfile)
 {
 	gStyle->SetOptStat(111111);
 	// 
-	TH1F* h1d_minrising_drifttime_mwdc[g_mwdc_location][g_mwdc_wireplane];
-	TH1F* h1d_maxtot_drifttime_mwdc[g_mwdc_location][g_mwdc_wireplane];
+	TH1F* h1d_minrising_drifttime_mwdc_sum[g_mwdc_location][g_mwdc_wireplane];
 	for(int l=0;l<g_mwdc_location;l++){
 	  for(int p=0;p<g_mwdc_wireplane;p++){
-	  	h1d_minrising_drifttime_mwdc[l][p]=new TH1F(Form("h1d_%s_%s_minrising_drifttime",g_str_location[l],g_str_plane[p]),Form("h1d_%s_%s_minrising_drifttime",g_str_location[l],g_str_plane[p]),600,-100.5,499.5);
-	  	h1d_maxtot_drifttime_mwdc[l][p]=new TH1F(Form("h1d_%s_%s_maxtot_drifttime",g_str_location[l],g_str_plane[p]),Form("h1d_%s_%s_maxtot_drifttime",g_str_location[l],g_str_plane[p]),600,-100.5,499.5);
+	  	h1d_minrising_drifttime_mwdc_sum[l][p]=new TH1F(Form("h1d_%s_%s_minrising_drifttime",g_str_location[l],g_str_plane[p]),Form("h1d_%s_%s_minrising_drifttime",g_str_location[l],g_str_plane[p]),600,-100.5,499.5);
+	  	h1d_minrising_drifttime_mwdc_sum[l][p]=new TH1F(Form("h1d_%s_%s_maxtot_drifttime",g_str_location[l],g_str_plane[p]),Form("h1d_%s_%s_maxtot_drifttime",g_str_location[l],g_str_plane[p]),600,-100.5,499.5);
 	  }
+	}
+	std::map<UInt_t,TH1F*> h1d_minrising_drifttime_mwdc_single;
+	for(int l=0;l<g_mwdc_location;l++){
+	  for(int p=0;p<g_mwdc_wireplane;p++){
+	      for(int w=0;w<g_mwdc_wireindex[p];w++){
+	          UInt_t gid=Encoding::Encode(EMWDC,l,p,w);
+	          h1d_minrising_drifttime_mwdc_single[gid]=new TH1F(Form("h1d_minrising_drifttime_mwdc_%s_%s_%d",g_str_location[l],g_str_plane[p],w+1),Form("h1d_minrising_drifttime_mwdc_%s_%s_%d",g_str_location[l],g_str_plane[p],w+1),600,-100.5,499.5);
+	        }
+	    }
 	}
 	// 
 	TString file_data=TString(datadir)+"/"+outfile;  
@@ -31,7 +40,7 @@ void draw_drifttime(const char* datadir,const char* outfile)
 	}
 
 	TTree* tree_maxtot_drifttime,*tree_minrising_drifttime;
-	file_drifttime->GetObject("maxtot_drifttime/maxtot_drifttime",tree_maxtot_drifttime);
+	// file_drifttime->GetObject("maxtot_drifttime/maxtot_drifttime",tree_maxtot_drifttime);
 	file_drifttime->GetObject("minrising_drifttime/minrising_drifttime",tree_minrising_drifttime);
 
 	UInt_t maxtot_gid[g_mwdc_location][g_mwdc_wireplane],minrising_gid[g_mwdc_location][g_mwdc_wireplane];
@@ -41,14 +50,18 @@ void draw_drifttime(const char* datadir,const char* outfile)
 	Double_t tot_limit=2775;// if a channel has only rising edge and no falling edge, we think its tot is beyond the limit.
 	Double_t drifttime_limt=3000;
 	                           // thus assign this value as the tot value of this channel. It's kind of arbitrarily.
-	tree_maxtot_drifttime->SetBranchAddress("gid",maxtot_gid);
-	tree_maxtot_drifttime->SetBranchAddress("tot",maxtot_tot);
-	tree_maxtot_drifttime->SetBranchAddress("drifttime",maxtot_drifttime);
+	// tree_maxtot_drifttime->SetBranchAddress("gid",maxtot_gid);
+	// tree_maxtot_drifttime->SetBranchAddress("tot",maxtot_tot);
+	// tree_maxtot_drifttime->SetBranchAddress("drifttime",maxtot_drifttime);
 
 	tree_minrising_drifttime->SetBranchAddress("gid",minrising_gid);
 	tree_minrising_drifttime->SetBranchAddress("tot",minrising_tot);
 	tree_minrising_drifttime->SetBranchAddress("drifttime",minrising_drifttime);
 	
+	DriftInfo* driftinfo;
+	file_drifttime->GetObject("minrising_drifttime/init_edge_fitting_result",driftinfo);
+	assert(driftinfo);
+
 	// broken wires
 	UInt_t brokenwire_gid[11];
 	// DownX
@@ -68,6 +81,7 @@ void draw_drifttime(const char* datadir,const char* outfile)
 	brokenwire_gid[11]=Encoding::Encode(EMWDC,EDOWN,EU,96);
 
 	Bool_t maxtot_brokenwireflag,minrising_brokenwireflag;
+	Double_t t0,T0,tm,Tm;
 	// event loop
 	Int_t entries=tree_minrising_drifttime->GetEntries();
 	for(int i=0;i<entries;i++){
@@ -76,31 +90,36 @@ void draw_drifttime(const char* datadir,const char* outfile)
 		}
 
 		tree_minrising_drifttime->GetEntry(i);
-		tree_maxtot_drifttime->GetEntry(i);
+		// tree_maxtot_drifttime->GetEntry(i);
 		// 
 		for(int l=0;l<g_mwdc_location;l++){
 		  for(int p=0;p<g_mwdc_wireplane;p++){
+		  	t0=driftinfo->Get_t0(minrising_gid[l][p]);
+		  	T0=driftinfo->Get_T0(minrising_gid[l][p]);
+		  	tm=driftinfo->Get_tm(minrising_gid[l][p]);
+		  	Tm=driftinfo->Get_Tm(minrising_gid[l][p]);
 		  	if(l==1){
-		    	if(Encoding::IsChannelValid(maxtot_gid[l][p])){
-		   			h1d_maxtot_drifttime_mwdc[l][p]->Fill(maxtot_drifttime[l][p]);
-		    	}
+		    	// if(Encoding::IsChannelValid(maxtot_gid[l][p])){
+		   		// 	h1d_maxtot_drifttime_mwdc[l][p]->Fill(maxtot_drifttime[l][p]);
+		    	// }
 		    	if(Encoding::IsChannelValid(minrising_gid[l][p])){
-		    		h1d_minrising_drifttime_mwdc[l][p]->Fill(minrising_drifttime[l][p]);
+		    		h1d_minrising_drifttime_mwdc_sum[l][p]->Fill(minrising_drifttime[l][p] - (t0-2*T0));
+		    		h1d_minrising_drifttime_mwdc_single[minrising_gid[l][p]]->Fill(minrising_drifttime[l][p] - (t0-2*T0));
 		    	}
 			}
 			else{
-				if(Encoding::IsChannelValid(maxtot_gid[l][p])){
-		   			maxtot_brokenwireflag=false;
-		   			for(int brokenwire_index=0;brokenwire_index<11;brokenwire_index++){
-		   				if(maxtot_gid[l][p] == brokenwire_gid[brokenwire_index]){
-		   					maxtot_brokenwireflag=true;
-		   					break;
-		   				}
-		   			}
-		   			if(!maxtot_brokenwireflag){	
-		   				h1d_maxtot_drifttime_mwdc[l][p]->Fill(maxtot_drifttime[l][p]);
-		   			}
-		    	}
+				// if(Encoding::IsChannelValid(maxtot_gid[l][p])){
+		  //  			maxtot_brokenwireflag=false;
+		  //  			for(int brokenwire_index=0;brokenwire_index<11;brokenwire_index++){
+		  //  				if(maxtot_gid[l][p] == brokenwire_gid[brokenwire_index]){
+		  //  					maxtot_brokenwireflag=true;
+		  //  					break;
+		  //  				}
+		  //  			}
+		  //  			if(!maxtot_brokenwireflag){	
+		  //  				h1d_maxtot_drifttime_mwdc[l][p]->Fill(maxtot_drifttime[l][p]);
+		  //  			}
+		  //   	}
 		    	if(Encoding::IsChannelValid(minrising_gid[l][p])){
 		    		minrising_brokenwireflag=false;
 		    		for(int brokenwire_index=0;brokenwire_index<11;brokenwire_index++){
@@ -110,7 +129,8 @@ void draw_drifttime(const char* datadir,const char* outfile)
 		    			}
 		    		}
 		    		if(!minrising_brokenwireflag){
-						h1d_minrising_drifttime_mwdc[l][p]->Fill(minrising_drifttime[l][p]);		    			
+						h1d_minrising_drifttime_mwdc_sum[l][p]->Fill(minrising_drifttime[l][p] - (t0-2*T0));		    			
+		    			h1d_minrising_drifttime_mwdc_single[minrising_gid[l][p]]->Fill(minrising_drifttime[l][p] - (t0-2*T0));
 		    		}
 		    	}
 			}
@@ -120,21 +140,21 @@ void draw_drifttime(const char* datadir,const char* outfile)
 	printf("%d events processed totally\n",entries);
 
 	// save histograms
-	TDirectory* dir_maxtot=file_drifttime->GetDirectory("maxtot_drifttime");
-	if(!dir_maxtot){
-	  dir_maxtot=file_drifttime->mkdir("maxtot_drifttime");
-	  if(!dir_maxtot){
-	    printf("error!can't mkdir \"maxtot_drifttime\" in %s\n",file_data.Data());
-	    exit(1);
-	  }
-	  dir_maxtot=file_drifttime->GetDirectory("maxtot_drifttime");
-	}
-	dir_maxtot->cd();
-	for(int l=0;l<g_mwdc_location;l++){
-	  for(int p=0;p<g_mwdc_wireplane;p++){
-	  	h1d_maxtot_drifttime_mwdc[l][p]->Write(0,TObject::kOverwrite);
-	  }
-	}
+	// TDirectory* dir_maxtot=file_drifttime->GetDirectory("maxtot_drifttime");
+	// if(!dir_maxtot){
+	//   dir_maxtot=file_drifttime->mkdir("maxtot_drifttime");
+	//   if(!dir_maxtot){
+	//     printf("error!can't mkdir \"maxtot_drifttime\" in %s\n",file_data.Data());
+	//     exit(1);
+	//   }
+	//   dir_maxtot=file_drifttime->GetDirectory("maxtot_drifttime");
+	// }
+	// dir_maxtot->cd();
+	// for(int l=0;l<g_mwdc_location;l++){
+	//   for(int p=0;p<g_mwdc_wireplane;p++){
+	//   	h1d_maxtot_drifttime_mwdc[l][p]->Write(0,TObject::kOverwrite);
+	//   }
+	// }
 
 	TDirectory* dir_minrising=file_drifttime->GetDirectory("minrising_drifttime");
 	if(!dir_minrising){
@@ -148,14 +168,34 @@ void draw_drifttime(const char* datadir,const char* outfile)
 	dir_minrising->cd();
 	for(int l=0;l<g_mwdc_location;l++){
 	  for(int p=0;p<g_mwdc_wireplane;p++){
-	  	h1d_minrising_drifttime_mwdc[l][p]->Write(0,TObject::kOverwrite);
+	  	h1d_minrising_drifttime_mwdc_sum[l][p]->Write(0,TObject::kOverwrite);
 
 	  	TCanvas* c1=new TCanvas(Form("c%s_%s_minrising_drifttime",g_str_location[l],g_str_plane[p]),Form("c%s_%s_minrising_drifttime",g_str_location[l],g_str_plane[p]));
 	  	c1->SetLogy();
-	  	h1d_minrising_drifttime_mwdc[l][p]->Draw();
+	  	h1d_minrising_drifttime_mwdc_sum[l][p]->Draw();
 	  }
 	}
 
+	TDirectory* dir_minrising_hist=dir_minrising->GetDirectory("hist_t0_corrected");
+	if(!dir_minrising_hist){
+	  dir_minrising_hist=dir_minrising->mkdir("hist_t0_corrected");
+	  if(!dir_minrising_hist){
+	    printf("error!can't mkdir \"minrising_drifttime/hist_t0_corrected\"\n");
+	    exit(1);
+	  }
+	  dir_minrising_hist=dir_minrising->GetDirectory("hist_t0_corrected");
+	}
+	dir_minrising_hist->cd();
+	for(int l=0;l<g_mwdc_location;l++){
+	  for(int p=0;p<g_mwdc_wireplane;p++){
+	      for(int w=0;w<g_mwdc_wireindex[p];w++){
+	          UInt_t gid=Encoding::Encode(EMWDC,l,p,w);
+	          h1d_minrising_drifttime_mwdc_single[gid]->Write(0,TObject::kOverwrite);
+	        }
+	    }
+	}
+	
 	// 
+	delete driftinfo;
 	delete file_drifttime;
 }

@@ -13,6 +13,7 @@
 #include "TLine.h"
 #include "TH2F.h"
 #include "TGraph.h"
+#include "DriftInfo.h"
 
 TF1* fit_rising(TH1* hinput,const char* options,double low=-30,double high=40,Int_t type=0)
 {
@@ -227,6 +228,7 @@ void fit_drifttime_edge(const char* datadir,const char* outfile)
 	Bool_t minrising_brokenwireflag;
 	// 
 	TF1* ffit_rising,*ffit_falling;
+	DriftInfo* driftinfo=new DriftInfo();
 
 	TDirectory* dir_hist=file_drifttime->GetDirectory("minrising_drifttime/histogram");
 	dir_hist->cd();
@@ -243,6 +245,7 @@ void fit_drifttime_edge(const char* datadir,const char* outfile)
 	      	}
 	      	if(!minrising_brokenwireflag){
 	      		ffit_rising=fit_rising(h1d_minrising_drifttime_mwdc_single[gid],"QB+",-30,40,1);
+	      		driftinfo->Insert_frising(gid,ffit_rising);
 	      		for(int paramindex=0;paramindex<rising_nparams;paramindex++){
 	      			h1d_rising_param[paramindex]->Fill(ffit_rising->GetParameter(paramindex));
 	      			
@@ -250,6 +253,7 @@ void fit_drifttime_edge(const char* datadir,const char* outfile)
 	      		h1d_drifttime_t0_minus_2T0->Fill(ffit_rising->GetParameter("t0")-2*ffit_rising->GetParameter("T0"));
 	      		// 
 	      		ffit_falling=fit_falling(h1d_minrising_drifttime_mwdc_single[gid],"QB+",80,150,0);
+	      		driftinfo->Insert_ffalling(gid,ffit_falling);
 	      		for(int paramindex=0;paramindex<falling_nparams;paramindex++){
 	      			h1d_falling_param[paramindex]->Fill(ffit_falling->GetParameter(paramindex));
 	      		}
@@ -268,41 +272,41 @@ void fit_drifttime_edge(const char* datadir,const char* outfile)
 	  }
 	}
 
-	//
-	Double_t t0,tm,Tm,T0;
-	Int_t bin_t0,bin_tm; 
-	TCanvas* c[g_mwdc_location][g_mwdc_wireplane];
-	TCanvas* c1;
+	// //
+	// Double_t t0,tm,Tm,T0;
+	// Int_t bin_t0,bin_tm; 
+	// TCanvas* c[g_mwdc_location][g_mwdc_wireplane];
+	// TCanvas* c1;
 
-	for(int l=0;l<g_mwdc_location;l++){
-	  for(int p=0;p<g_mwdc_wireplane;p++){
-	  	ffit_rising=fit_rising(h1d_minrising_drifttime_mwdc[l][p],"QB+",-30,40,1);
-	  	ffit_falling=fit_falling(h1d_minrising_drifttime_mwdc[l][p],"QB+",80,150,0);
-	  	c1=(TCanvas*)gROOT->FindObject("c1");
-		delete c1;
-	  	// 
-	  	// c[l][p]=new TCanvas(Form("c%s_%s_minrising_drifttime",g_str_location[l],g_str_plane[p]),Form("c%s_%s_minrising_drifttime",g_str_location[l],g_str_plane[p]));
-	  	// c[l][p]->cd();
-	  	// h1d_minrising_drifttime_mwdc[l][p]->Draw();
-	  	h1d_minrising_drifttime_mwdc[l][p]->Print();
+	// for(int l=0;l<g_mwdc_location;l++){
+	//   for(int p=0;p<g_mwdc_wireplane;p++){
+	//   	ffit_rising=fit_rising(h1d_minrising_drifttime_mwdc[l][p],"QB+",-30,40,1);
+	//   	ffit_falling=fit_falling(h1d_minrising_drifttime_mwdc[l][p],"QB+",80,150,0);
+	//   	c1=(TCanvas*)gROOT->FindObject("c1");
+	// 	delete c1;
+	//   	// 
+	//   	// c[l][p]=new TCanvas(Form("c%s_%s_minrising_drifttime",g_str_location[l],g_str_plane[p]),Form("c%s_%s_minrising_drifttime",g_str_location[l],g_str_plane[p]));
+	//   	// c[l][p]->cd();
+	//   	// h1d_minrising_drifttime_mwdc[l][p]->Draw();
+	//   	h1d_minrising_drifttime_mwdc[l][p]->Print();
 
-	  	t0=ffit_rising->GetParameter("t0");T0=ffit_rising->GetParameter("T0");tm=ffit_falling->GetParameter("tm");Tm=ffit_falling->GetParameter("Tm");
-	  	bin_t0=h1d_minrising_drifttime_mwdc[l][p]->FindBin(t0);bin_tm=h1d_minrising_drifttime_mwdc[l][p]->FindBin(tm);
-	  	printf("MWDC_%s_%s: t0=%.2f, tm=%.2f, Tm=%.2f, tm-t0=%.2f\n",g_str_location[l],g_str_plane[p],t0,tm,Tm,tm-t0);
-	  	printf("\tevent_proportion: <t0=%.4f, tm-t0=%.4f, >tm=%.4f\n", h1d_minrising_drifttime_mwdc[l][p]->Integral(0,bin_t0-1)/h1d_minrising_drifttime_mwdc[l][p]->Integral(),h1d_minrising_drifttime_mwdc[l][p]->Integral(bin_t0,bin_tm)/h1d_minrising_drifttime_mwdc[l][p]->Integral(),h1d_minrising_drifttime_mwdc[l][p]->Integral(bin_tm+1,600)/h1d_minrising_drifttime_mwdc[l][p]->Integral());
+	//   	t0=ffit_rising->GetParameter("t0");T0=ffit_rising->GetParameter("T0");tm=ffit_falling->GetParameter("tm");Tm=ffit_falling->GetParameter("Tm");
+	//   	bin_t0=h1d_minrising_drifttime_mwdc[l][p]->FindBin(t0);bin_tm=h1d_minrising_drifttime_mwdc[l][p]->FindBin(tm);
+	//   	printf("MWDC_%s_%s: t0=%.2f, tm=%.2f, Tm=%.2f, tm-t0=%.2f\n",g_str_location[l],g_str_plane[p],t0,tm,Tm,tm-t0);
+	//   	printf("\tevent_proportion: <t0=%.4f, tm-t0=%.4f, >tm=%.4f\n", h1d_minrising_drifttime_mwdc[l][p]->Integral(0,bin_t0-1)/h1d_minrising_drifttime_mwdc[l][p]->Integral(),h1d_minrising_drifttime_mwdc[l][p]->Integral(bin_t0,bin_tm)/h1d_minrising_drifttime_mwdc[l][p]->Integral(),h1d_minrising_drifttime_mwdc[l][p]->Integral(bin_tm+1,600)/h1d_minrising_drifttime_mwdc[l][p]->Integral());
 
-	  	bin_t0=h1d_minrising_drifttime_mwdc[l][p]->FindBin(t0-2*T0);bin_tm=h1d_minrising_drifttime_mwdc[l][p]->FindBin(tm+2*Tm);
-	  	printf("\tevent_proportion: <t0-2T0=%.4f, tm-t0=%.4f, >tm+2Tm=%.4f\n", h1d_minrising_drifttime_mwdc[l][p]->Integral(0,bin_t0-1)/h1d_minrising_drifttime_mwdc[l][p]->Integral(),h1d_minrising_drifttime_mwdc[l][p]->Integral(bin_t0,bin_tm)/h1d_minrising_drifttime_mwdc[l][p]->Integral(),h1d_minrising_drifttime_mwdc[l][p]->Integral(bin_tm+1,600)/h1d_minrising_drifttime_mwdc[l][p]->Integral());
-	  	// TLine* line_t0=new TLine(t0,0,t0,ffit_rising->GetParameter(1));
-	  	// line_t0->SetLineWidth(2);
-	  	// line_t0->SetLineColor(kBlack);
-	  	// line_t0->DrawClone("same");
-	  	// TLine* line_tm=new TLine(tm,0,tm,ffit_falling->GetParameter(2));
-	  	// line_tm->SetLineWidth(2);
-	  	// line_tm->SetLineColor(kGreen);
-	  	// line_tm->DrawClone("same");
-	  }
-	}
+	//   	bin_t0=h1d_minrising_drifttime_mwdc[l][p]->FindBin(t0-2*T0);bin_tm=h1d_minrising_drifttime_mwdc[l][p]->FindBin(tm+2*Tm);
+	//   	printf("\tevent_proportion: <t0-2T0=%.4f, tm-t0=%.4f, >tm+2Tm=%.4f\n", h1d_minrising_drifttime_mwdc[l][p]->Integral(0,bin_t0-1)/h1d_minrising_drifttime_mwdc[l][p]->Integral(),h1d_minrising_drifttime_mwdc[l][p]->Integral(bin_t0,bin_tm)/h1d_minrising_drifttime_mwdc[l][p]->Integral(),h1d_minrising_drifttime_mwdc[l][p]->Integral(bin_tm+1,600)/h1d_minrising_drifttime_mwdc[l][p]->Integral());
+	//   	// TLine* line_t0=new TLine(t0,0,t0,ffit_rising->GetParameter(1));
+	//   	// line_t0->SetLineWidth(2);
+	//   	// line_t0->SetLineColor(kBlack);
+	//   	// line_t0->DrawClone("same");
+	//   	// TLine* line_tm=new TLine(tm,0,tm,ffit_falling->GetParameter(2));
+	//   	// line_tm->SetLineWidth(2);
+	//   	// line_tm->SetLineColor(kGreen);
+	//   	// line_tm->DrawClone("same");
+	//   }
+	// }
 
 	// save param histogram
 	TDirectory* dir_drift=file_drifttime->GetDirectory("minrising_drifttime");
@@ -321,6 +325,9 @@ void fit_drifttime_edge(const char* datadir,const char* outfile)
 	h2d_t0_vs_tm_new->Write(0,TObject::kOverwrite);
 	h2d_location_vs_tm->Write(0,TObject::kOverwrite);
 	h2d_location_vs_t0->Write(0,TObject::kOverwrite);
+	driftinfo->Write(0,TObject::kOverwrite);
+
 	// 
+	delete driftinfo;
 	delete file_drifttime;
 }

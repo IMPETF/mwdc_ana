@@ -17,11 +17,13 @@ ROOT_GENERATE_DICTIONARY(BoardInfo_Dict ${CMAKE_CURRENT_SOURCE_DIR}/BoardInfo.h 
 ROOT_GENERATE_DICTIONARY(CrateInfo_Dict ${CMAKE_CURRENT_SOURCE_DIR}/CrateInfo.h LINKDEF CrateInfo_LinkDef.h)
 ROOT_GENERATE_DICTIONARY(utility_Dict ${CMAKE_CURRENT_SOURCE_DIR}/utility.h LINKDEF utility_LinkDef.h)
 ROOT_GENERATE_DICTIONARY(GeometryInfo_Dict ${CMAKE_CURRENT_SOURCE_DIR}/GeometryInfo.h LINKDEF GeometryInfo_LinkDef.h)
+ROOT_GENERATE_DICTIONARY(DriftInfo_Dict ${CMAKE_CURRENT_SOURCE_DIR}/DriftInfo.h LINKDEF DriftInfo_LinkDef.h)
 ROOT_LINKER_LIBRARY(mwdc global.h global_Dict.cxx BoardInfo.h BoardInfo_Dict.cxx 
 		    CrateInfo.h CrateInfo_Dict.cxx
 		    jsoncpp.cpp
 		    utility_Dict.cxx utility.cxx
 		    GeometryInfo_Dict.cxx GeometryInfo.cxx
+		    DriftInfo_Dict.cxx DriftInfo.cxx
 		    LIBRARIES Core Cint RIO Hist Gpad Tree Rint MathCore)
 		    
 #-------------------------------------------------------
