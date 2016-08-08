@@ -30,6 +30,7 @@ public:
 	}
 	~Line() {}
 	
+
 	void Reset(const double* p){
 		fx0.SetXYZ(p[0],p[2],0);
 		fx1.SetXYZ(p[0]+p[1],p[2]+p[3],1);
@@ -38,8 +39,8 @@ public:
 	}
 
 	void Reset(TVector3 point,TVector3 direction,Bool_t flag=true){
-		printf("\nin line\n");
-		point.Print();direction.Print();
+		// printf("\nin line\n");
+		// point.Print();direction.Print();
 		if(flag){
 			fx0=point;
 			fx1=fx0+direction;
@@ -49,6 +50,25 @@ public:
 			fx1=direction;
 		}
 		Standardize();
+		// fx0.Print();fdirection.Print();
+	}
+
+	void Reset_Unstandard(TVector3 point,TVector3 direction,Bool_t flag=true){//to represent wires, which are parrallel to the x-y plane
+		// printf("\nin line\n");
+		// point.Print();direction.Print();
+		if(flag){
+			fx0=point;
+			fx1=fx0+direction;
+			fdirection=direction;
+			funitdirection=fdirection.Unit();
+		}
+		else{
+			fx0=point;
+			fx1=direction;
+			fdirection=fx1-fx0;
+			funitdirection=fdirection.Unit();
+		}
+		// fx0.Print();fdirection.Print();
 	}
 
 	TVector3 GetPoint(Double_t t){
@@ -76,16 +96,31 @@ public:
 		return tmp.Cross(funitdirection).Mag2();
 	}
 
+	Bool_t IsParallel(Line line){
+		TVector3 direction=line.GetUnitDirection();
+		if(direction == funitdirection)
+			return true;
+		else
+			return false;
+	}
+
 	TVector3 Cross(Line line){
 		TVector3 dir= fdirection.Cross(line.GetUnitDirection());
 		return dir.Unit();
 	}
 
 	Double_t DistanceToLine(Line line){
-		TVector3 dir=Cross(line);
 
-		TVector3 tmp=line.GetPoint(1)-fx0;
-		return TMath::Abs(tmp*dir);
+		if(IsParallel(line)){
+			TVector3 tmp=line.GetPoint(1)-fx0;
+			TVector3 length=funitdirection.Cross(tmp);
+			return length.Mag();
+		}
+		else{
+			TVector3 dir=Cross(line);
+			TVector3 tmp=line.GetPoint(1)-fx0;
+			return TMath::Abs(tmp*dir);
+		}
 	}	
 
 private:
@@ -109,6 +144,8 @@ private:
 		fx1.SetXYZ(x1,y1,z1);
 		fdirection=fx1-fx0;
 		funitdirection=fdirection.Unit();
+
+		return;
 	}
 
 	TVector3 fx0;
@@ -132,16 +169,59 @@ public:
 	//  
 	void AddHit(UInt_t gid, Double_t distance){
 		fDistances[gid]=distance;
+		fHittedwires[gid]=Line();
+		fHittedwires[gid].Reset_Unstandard(fWirePositions.GetPoint(gid),fWirePositions.GetDirection(gid));
 	}
 
 	void Reset(){
 		fDistances.clear();
+		fHittedwires.clear();
+		fDistances_Fitted.clear();
+		fResiduals.clear();
+		// fFlag_Init=true;
+	}
+
+	void CalcResiduals(Line track){// residual = fitted - original
+		fDistances_Fitted.clear();
+		fResiduals.clear();
+		// 
+		std::map<UInt_t,Line>::const_iterator it;
+		Double_t tmpdistance;
+		for(it = fHittedwires.begin();it!=fHittedwires.end();++it){
+			tmpdistance=track.DistanceToLine(it->second);
+			fDistances_Fitted[it->first]=tmpdistance;
+			fResiduals[it->first]=tmpdistance- fDistances[it->first];
+		}
+	}
+
+	void CalcResiduals(Double_t *p){
+		Line track(p);
+		// 
+		fDistances_Fitted.clear();
+		fResiduals.clear();
+		// 
+		std::map<UInt_t,Line>::const_iterator it;
+		Double_t tmpdistance;
+		for(it = fHittedwires.begin();it!=fHittedwires.end();++it){
+			tmpdistance=track.DistanceToLine(it->second);
+			fDistances_Fitted[it->first]=tmpdistance;
+			fResiduals[it->first]=tmpdistance- fDistances[it->first];
+		}
+	}
+
+	std::map<UInt_t, Double_t> GetResiduals(){
+		return fResiduals;
+	}
+
+	std::map<UInt_t, Double_t> GetFittedDistances(){
+		return fDistances_Fitted;
 	}
 
 private:
 	double DoEval(const double * p) const {
 		Line track(p);
-		Line wire;
+		// printf("in LineFit\n");
+
 		// 
 		Double_t sum=0;
 		Int_t size=fDistances.size();
@@ -153,20 +233,30 @@ private:
 		for(it = fDistances.begin();it!=fDistances.end();++it){
 			gid=it->first;distance=it->second;
 			// 
-			wire.Reset(fWirePositions.GetPoint(gid),fWirePositions.GetDirection(gid));
-			// 
-			tmpdistance=track.DistanceToLine(wire);
+			tmpdistance=track.DistanceToLine(fHittedwires.at(gid));
 
 			sum+=TMath::Power(tmpdistance-distance,2);
+			// printf("%.4f(%.4f)\n", tmpdistance,distance);
 		}
 
+		// if(fFlag_Init){
+		// 	printf("Init total final distance square: %.4f\n", sum);
+		// 	fFlag_Init=false;
+		// }
 		return sum;
 	}
 
 
 private:
+	Line track;
+
+	std::map<UInt_t, Line>     fHittedwires;
 	std::map<UInt_t, Double_t> fDistances;//gid -> drift_distance
+	std::map<UInt_t, Double_t> fDistances_Fitted;
+	std::map<UInt_t, Double_t> fResiduals;
+
 	GeometryInfo               fWirePositions;
+	// bool 					   fFlag_Init;
 };
 
 }

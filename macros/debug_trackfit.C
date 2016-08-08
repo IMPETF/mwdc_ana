@@ -8,14 +8,32 @@
 #include "TMath.h"
 #include "TStyle.h"
 #include "TH2F.h"
+#include "TH1F.h"
 #include "DriftInfo.h"
 #include "TSpline.h"
 #include "TGraph.h"
+#include "TStopwatch.h"
 #include <Fit/Fitter.h>
 #include "global.h"
 
 int calib(const char* datadir,const char* outfile)
 {
+	TH2F* h2d_residuals[g_mwdc_location][g_mwdc_wireplane];
+	for(int l=0;l<g_mwdc_location;l++){
+		for(int p=0;p<g_mwdc_wireplane;p++){
+			h2d_residuals[l][p]=new TH2F(Form("h2d_%s_%s_residual",g_str_location[l],g_str_plane[p]),Form("h2d_%s_%s_residual",g_str_location[l],g_str_plane[p]),400,0,400,4000,0,8);
+		}
+	}
+
+	TH1F* h1d_fitteddistances[g_mwdc_location][g_mwdc_wireplane];
+	for(int l=0;l<g_mwdc_location;l++){
+		for(int p=0;p<g_mwdc_wireplane;p++){
+			h1d_fitteddistances[l][p]=new TH1F(Form("h1d_%s_%s_Init_Fitted_Distance",g_str_location[l],g_str_plane[p]),Form("h1d_%s_%s_Init_Fitted_Distance",g_str_location[l],g_str_plane[p]),200,0,50);
+		}
+	}
+	TH1F* h1d_init_distance_square=new TH1F("h1d_init_distance_square","h1d_init_distance_square",200,0,2000);
+	TH1F* h1d_final_distance_square=new TH1F("h1d_final_distance_square","h1d_final_distance_square",100,0,100);
+	// 
 	TString file_data=TString(datadir)+"/"+outfile;  
 	TFile* file_drifttime=new TFile(file_data,"update");
 	if(!file_drifttime){
@@ -84,16 +102,24 @@ int calib(const char* datadir,const char* outfile)
 
 	GeometryInfo gm_info;
 	Double_t p0_start[4];
+	const Double_t* p0_stop;
 	double p0_step=0.01;
 
 	TrackFit::LineFit linefit(gm_info);
 	TrackFit::Line init_track;
 	ROOT::Fit::Fitter  fitter;
 	ROOT::Fit::FitResult result;
+	std::map<UInt_t, Double_t> residuals;
+	std::map<UInt_t,Double_t>::const_iterator it;
 	// event loop
 	Int_t entries=tree_minrising_drifttime->GetEntries();
-	for(int i=0;i<10;i++){
-	// for(int i=0;i<entries;i++){
+	Int_t failed_evenum=0;
+	Int_t valid_evenum=0;
+
+	 TStopwatch timer;
+	 timer.Start();
+	// for(int i=0;i<10000;i++){
+	for(int i=0;i<entries;i++){
 		if(!((i+1)%5000)){
 		  printf("%d events analyzed\n",i+1);
 		}
@@ -124,6 +150,8 @@ int calib(const char* datadir,const char* outfile)
 		}
 
 		if(valid_event){
+			valid_evenum++;
+
 			linefit.Reset();
 			for(int l=0;l<g_mwdc_location;l++){
 			  for(int p=0;p<g_mwdc_wireplane;p++){
@@ -131,7 +159,7 @@ int calib(const char* datadir,const char* outfile)
 			  	T0=driftinfo->Get_T0(minrising_gid[l][p]);
 			  	// tm=driftinfo->Get_tm(minrising_gid[l][p]);
 			  	// Tm=driftinfo->Get_Tm(minrising_gid[l][p]);
-			  	minrising_drifttime[l][p]-=t0-2*T0;
+			  	minrising_drifttime[l][p]-=(t0-2*T0);
 			  	// 
 			  	linefit.AddHit(minrising_gid[l][p],rt_relation[l][p]->Eval(minrising_drifttime[l][p]));
 			  }
@@ -139,42 +167,105 @@ int calib(const char* datadir,const char* outfile)
 
 			// start parameters 
 			hitwireUpX=gm_info.GetPoint(minrising_gid[1][0]);
-			hitwireUpX.Print();
+			// hitwireUpX.Print();
 			hitwireUpY=gm_info.GetPoint(minrising_gid[1][1]);
-			hitwireUpY.Print();
+			// hitwireUpY.Print();
 			hitwireDownX=gm_info.GetPoint(minrising_gid[0][0]);
-			hitwireDownX.Print();
+			// hitwireDownX.Print();
 			hitwireDownY=gm_info.GetPoint(minrising_gid[0][1]);
-			hitwireDownY.Print();
+			// hitwireDownY.Print();
 
 			hitposUp.SetXYZ(hitwireUpY.X(),hitwireUpX.Y(),(hitwireUpY.Z()+hitwireUpX.Z())/2);
-			hitposUp.Print();
+			// hitposUp.Print();
 			hitposDown.SetXYZ(hitwireDownX.X(),hitwireDownY.Y(),(hitwireDownX.Z()+hitwireDownY.Z())/2);
-			hitposDown.Print();
+			// hitposDown.Print();
 			
 			init_track.Reset(hitposUp,hitposDown,false);
 			init_track.GetParameter(p0_start);
-
+			
+			linefit.CalcResiduals(p0_start);
+			residuals=linefit.GetResiduals();
+			for(it = residuals.begin();it!=residuals.end();++it){
+				UChar_t l,p;
+				l=Encoding::DecodeLocation(it->first);
+				p=Encoding::DecodeDirection(it->first);
+				h1d_fitteddistances[l][p]->Fill(it->second);
+			}
+			
 			// fit config
 			fitter.SetFCN(linefit,p0_start);
-			for (int i = 0; i < 4; ++i) 
-				fitter.Config().ParSettings(i).SetStepSize(p0_step);
+			for (int j = 0; j < 4; ++j) 
+				fitter.Config().ParSettings(j).SetStepSize(p0_step);
 			
+			// fitter.EvalFCN();
+			// printf("Init distance square: %.4f %.4f\n",fitter.Result().MinFcnValue(), linefit(p0_start));
+			h1d_init_distance_square->Fill(linefit(p0_start));
+
 			// fitting
 			if (!fitter.FitFCN()) {
 			   Error("line3Dfit","Line3D Fit failed");
-			   return 1;
+
+			   printf("Event No: %d\n",i+1 );
+			   hitwireUpX.Print();
+			   hitwireUpY.Print();
+			   hitwireDownX.Print();
+			   hitwireDownY.Print();
+			   hitposUp.Print();
+			   hitposDown.Print();
+			   for(int j=0;j<4;j++){
+			   	printf("%.2f\t", p0_start[j]);
+			   }
+
+			   failed_evenum++;
+			   // return 1;
 			}
 
 			// fit result
 			result = fitter.Result();
-			std::cout << "Total final distance square " << result.MinFcnValue() << std::endl;
-			result.Print(std::cout);
+			// std::cout << "Total final distance square " << result.MinFcnValue() << std::endl;
+			h1d_final_distance_square->Fill(result.MinFcnValue());
+			// result.Print(std::cout);
+			p0_stop=result.GetParams();
+
+			// calculate residuals
+			linefit.CalcResiduals(p0_stop);
+			residuals=linefit.GetResiduals();
+			
+			for(it = residuals.begin();it!=residuals.end();++it){
+				UChar_t l,p;
+				l=Encoding::DecodeLocation(it->first);
+				p=Encoding::DecodeDirection(it->first);
+				h2d_residuals[l][p]->Fill(minrising_drifttime[l][p], it->second);
+			}
 		}
 		
 	}
+	timer.Stop();
+	printf("%d events processed totally; %d events valid, %d events failed\n",entries,valid_evenum,failed_evenum);
+	Double_t cputime = timer.CpuTime();
+	printf("RT=%7.3f s, Cpu=%7.3f s\n",timer.RealTime(),cputime);
 
-	printf("%d events processed totally\n",entries);
-
+	for(int l=0;l<g_mwdc_location;l++){
+		for(int p=0;p<g_mwdc_wireplane;p++){
+			TCanvas* c=new TCanvas(Form("c%s_%s",g_str_location[l],g_str_plane[p]),Form("c%s_%s",g_str_location[l],g_str_plane[p]));
+			// c->SetLogy();
+			h2d_residuals[l][p]->Draw();
+			// h1d_fitteddistances[l][p]->Draw();
+		}
+	}
+	for(int l=0;l<g_mwdc_location;l++){
+		for(int p=0;p<g_mwdc_wireplane;p++){
+			TCanvas* c=new TCanvas(Form("cfitteddistances%s_%s",g_str_location[l],g_str_plane[p]),Form("c%s_%s",g_str_location[l],g_str_plane[p]));
+			// c->SetLogy();
+			h1d_fitteddistances[l][p]->Draw();
+		}
+	}
+	TCanvas* cinit_distance_square=new TCanvas("cinit_distance_square","cinit_distance_square");
+	// cinit_distance_square->SetLogy();
+	h1d_init_distance_square->Draw();
+	TCanvas* cfinal_distance_square=new TCanvas("cfinal_distance_square","cfinal_distance_square");
+	// cfinal_distance_square->SetLogy();
+	h1d_final_distance_square->Draw();
+	// 
 	delete file_drifttime;
 }

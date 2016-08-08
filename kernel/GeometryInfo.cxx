@@ -117,7 +117,7 @@ void GeometryInfo::InitUpZ()
 
 	TVector3 point;
 	UInt_t gid;
-	UInt_t wire_sparation=10.5;
+	Double_t wire_sparation=10.5;
 	for(int i=0;i<106;i++){
 		gid=Encoding::Encode(EMWDC,EUP,EU,i);
 		point=init_point + wire_sparation*i*moving_direction;
@@ -177,7 +177,7 @@ void GeometryInfo::InitDownZ()
 
 	TVector3 point;
 	UInt_t gid;
-	UInt_t wire_sparation=10.5;
+	Double_t wire_sparation=10.5;
 	for(int i=0;i<106;i++){
 		gid=Encoding::Encode(EMWDC,EDOWN,EU,105-i);
 		point=init_point + wire_sparation*i*moving_direction;
