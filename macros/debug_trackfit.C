@@ -21,14 +21,16 @@ int calib(const char* datadir,const char* outfile)
 	TH2F* h2d_residuals[g_mwdc_location][g_mwdc_wireplane];
 	for(int l=0;l<g_mwdc_location;l++){
 		for(int p=0;p<g_mwdc_wireplane;p++){
-			h2d_residuals[l][p]=new TH2F(Form("h2d_%s_%s_residual",g_str_location[l],g_str_plane[p]),Form("h2d_%s_%s_residual",g_str_location[l],g_str_plane[p]),400,0,400,4000,0,8);
+			h2d_residuals[l][p]=new TH2F(Form("h2d_%s_%s_residual",g_str_location[l],g_str_plane[p]),Form("h2d_%s_%s_residual",g_str_location[l],g_str_plane[p]),400,0,400,8000,-8,8);
 		}
 	}
 
-	TH1F* h1d_fitteddistances[g_mwdc_location][g_mwdc_wireplane];
+	TH1F* h1d_init_fitteddistances[g_mwdc_location][g_mwdc_wireplane];
+	TH1F* h1d_final_fitteddistances[g_mwdc_location][g_mwdc_wireplane];
 	for(int l=0;l<g_mwdc_location;l++){
 		for(int p=0;p<g_mwdc_wireplane;p++){
-			h1d_fitteddistances[l][p]=new TH1F(Form("h1d_%s_%s_Init_Fitted_Distance",g_str_location[l],g_str_plane[p]),Form("h1d_%s_%s_Init_Fitted_Distance",g_str_location[l],g_str_plane[p]),200,0,50);
+			h1d_init_fitteddistances[l][p]=new TH1F(Form("h1d_%s_%s_Init_Fitted_Distance",g_str_location[l],g_str_plane[p]),Form("h1d_%s_%s_Init_Fitted_Distance",g_str_location[l],g_str_plane[p]),200,0,50);
+			h1d_final_fitteddistances[l][p]=new TH1F(Form("h1d_%s_%s_Final_Fitted_Distance",g_str_location[l],g_str_plane[p]),Form("h1d_%s_%s_Final_Fitted_Distance",g_str_location[l],g_str_plane[p]),200,0,50);
 		}
 	}
 	TH1F* h1d_init_distance_square=new TH1F("h1d_init_distance_square","h1d_init_distance_square",200,0,2000);
@@ -189,7 +191,7 @@ int calib(const char* datadir,const char* outfile)
 				UChar_t l,p;
 				l=Encoding::DecodeLocation(it->first);
 				p=Encoding::DecodeDirection(it->first);
-				h1d_fitteddistances[l][p]->Fill(it->second);
+				h1d_init_fitteddistances[l][p]->Fill(it->second);
 			}
 			
 			// fit config
@@ -236,6 +238,7 @@ int calib(const char* datadir,const char* outfile)
 				l=Encoding::DecodeLocation(it->first);
 				p=Encoding::DecodeDirection(it->first);
 				h2d_residuals[l][p]->Fill(minrising_drifttime[l][p], it->second);
+				h1d_final_fitteddistances[l][p]->Fill(it->second);
 			}
 		}
 		
@@ -255,9 +258,16 @@ int calib(const char* datadir,const char* outfile)
 	}
 	for(int l=0;l<g_mwdc_location;l++){
 		for(int p=0;p<g_mwdc_wireplane;p++){
-			TCanvas* c=new TCanvas(Form("cfitteddistances%s_%s",g_str_location[l],g_str_plane[p]),Form("c%s_%s",g_str_location[l],g_str_plane[p]));
+			TCanvas* c=new TCanvas(Form("cinit_fitteddistances%s_%s",g_str_location[l],g_str_plane[p]),Form("cinit_fitteddistances%s_%s",g_str_location[l],g_str_plane[p]));
 			// c->SetLogy();
-			h1d_fitteddistances[l][p]->Draw();
+			h1d_init_fitteddistances[l][p]->Draw();
+		}
+	}
+	for(int l=0;l<g_mwdc_location;l++){
+		for(int p=0;p<g_mwdc_wireplane;p++){
+			TCanvas* c=new TCanvas(Form("cfinal_fitteddistances%s_%s",g_str_location[l],g_str_plane[p]),Form("cfinal_fitteddistances%s_%s",g_str_location[l],g_str_plane[p]));
+			// c->SetLogy();
+			h1d_final_fitteddistances[l][p]->Draw();
 		}
 	}
 	TCanvas* cinit_distance_square=new TCanvas("cinit_distance_square","cinit_distance_square");
