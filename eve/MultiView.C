@@ -44,8 +44,13 @@ struct MultiView
    TEveScene             *fXOZEventScene;
    TEveScene             *fYOZEventScene;
 
+   private:
+      Double_t lrange;
+      Double_t hrange;//z-axis in the range [lrange,hrange] will be scaled
+
    //---------------------------------------------------------------------------
 
+   public:
    MultiView()
    {
       // Constructor --- creates required scenes, projection managers
@@ -76,7 +81,6 @@ struct MultiView
       Double_t thickness=5;
       Double_t z_display=(up_z+down_z)/2;//origin displacement
       TEveVector displace(0,0,z_display);
-      Double_t lrange,hrange;//z-axis in the range [lrange,hrange] will be scaled
       lrange= up_z - z_display- 1;
       hrange= lrange + 7;
 
@@ -92,10 +96,7 @@ struct MultiView
          p->SetCenter(displace);
 
          // fish-eye transformation zoom out the gap between the up and down mwdc
-         p->AddPreScaleEntry(1, 0,  0.1);    // z scale 0.1 from origin to lrange
-         p->AddPreScaleEntry(1, lrange,  1);    // z scale 1 between lrange and hrange
-         p->AddPreScaleEntry(1, hrange,  0.1);    // z scale 0.1 from hrange to infinity
-         p->SetUsePreScale(kTRUE);
+         UsePreScaleXOZ(lrange,hrange);
 
          // add axises
          TEveProjectionAxes* a = new TEveProjectionAxes(fXOZMgr);
@@ -117,10 +118,7 @@ struct MultiView
          p->SetCenter(displace);
 
          // fish-eye transformation zoom out the gap between the up and down mwdc
-         p->AddPreScaleEntry(1, 0,  0.1);    // z scale 0.1 from origin to lrange
-         p->AddPreScaleEntry(1, lrange,  1);    // z scale 1 between lrange and hrange
-         p->AddPreScaleEntry(1, hrange,  0.1);    // z scale 0.1 from hrange to infinity
-         p->SetUsePreScale(kTRUE);
+         UsePreScaleYOZ(lrange,hrange);
 
          // add axises
          TEveProjectionAxes* a = new TEveProjectionAxes(fYOZMgr);
@@ -142,10 +140,7 @@ struct MultiView
          p->SetCenter(displace);
 
          // fish-eye transformation zoom out the gap between the up and down mwdc
-         p->AddPreScaleEntry(1, 0,  0.1);    // z scale 0.1 from origin to lrange
-         p->AddPreScaleEntry(1, lrange,  1);    // z scale 1 between lrange and hrange
-         p->AddPreScaleEntry(1, hrange,  0.1);    // z scale 0.1 from hrange to infinity
-         p->SetUsePreScale(kTRUE);
+         UsePreScaleUpUOZ(lrange,hrange);
 
          // add axises
          TEveProjectionAxes* a = new TEveProjectionAxes(fUpUOZMgr);
@@ -167,10 +162,7 @@ struct MultiView
          p->SetCenter(displace);
 
          // fish-eye transformation zoom out the gap between the up and down mwdc
-         p->AddPreScaleEntry(1, 0,  0.1);    // z scale 0.1 from origin to lrange
-         p->AddPreScaleEntry(1, lrange,  1);    // z scale 1 between lrange and hrange
-         p->AddPreScaleEntry(1, hrange,  0.1);    // z scale 0.1 from hrange to infinity
-         p->SetUsePreScale(kTRUE);
+         UsePreScaleDownUOZ(lrange,hrange);
 
          // add axises
          TEveProjectionAxes* a = new TEveProjectionAxes(fDownUOZMgr);
@@ -197,6 +189,7 @@ struct MultiView
       
       pack->NewSlot()->MakeCurrent();
       fXOZView = gEve->SpawnNewViewer("XOZ View", "");
+      fXOZView->GetGLViewer()->SetStyle(TGLRnrCtx::kOutline);
       fXOZView->GetGLViewer()->SetCurrentCamera(TGLViewer::kCameraOrthoXOY);
       fXOZView->AddScene(fXOZGeomScene);
       fXOZView->AddScene(fXOZEventScene);
@@ -299,4 +292,101 @@ struct MultiView
    {
       fDownUOZEventScene->DestroyElements();
    }
+
+   void UsePreScaleXOZ(Double_t lrange, Double_t hrange){
+      TEveProjection* p=fXOZMgr->GetProjection();
+      p->ClearPreScales();
+      p->AddPreScaleEntry(1, 0,  0.1);    // z scale 0.1 from origin to lrange
+      p->AddPreScaleEntry(1, lrange,  1);    // z scale 1 between lrange and hrange
+      p->AddPreScaleEntry(1, hrange,  0.1);    // z scale 0.1 from hrange to infinity
+      p->SetUsePreScale(kTRUE);
+   }
+
+   void UsePreScaleYOZ(Double_t lrange, Double_t hrange){
+      TEveProjection* p=fYOZMgr->GetProjection();
+      p->ClearPreScales();
+      p->AddPreScaleEntry(1, 0,  0.1);    // z scale 0.1 from origin to lrange
+      p->AddPreScaleEntry(1, lrange,  1);    // z scale 1 between lrange and hrange
+      p->AddPreScaleEntry(1, hrange,  0.1);    // z scale 0.1 from hrange to infinity
+      p->SetUsePreScale(kTRUE);
+   }
+
+   void UsePreScaleUpUOZ(Double_t lrange, Double_t hrange){
+      TEveProjection* p=fUpUOZMgr->GetProjection();
+      p->ClearPreScales();
+      p->AddPreScaleEntry(1, 0,  0.1);    // z scale 0.1 from origin to lrange
+      p->AddPreScaleEntry(1, lrange,  1);    // z scale 1 between lrange and hrange
+      p->AddPreScaleEntry(1, hrange,  0.1);    // z scale 0.1 from hrange to infinity
+      p->SetUsePreScale(kTRUE);
+   }
+
+   void UsePreScaleDownUOZ(Double_t lrange, Double_t hrange){
+      TEveProjection* p=fDownUOZMgr->GetProjection();
+      p->ClearPreScales();
+      p->AddPreScaleEntry(1, 0,  0.1);    // z scale 0.1 from origin to lrange
+      p->AddPreScaleEntry(1, lrange,  1);    // z scale 1 between lrange and hrange
+      p->AddPreScaleEntry(1, hrange,  0.1);    // z scale 0.1 from hrange to infinity
+      p->SetUsePreScale(kTRUE);
+   }
+
+   void SetUsePreScale(Double_t lrange_input=-1, Double_t hrange_input=-1)
+   {
+      if(lrange_input <0 || hrange_input<0){
+         UsePreScaleXOZ(lrange,hrange);
+         UsePreScaleYOZ(lrange,hrange);
+         UsePreScaleUpUOZ(lrange,hrange);
+         UsePreScaleDownUOZ(lrange,hrange);
+      }
+      else{
+         lrange=lrange_input;hrange= hrange_input;
+         UsePreScaleXOZ(lrange_input,hrange_input);
+         UsePreScaleYOZ(lrange_input,hrange_input);
+         UsePreScaleUpUOZ(lrange_input,hrange_input);
+         UsePreScaleDownUOZ(lrange_input,hrange_input);
+      }
+   }
+
+   void DisablePreScale()
+   {
+      TEveProjection* p=fXOZMgr->GetProjection();
+      p->SetUsePreScale(kFALSE);
+      fXOZMgr->ProjectChildren();
+
+      p=fYOZMgr->GetProjection();
+      p->SetUsePreScale(kFALSE);
+      fYOZMgr->ProjectChildren();
+
+      p=fUpUOZMgr->GetProjection();
+      p->SetUsePreScale(kFALSE);
+      fUpUOZMgr->ProjectChildren();
+
+      p=fDownUOZMgr->GetProjection();
+      p->SetUsePreScale(kFALSE);
+      fDownUOZMgr->ProjectChildren();
+
+      gEve->Redraw3D(kTRUE);
+   }
+
+   void EnablePreScale()
+   {
+      TEveProjection* p=fXOZMgr->GetProjection();
+      p->SetUsePreScale(kTRUE);
+      fXOZMgr->ProjectChildren();
+
+      p=fYOZMgr->GetProjection();
+      p->SetUsePreScale(kTRUE);
+      fYOZMgr->ProjectChildren();
+
+      p=fUpUOZMgr->GetProjection();
+      p->SetUsePreScale(kTRUE);
+      fUpUOZMgr->ProjectChildren();
+
+      p=fDownUOZMgr->GetProjection();
+      p->SetUsePreScale(kTRUE);
+      fDownUOZMgr->ProjectChildren();
+      
+      gEve->Redraw3D(kTRUE);
+   }
+
+   ClassDef(MultiView, 0);
 };
