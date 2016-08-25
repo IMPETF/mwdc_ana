@@ -7,10 +7,10 @@
 #include "TEveGeoShape.h"
 #include "TEveSelection.h"
 #include "TEveTrans.h"
+#include "TEveText.h"
+#include "TEveArrow.h"
 #include "TMath.h"
 #include "TString.h"
-#include "TGeoManager.h"
-#include "TGeoNode.h"
 #include "TGeoTube.h"
 #include "TGLViewer.h"
 #include "TGLCameraOverlay.h"
@@ -25,153 +25,77 @@
 #include "MultiView.C"
 MultiView* gMultiView = 0;
 
-// debug selection/highlight
-class SigTestSpitter
+
+TEveElement* get_cell(TEveElement* mwdc, Int_t l, Int_t p, Int_t index)
 {
-   TEveSelection *fSel;
-   TString        fPrefix;
+	const char name[3][3]={"x","y","u"};
 
-public:
-   SigTestSpitter(TEveSelection* sel, const TString& prefix) :
-      fSel(sel), fPrefix(prefix)
-   {
-      fSel->Connect("SelectionAdded(TEveElement*)", "SigTestSpitter", this, "Added(TEveElement*)");
-      fSel->Connect("SelectionRemoved(TEveElement*)", "SigTestSpitter", this, "Removed(TEveElement*)");
-      fSel->Connect("SelectionCleared()", "SigTestSpitter", this, "Cleared()");
-   }
-   ~SigTestSpitter()
-   {
-      fSel->Disconnect("SelectionAdded(TEveElement*)", this, "Added(TEveElement*)");
-      fSel->Disconnect("SelectionRemoved(TEveElement*)", this, "Removed(TEveElement*)");
-      fSel->Disconnect("SelectionCleared()", this, "Cleared()");
-   }
-   // ----------------------------------------------------------------
-   void Added(TEveElement* el)
-   {
-      printf("%s Added 0x%lx '%s'\n", fPrefix.Data(), el, el ? el->GetElementName() : "");
-   }
-   void Removed(TEveElement* el)
-   {
-      printf("%s Removed 0x%lx '%s'\n", fPrefix.Data(), el, el ? el->GetElementName() : "");
-   }
-   void Cleared()
-   {
-      printf("%s Cleared'\n", fPrefix.Data());
-   }
-};
+	TString plane_name=TString::Format("%s_plane_%d",name[p],l);
+	TEveElement* plane=mwdc->FindChild(plane_name);
+	// printf("%s: %d\n",plane_name.Data(),plane );
 
-
-void turnoff_wire()
-{
-	const TString kEH("turnoff_wire");
-	// 
-	Bool_t s = gGeoManager->cd("/x_plane_0/x_cell_1/x_wire_0");
-	if (!s) {
-	   Error(kEH, "Start node not found.");
-	   return;
-	}
-	TGeoNode *x_wrie = gGeoManager->GetCurrentNode();
-	x_wrie->GetVolume()->SetVisibility(kFALSE);
-
-	s = gGeoManager->cd("/y_plane_0/y_cell_1/y_wire_0");
-	if (!s) {
-	   Error(kEH, "Start node not found.");
-	   return;
-	}
-	TGeoNode *y_wrie = gGeoManager->GetCurrentNode();
-	y_wrie->GetVolume()->SetVisibility(kFALSE);
-
-	for(int i=0;i<106;i++){
-		s = gGeoManager->cd(Form("/u_plane_0/u_chamber%d_0/u_wire%d_0",i,i));
-		if (!s) {
-		   Error(kEH, "Start node not found.");
-		   return;
+	TString chamber_name;
+	if(p==2){
+		switch(l){
+			case 0:
+				chamber_name=TString::Format("u_chamber%d_0",105-index);
+				break;
+			case 1:
+				chamber_name=TString::Format("u_chamber%d_0",index);
+				break;
 		}
-		TGeoNode *u_wrie=gGeoManager->GetCurrentNode();
-		u_wrie->GetVolume()->SetVisibility(kFALSE);	
 	}
+	else{
+		switch(l){
+			case 0:
+				chamber_name=TString::Format("%s_cell_%d",name[p],index+1);
+				break;
+			case 1:
+				chamber_name=TString::Format("%s_cell_%d",name[p],80-index);
+				break;
+		}
+	}
+	TEveElement* chamber=plane->FindChild(chamber_name);
+	// printf("%d\n", chamber);
+
+	return chamber;
 }
 
-void turnoff_chamber()
+TEveElement* get_wire(TEveElement* mwdc, Int_t l, Int_t p, Int_t index)
 {
-	const TString kEH("turnoff_chamber");
+	const char name[3][3]={"x","y","u"};
 
-	Bool_t s = gGeoManager->cd("/x_plane_0/x_cell_1");
-	if (!s) {
-		Error(kEH, "Start node not found.");
-		return;
-	}
-	TGeoNode *x_cell = gGeoManager->GetCurrentNode();
-	x_cell->GetVolume()->SetVisibility(kFALSE);
+	TString plane_name=TString::Format("%s_plane_%d",name[p],l);
+	TEveElement* plane=mwdc->FindChild(plane_name);
+	// printf("%s: %d\n",plane_name.Data(),plane );
 
-	s = gGeoManager->cd("/y_plane_0/y_cell_1");
-	if (!s) {
-		Error(kEH, "Start node not found.");
-		return;
-	}
-	TGeoNode *y_cell = gGeoManager->GetCurrentNode();
-	y_cell->GetVolume()->SetVisibility(kFALSE);
-
-	for(int i=0;i<106;i++){
-		s = gGeoManager->cd(Form("/u_plane_0/u_chamber%d_0",i,i));
-		if (!s) {
-			Error(kEH, "Start node not found.");
-			return;
+	TString chamber_name;
+	if(p==2){
+		switch(l){
+			case 0:
+				chamber_name=TString::Format("u_chamber%d_0",105-index);
+				break;
+			case 1:
+				chamber_name=TString::Format("u_chamber%d_0",index);
+				break;
 		}
-		TGeoNode *u_chamber=gGeoManager->GetCurrentNode();
-		u_chamber->GetVolume()->SetVisibility(kFALSE);	
 	}
-}
-
-void extract_geom(int flag)
-{
-	const char filename[40]="mwdc_wire.root";
-	TString outfilename;
-
-	TEveManager::Create();
-
-	gGeoManager= gEve->GetGeometry(filename);
-	gGeoManager->DefaultColors();
-	TGeoNode* node = gGeoManager->GetTopNode();
-	TEveGeoTopNode* top = new TEveGeoTopNode(gGeoManager, node);
-
-	top->SetVisOption(0);
-	top->SetVisLevel(3);
-	top->GetNode()->GetVolume()->SetVisibility(kFALSE);
-
-	gEve->AddGlobalElement(top);
-
-	// container invisible
-	TGeoNode* x_plane = gGeoManager->GetTopVolume()->FindNode("x_plane_0");
-	x_plane->GetVolume()->SetVisibility(kFALSE);
-
-	TGeoNode* y_plane = gGeoManager->GetTopVolume()->FindNode("y_plane_0");
-	y_plane->GetVolume()->SetVisibility(kFALSE);
-
-	switch(flag){
-		case 0:
-		{
-			outfilename="mwdc_extract_full.root";
-			break;
+	else{
+		switch(l){
+			case 0:
+				chamber_name=TString::Format("%s_cell_%d",name[p],index+1);
+				break;
+			case 1:
+				chamber_name=TString::Format("%s_cell_%d",name[p],80-index);
+				break;
 		}
-		case 1:
-		{
-			outfilename="mwdc_extract_chamber.root";
-			turnoff_wire();
-			break;
-		}
-		case 2:
-		{
-			outfilename="mwdc_extract_wire.root";
-			turnoff_chamber();
-			break;
-		}
-		default:
-			break;
 	}
+	TEveElement* chamber=plane->FindChild(chamber_name);
+	// printf("%d\n", chamber);
+	
+	TEveElement* wire=chamber->FirstChild();
 
-	top->ExpandIntoListTreesRecursively();
-	top->SaveExtract(outfilename, "mwdc",kFALSE);
+	return wire;
 }
 
 void make_gui()
@@ -208,7 +132,7 @@ void make_gui()
    browser->SetTabTitle("Event Control", 0);
 }
 
-void add_debug_event()
+void add_debug_event(TEveElement* mwdc)
 {
 	GeometryInfo gm_info;
 
@@ -216,7 +140,7 @@ void add_debug_event()
 	UInt_t gid[2][3];
 	for(int l=0;l<2;l++){
 		for(int p=0;p<3;p++){
-			gid[l][p]=Encoding::Encode(EMWDC,l,p,20);
+			gid[l][p]=Encoding::Encode(EMWDC,l,p,20+2*l+p*3);
 			hitted_wire[l][p].Reset_Unstandard(gm_info.GetPoint(gid[l][p]),gm_info.GetDirection(gid[l][p]));
 		}
 	}
@@ -228,21 +152,21 @@ void add_debug_event()
 	hitwireUpY=gm_info.GetPoint(gid[1][1]);
 	hitwireDownX=gm_info.GetPoint(gid[0][0]);
 	hitwireDownY=gm_info.GetPoint(gid[0][1]);
-	hitposUp.SetXYZ(hitwireUpY.X()-200,hitwireUpX.Y()-105,(hitwireUpY.Z()+hitwireUpX.Z())/2);
-	hitposDown.SetXYZ(hitwireDownX.X()+450,hitwireDownY.Y()+405,(hitwireDownX.Z()+hitwireDownY.Z())/2);
+	hitposUp.SetXYZ(hitwireUpY.X(),hitwireUpX.Y(),(hitwireUpY.Z()+hitwireUpX.Z())/2);
+	hitposDown.SetXYZ(hitwireDownX.X(),hitwireDownY.Y(),(hitwireDownX.Z()+hitwireDownY.Z())/2);
 	
 	track.Reset(hitposUp,hitposDown,false);
-	// track.Reset_Unstandard(hitwireUpY,TVector3(0,1,0));
+
+	TrackFit::Line track2;
+	hitposUp.SetXYZ(hitwireUpY.X()+100,hitwireUpX.Y()+300,(hitwireUpY.Z()+hitwireUpX.Z())/2+200);
+	hitposDown.SetXYZ(hitwireDownX.X()+10,hitwireDownY.Y()+30,(hitwireDownX.Z()+hitwireDownY.Z())/2+20);
+	track2.Reset(hitposUp,hitposDown,false);
 
 	// track
 	TVector3 point;
 	TEveLine* track_line = new TEveLine;
-	track_line->SetMainColor(kBlue);
-	
-	// point=track.GetPoint(-300);
-	// track_line->SetNextPoint(point.X()/10,point.Y()/10,point.Z()/10);
-	// point=track.GetPoint(900);
-	// track_line->SetNextPoint(point.X()/10,point.Y()/10,point.Z()/10);
+	track_line->SetMainColor(kBlack);
+	track_line->SetLineWidth(2);
 	for(int i=0;i<400;i++){
 		point=track.GetPoint(-400+i*1400/400);
 		track_line->SetNextPoint(point.X()/10,point.Y()/10,point.Z()/10);
@@ -254,13 +178,15 @@ void add_debug_event()
 	gMultiView->ImportEventYOZ(track_line);
 	gMultiView->ImportEventUpUOZ(track_line);
 	gMultiView->ImportEventDownUOZ(track_line);
-	
+	gMultiView->ImportEvent3D(track_line);
+
 	// hitted wire
 	TEveLine* hitted_wire_line[2][3];
 	for(int l=0;l<2;l++){
 		for(int p=0;p<3;p++){
 			hitted_wire_line[l][p]=new TEveLine;
-			hitted_wire_line[l][p]->SetMainColor(kRed);
+			hitted_wire_line[l][p]->SetMainColor(kGray);
+			// hitted_wire_line[l][p]->SetLineStyle(3);
 		
 			point=hitted_wire[l][p].GetPoint(-500);
 			hitted_wire_line[l][p]->SetNextPoint(point.X()/10,point.Y()/10,point.Z()/10);
@@ -268,10 +194,7 @@ void add_debug_event()
 			hitted_wire_line[l][p]->SetNextPoint(point.X()/10,point.Y()/10,point.Z()/10);			
 		
 			gEve->AddElement(hitted_wire_line[l][p]);
-			// gMultiView->ImportEventXOZ(hitted_wire_line[l][p]);
-			// gMultiView->ImportEventYOZ(hitted_wire_line[l][p]);
-			// gMultiView->ImportEventUpUOZ(hitted_wire_line[l][p]);
-			// gMultiView->ImportEventDownUOZ(hitted_wire_line[l][p]);
+			gMultiView->ImportEvent3D(hitted_wire_line[l][p]);
 		}
 	}
 	gMultiView->ImportEventXOZ(hitted_wire_line[0][0]);
@@ -291,33 +214,27 @@ void add_debug_event()
 	for(int l=0;l<2;l++){
 		for(int p=0;p<3;p++){
 			drift_radius[l][p]= hitted_wire[l][p].DistanceToLine(track)/10;
-			printf("raidus[%d][%d]=%.4f\n",l,p,drift_radius[l][p]);
+			printf("raidus[%d][%d]=%.7f\n",l,p,drift_radius[l][p]);
+			
+			// 
 			driftcircles[l][p]=new TEveGeoShape(Form("drift_circle_%s_%s",g_str_location[l],g_str_plane[p]));
 			driftcircles[l][p]->SetShape(new TGeoTube(0,drift_radius[l][p],60));
+			
+			// tube rotation and translation
 			driftcircles[l][p]->RefMainTrans().SetPos((hitted_wire[l][p].GetPoint(0).X())/10,(hitted_wire[l][p].GetPoint(0).Y())/10,hitted_wire[l][p].GetPoint(0).Z()/10);
 			driftcircles[l][p]->RefMainTrans().SetRotByAngles(wire_angles[l][p],0,0);
 			driftcircles[l][p]->RefMainTrans().RotateLF(2,3,TMath::Pi()/2);
+
 			
 			driftcircles[l][p]->SetNSegments(100);
 			driftcircles[l][p]->SetMainTransparency(90);
 			driftcircles[l][p]->SetMainColor(kGreen);
 			driftcircles[l][p]->SetLineColor(kBlack);
-			// driftcircles[l][p]->SetLineWidth(2);
-
+			// // driftcircles[l][p]->SetLineWidth(2);
+			
+			// add into event scene
 			gEve->AddElement(driftcircles[l][p]);
-			// switch(p){
-			// 	case 0:
-			// 	{
-			// 		if(l==0){
-
-			// 		}
-			// 		break;
-			// 	}
-			// }
-			// gMultiView->ImportEventXOZ(driftcircles[l][p]);
-			// gMultiView->ImportEventYOZ(driftcircles[l][p]);
-			// gMultiView->ImportEventUpUOZ(driftcircles[l][p]);
-			// gMultiView->ImportEventDownUOZ(driftcircles[l][p]);
+			gMultiView->ImportEvent3D(driftcircles[l][p]);
 		}
 	}
 	gMultiView->ImportEventXOZ(driftcircles[0][0]);
@@ -328,6 +245,25 @@ void add_debug_event()
 
 	gMultiView->ImportEventUpUOZ(driftcircles[1][2]);
 	gMultiView->ImportEventDownUOZ(driftcircles[0][2]);
+
+	// hitted wire highlighting 
+	for(int l=0;l<2;l++){
+		for(int p=0;p<3;p++){
+			UChar_t type,location,direction;
+			UShort_t index;
+			Encoding::Decode(gid[l][p],type,location,direction,index);
+			TEveElement *cell=get_cell(mwdc,location,direction,index);
+			cell->HighlightElement(kTRUE);
+			// cell->SelectElement(kTRUE);
+
+			TEveGeoShape* shape=dynamic_cast<TEveGeoShape*>(cell);
+			TEveGeoShape* cell_clone=new TEveGeoShape(shape->GetName(),shape->GetTitle());
+			cell_clone->SetShape(shape->GetShape());
+			cell_clone->RefMainTrans().SetTrans(shape->RefMainTrans());
+			cell_clone->CopyVizParams(shape);
+			gMultiView->ImportEvent3D(cell_clone);
+		}
+	}
 }
 
 void debug_multiview()
@@ -351,22 +287,52 @@ void debug_multiview()
 	TEveGeoShapeExtract* gse = (TEveGeoShapeExtract*)file->Get("mwdc");
 	TEveGeoShape* mwdc=TEveGeoShape::ImportShapeExtract(gse,0);
 	delete file;
-	
-	
-	TEveElement* x_plane=mwdc->FindChild("x_plane_0");
-	TEveElement* x_cell=x_plane->FindChild("x_cell_40");
-	TEveTrans& t = x_plane->RefMainTrans();
-	std::cout<<x_plane->GetElementName()<<std::endl;
-	x_cell->HighlightElement(kTRUE);
-	// x_cell->SelectElement(kTRUE);
-	
+
 	// 
+	// TEveElement* mwdc_clone=mwdc->CloneElementRecurse(-1);
+	// mwdc->SetRnrSelf(kFALSE);
 	gEve->AddGlobalElement(mwdc);
 	
+	// add text and arrows
+	Double_t t_pos[3];
+	TEveText* t_up=new TEveText("Up");
+	t_up->SetFontSize(20);t_up->SetMainColor(kBlue);
+   	TEveElement* x_up=get_cell(mwdc,1,0,39);
+   	x_up->RefMainTrans().GetPos(t_pos);
+   	t_pos[0]-=70;t_pos[2]+=10;
+   	t_up->RefMainTrans().SetPos(t_pos);
+   	gEve->AddGlobalElement(t_up);
+   	
+   	Double_t t_pos_down[3];
+   	TEveText* t_down=new TEveText("Down");
+	t_down->SetFontSize(20);t_down->SetMainColor(kBlue);
+   	TEveElement* x_down=get_cell(mwdc,0,0,39);
+   	x_down->RefMainTrans().GetPos(t_pos_down);
+   	t_pos_down[0]-=70;t_pos_down[2]-=10;
+   	t_down->RefMainTrans().SetPos(t_pos_down);
+   	gEve->AddGlobalElement(t_down);
+
+   	TEveArrow* ax = new TEveArrow(15., 0., 0., t_pos[0], t_pos[1], (t_pos[2]+t_pos_down[2])/2);
+   	ax->SetMainColor(kRed);ax->SetTubeR(0.05);ax->SetConeR(0.15);ax->SetConeL(0.2);
+   	ax->SetPickable(kTRUE);
+   	gEve->AddGlobalElement(ax);
+   	TEveText* tx=new TEveText("+X");
+	tx->SetFontSize(15);tx->SetMainColor(kRed);
+   	tx->RefMainTrans().SetPos(t_pos[0]+15,t_pos[1],(t_pos[2]+t_pos_down[2])/2);
+   	gEve->AddGlobalElement(tx);
+
+   	TEveArrow* ay = new TEveArrow(0., 15., 0., t_pos[0], t_pos[1], (t_pos[2]+t_pos_down[2])/2);
+   	ay->SetMainColor(kGreen);ay->SetTubeR(0.05);ay->SetConeR(0.15);ay->SetConeL(0.2);
+   	ay->SetPickable(kTRUE);
+   	gEve->AddGlobalElement(ay);
+   	TEveText* ty=new TEveText("+Y");
+	ty->SetFontSize(15);ty->SetMainColor(kGreen);
+   	ty->RefMainTrans().SetPos(t_pos[0],t_pos[1]+15,(t_pos[2]+t_pos_down[2])/2);
+   	gEve->AddGlobalElement(ty);
 
 	// multiview
 	gMultiView = new MultiView;
-	gMultiView->DisablePreScale();	
+	// gMultiView->DisablePreScale();	
 
 	gMultiView->SetDepth(-10);
 	gMultiView->ImportGeomXOZ(mwdc);
@@ -375,105 +341,31 @@ void debug_multiview()
 	gMultiView->ImportGeomDownUOZ(mwdc);
 	gMultiView->SetDepth(0);
 
+	gMultiView->ImportEvent3D(t_up);
+	gMultiView->ImportEvent3D(t_down);
+	gMultiView->ImportEvent3D(tx);
+	gMultiView->ImportEvent3D(ax);
+	gMultiView->ImportEvent3D(ty);
+	gMultiView->ImportEvent3D(ay);
+	
 	make_gui();
 
 	// add event
-	add_debug_event();
+	add_debug_event(mwdc);
 
 	// draw
 	gEve->GetViewers()->SwitchColorSet();
 	gEve->GetDefaultGLViewer()->SetStyle(TGLRnrCtx::kOutline);
+	gEve->GetDefaultGLViewer()->SetGuideState(TGLUtil::kAxesEdge, kTRUE, kFALSE, 0);
 
 	gEve->GetBrowser()->GetTabRight()->SetTab(1);
 
 	// 
-	TGLCameraOverlay* co = gEve->GetDefaultGLViewer()->GetCameraOverlay();
-	co->SetShowOrthographic(kTRUE);
-	co->SetOrthographicMode(TGLCameraOverlay::kGridFront);
+	// TGLCameraOverlay* co = gEve->GetDefaultGLViewer()->GetCameraOverlay();
+	// co->SetShowOrthographic(kTRUE);
+	// co->SetOrthographicMode(TGLCameraOverlay::kGridFront);
 
-	gEve->Redraw3D(kTRUE);
+	gEve->Redraw3D();
 
 }
 
-void debug_eve()
-{
-	// load multiview in compiled mode
-	// if (gROOT->LoadMacro("MultiView.C+") != 0)
-	// {
-	//    Error("turnoff_wire()", "Failed loading MultiView.C in compiled mode.");
-	//    return;
-	// }
-
-	TEveManager::Create();
-
-	// debug selection/highlight
-	new SigTestSpitter(gEve->GetSelection(), "Selection");
-   	new SigTestSpitter(gEve->GetHighlight(), "Highlight");
-
-   	// import geometry 
-	const char filename[40]="mwdc_wire.root";
-
-	gGeoManager= gEve->GetGeometry(filename);
-	gGeoManager->DefaultColors();
-	// 
-	TGeoNode* node = gGeoManager->GetTopNode();
-	// TGeoNode* node = gGeoManager->GetTopVolume()->FindNode("TPC_M_1");
-
-	TEveGeoTopNode* top = new TEveGeoTopNode(gGeoManager, node);
-	top->SetVisOption(0);
-	top->SetVisLevel(3);
-	top->GetNode()->GetVolume()->SetVisibility(kFALSE);
-	// en->GetNode()->GetVolume()->SetTransparency(0);
-
-	// container invisible
-	TGeoNode* x_plane = gGeoManager->GetTopVolume()->FindNode("x_plane_0");
-	x_plane->GetVolume()->SetVisibility(kFALSE);
-
-	TGeoNode* y_plane = gGeoManager->GetTopVolume()->FindNode("y_plane_0");
-	y_plane->GetVolume()->SetVisibility(kFALSE);
-	
-	// wire invisible 
-	turnoff_wire();
-
-	// chamber invisible
-	// turnoff_chamber();
-	
-	// 
-	gEve->AddGlobalElement(top);
-
-	// multiview
-	gMultiView = new MultiView;
-
-	gMultiView->SetDepth(-10);
-	gMultiView->ImportGeomUpUOZ(top);
-	gMultiView->ImportGeomDownUOZ(top);
-	gMultiView->SetDepth(0);
-
-	// draw
-	gEve->GetViewers()->SwitchColorSet();
-	gEve->GetDefaultGLViewer()->SetStyle(TGLRnrCtx::kOutline);
-
-	gEve->GetBrowser()->GetTabRight()->SetTab(2);
-
-	gEve->Redraw3D(kTRUE);	
-
-	// en->ExpandIntoListTreesRecursively();
-	// en->SaveExtract("mwdc_cell_extract.root", "mwdc_cell",kFALSE);
-}
-
-void debug_eve_extract()
-{
-	TEveManager::Create();
-
-	const char filename[40]="mwdc_cell_extract.root";
-
-	TFile* file=new TFile(filename);
-	TEveGeoShapeExtract* gse = (TEveGeoShapeExtract*) file->Get("mwdc_cell");
-	TEveGeoShape* mwdc=TEveGeoShape::ImportShapeExtract(gse,0);
-	delete file;
-
-	
-	gEve->AddGlobalElement(mwdc);
-
-	gEve->Redraw3D(kTRUE);
-}
