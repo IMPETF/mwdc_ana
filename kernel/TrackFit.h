@@ -86,17 +86,17 @@ public:
 		return funitdirection;
 	}
 
-	Double_t DistanceToPoint(TVector3 point){
+	Double_t DistanceToPoint(TVector3& point){
 		TVector3 tmp= point-fx0;
 		return tmp.Cross(funitdirection).Mag();
 	}
 
-	Double_t DistanceToPoint2(TVector3 point){
+	Double_t DistanceToPoint2(TVector3& point){
 		TVector3 tmp= point-fx0;
 		return tmp.Cross(funitdirection).Mag2();
 	}
 
-	Bool_t IsParallel(Line line){
+	Bool_t IsParallel(Line& line){
 		TVector3 direction=line.GetUnitDirection();
 		if(direction == funitdirection)
 			return true;
@@ -104,12 +104,12 @@ public:
 			return false;
 	}
 
-	TVector3 Cross(Line line){
+	TVector3 Cross(Line& line){
 		TVector3 dir= fdirection.Cross(line.GetUnitDirection());
 		return dir.Unit();
 	}
 
-	Double_t DistanceToLine(Line line){
+	Double_t DistanceToLine(Line& line){
 
 		if(IsParallel(line)){
 			TVector3 tmp=line.GetPoint(1)-fx0;
@@ -181,31 +181,29 @@ public:
 		// fFlag_Init=true;
 	}
 
-	void CalcResiduals(Line track){// residual = fitted - original
+	void CalcResiduals(Line& track){// residual = fitted - original
 		fDistances_Fitted.clear();
 		fResiduals.clear();
 		// 
-		std::map<UInt_t,Line>::const_iterator it;
 		Double_t tmpdistance;
-		for(it = fHittedwires.begin();it!=fHittedwires.end();++it){
-			tmpdistance=track.DistanceToLine(it->second);
-			fDistances_Fitted[it->first]=tmpdistance;
-			fResiduals[it->first]=tmpdistance- fDistances[it->first];
+		for(fIterator = fHittedwires.begin();fIterator != fHittedwires.end();++fIterator){
+			tmpdistance=track.DistanceToLine(fIterator->second);
+			fDistances_Fitted[fIterator->first]=tmpdistance;
+			fResiduals[fIterator->first]=tmpdistance- fDistances[fIterator->first];
 		}
 	}
 
 	void CalcResiduals(Double_t *p){
-		Line track(p);
+		track.Reset(p);
 		// 
 		fDistances_Fitted.clear();
 		fResiduals.clear();
 		// 
-		std::map<UInt_t,Line>::const_iterator it;
 		Double_t tmpdistance;
-		for(it = fHittedwires.begin();it!=fHittedwires.end();++it){
-			tmpdistance=track.DistanceToLine(it->second);
-			fDistances_Fitted[it->first]=tmpdistance;
-			fResiduals[it->first]=tmpdistance- fDistances[it->first];
+		for(fIterator = fHittedwires.begin();fIterator != fHittedwires.end();++fIterator){
+			tmpdistance=track.DistanceToLine(fIterator->second);
+			fDistances_Fitted[fIterator->first]=tmpdistance;
+			fResiduals[fIterator->first]=tmpdistance- fDistances[fIterator->first];
 		}
 	}
 
@@ -219,30 +217,21 @@ public:
 
 private:
 	double DoEval(const double * p) const {
-		Line track(p);
+		Line track(p)
 		// printf("in LineFit\n");
 
 		// 
 		Double_t sum=0;
-		Int_t size=fDistances.size();
-		assert(size==6);
-		// 
-		std::map<UInt_t,Double_t>::const_iterator it;
-		UInt_t gid;
-		Double_t distance,tmpdistance;
-		for(it = fDistances.begin();it!=fDistances.end();++it){
-			gid=it->first;distance=it->second;
-			// 
-			tmpdistance=track.DistanceToLine(fHittedwires.at(gid));
+		// Int_t size=fDistances.size();
+		// assert(size==6);
+		// 		
+		Double_t tmpdistance;
+		for(fIterator = fDistances.begin();fIterator!=fDistances.end();++fIterator){
+			tmpdistance=track.DistanceToLine(fHittedwires.at(fIterator->first));
 
-			sum+=TMath::Power(tmpdistance-distance,2);
+			sum+=TMath::Power(tmpdistance - fIterator->second,2);
 			// printf("%.4f(%.4f)\n", tmpdistance,distance);
 		}
-
-		// if(fFlag_Init){
-		// 	printf("Init total final distance square: %.4f\n", sum);
-		// 	fFlag_Init=false;
-		// }
 		return sum;
 	}
 
@@ -254,9 +243,9 @@ private:
 	std::map<UInt_t, Double_t> fDistances;//gid -> drift_distance
 	std::map<UInt_t, Double_t> fDistances_Fitted;
 	std::map<UInt_t, Double_t> fResiduals;
+	std::map<UInt_t,Double_t>::const_iterator fIterator;
 
 	GeometryInfo               fWirePositions;
-	// bool 					   fFlag_Init;
 };
 
 }
