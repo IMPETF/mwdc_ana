@@ -1,3 +1,18 @@
+// Copyright (C) 2016  Yong Zhou
+
+// This program is free software: you can redistribute it and/or modify it
+// under the terms of the GNU General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+// more details.
+
+// You should have received a copy of the GNU General Public License along
+// with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #ifndef _TrackFit_
 #define _TrackFit_
 
@@ -71,32 +86,32 @@ public:
 		// fx0.Print();fdirection.Print();
 	}
 
-	TVector3 GetPoint(Double_t t){
+	TVector3 GetPoint(Double_t t) const{
 		return fx0 + t*fdirection;
 	}
 
-	void GetParameter(Double_t* p){
+	void GetParameter(Double_t* p) const{
 		p[0]=fx0.X();
 		p[1]=fdirection.X();
 		p[2]=fx0.Y();
 		p[3]=fdirection.Y();
 	}
 
-	TVector3 GetUnitDirection(){
+	TVector3 GetUnitDirection() const{
 		return funitdirection;
 	}
 
-	Double_t DistanceToPoint(TVector3& point){
+	Double_t DistanceToPoint(const TVector3& point){
 		TVector3 tmp= point-fx0;
 		return tmp.Cross(funitdirection).Mag();
 	}
 
-	Double_t DistanceToPoint2(TVector3& point){
+	Double_t DistanceToPoint2(const TVector3& point){
 		TVector3 tmp= point-fx0;
 		return tmp.Cross(funitdirection).Mag2();
 	}
 
-	Bool_t IsParallel(Line& line){
+	Bool_t IsParallel(const Line& line){
 		TVector3 direction=line.GetUnitDirection();
 		if(direction == funitdirection)
 			return true;
@@ -104,12 +119,12 @@ public:
 			return false;
 	}
 
-	TVector3 Cross(Line& line){
+	TVector3 Cross(const Line& line){
 		TVector3 dir= fdirection.Cross(line.GetUnitDirection());
 		return dir.Unit();
 	}
 
-	Double_t DistanceToLine(Line& line){
+	Double_t DistanceToLine(const Line& line){
 
 		if(IsParallel(line)){
 			TVector3 tmp=line.GetPoint(1)-fx0;
@@ -186,6 +201,7 @@ public:
 		fResiduals.clear();
 		// 
 		Double_t tmpdistance;
+		std::map<UInt_t,Line>::const_iterator fIterator;
 		for(fIterator = fHittedwires.begin();fIterator != fHittedwires.end();++fIterator){
 			tmpdistance=track.DistanceToLine(fIterator->second);
 			fDistances_Fitted[fIterator->first]=tmpdistance;
@@ -200,6 +216,7 @@ public:
 		fResiduals.clear();
 		// 
 		Double_t tmpdistance;
+		std::map<UInt_t,Line>::const_iterator fIterator;
 		for(fIterator = fHittedwires.begin();fIterator != fHittedwires.end();++fIterator){
 			tmpdistance=track.DistanceToLine(fIterator->second);
 			fDistances_Fitted[fIterator->first]=tmpdistance;
@@ -217,7 +234,7 @@ public:
 
 private:
 	double DoEval(const double * p) const {
-		Line track(p)
+		Line track(p);
 		// printf("in LineFit\n");
 
 		// 
@@ -226,6 +243,7 @@ private:
 		// assert(size==6);
 		// 		
 		Double_t tmpdistance;
+		std::map<UInt_t,Double_t>::const_iterator fIterator;
 		for(fIterator = fDistances.begin();fIterator!=fDistances.end();++fIterator){
 			tmpdistance=track.DistanceToLine(fHittedwires.at(fIterator->first));
 
@@ -243,7 +261,6 @@ private:
 	std::map<UInt_t, Double_t> fDistances;//gid -> drift_distance
 	std::map<UInt_t, Double_t> fDistances_Fitted;
 	std::map<UInt_t, Double_t> fResiduals;
-	std::map<UInt_t,Double_t>::const_iterator fIterator;
 
 	GeometryInfo               fWirePositions;
 };

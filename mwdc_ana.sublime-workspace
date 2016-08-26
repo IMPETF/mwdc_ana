@@ -1,0 +1,2005 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"re-r",
+				"re-running"
+			],
+			[
+				"config",
+				"configure_file"
+			],
+			[
+				"Res",
+				"Reset"
+			],
+			[
+				"fX",
+				"fXOZView"
+			],
+			[
+				"hr",
+				"hRotate"
+			],
+			[
+				"hran",
+				"hrange"
+			],
+			[
+				"SetCurrent",
+				"SetCurrentCamera"
+			],
+			[
+				"t_po",
+				"t_pos"
+			],
+			[
+				"Impo",
+				"ImportEvent3D"
+			],
+			[
+				"t",
+				"t_up"
+			],
+			[
+				"SetLin",
+				"SetLineStyle"
+			],
+			[
+				"Use",
+				"UseDefaultCamera"
+			],
+			[
+				"cell",
+				"cell_clone"
+			],
+			[
+				"cel",
+				"cell_clone"
+			],
+			[
+				"CloneE",
+				"CloneElementRecurse(-1"
+			],
+			[
+				"TEv",
+				"TEveElement"
+			],
+			[
+				"Hihg",
+				"HighlightElement"
+			],
+			[
+				"dir",
+				"direction	(extract_minrising_time.C)"
+			],
+			[
+				"plane",
+				"plane_name"
+			],
+			[
+				"x",
+				"x_cell"
+			],
+			[
+				"get",
+				"get_chamber"
+			],
+			[
+				"cham",
+				"chamber"
+			],
+			[
+				"palne",
+				"plane_name"
+			],
+			[
+				"Int",
+				"Int_t	(extract_minrising_time.C)"
+			],
+			[
+				"TE",
+				"TEveElement"
+			],
+			[
+				"mk",
+				"make_gui"
+			],
+			[
+				"UseP",
+				"UsePreScaleXOZ"
+			],
+			[
+				"hitw",
+				"hitwireUpY"
+			],
+			[
+				"hitwireUp",
+				"hitwireUpY"
+			],
+			[
+				"drif",
+				"driftcircles"
+			],
+			[
+				"T",
+				"TMath"
+			],
+			[
+				"wir",
+				"wire_angles"
+			],
+			[
+				"Dist",
+				"DistanceToLine	(debug_fit_track.C)"
+			],
+			[
+				"g_str",
+				"g_str_plane	(extract_minrising_time.C)"
+			],
+			[
+				"g",
+				"gMultiView"
+			],
+			[
+				"Up",
+				"UpUOZ"
+			],
+			[
+				"z",
+				"z_display"
+			],
+			[
+				"up",
+				"up_z"
+			],
+			[
+				"x_p",
+				"x_plane"
+			],
+			[
+				"x_pl",
+				"x_plane_0"
+			],
+			[
+				"fRohZ",
+				"fRhoZGeomScene"
+			],
+			[
+				"TEV",
+				"TEveManager"
+			],
+			[
+				"TS",
+				"TString"
+			],
+			[
+				"SetN",
+				"SetNextPoint"
+			],
+			[
+				"hiit",
+				"hitted_wire"
+			],
+			[
+				"hit",
+				"hitted_wire_line"
+			],
+			[
+				"tra",
+				"track"
+			],
+			[
+				"track",
+				"track_line"
+			],
+			[
+				"GetDre",
+				"GetDirection"
+			],
+			[
+				"hitte",
+				"hitted_wire"
+			],
+			[
+				"tur",
+				"turnoff_chamber"
+			],
+			[
+				"file",
+				"filename"
+			],
+			[
+				"dle",
+				"delete	(check_simulate_bunchid.C)"
+			],
+			[
+				"h2d_re",
+				"h2d_residual_init_vs_final"
+			],
+			[
+				"vali",
+				"valid_event"
+			],
+			[
+				"rt",
+				"rt_relation_corrected"
+			],
+			[
+				"h2d_",
+				"h2d_rtrelation"
+			],
+			[
+				"dir_",
+				"dir_h2d_rtrelation"
+			],
+			[
+				"dir_h2d",
+				"dir_h2d_residuals"
+			],
+			[
+				"US",
+				"UShort_t"
+			],
+			[
+				"TH1",
+				"TH1F"
+			],
+			[
+				"SetPara",
+				"SetParameters"
+			],
+			[
+				"newh",
+				"newh1dmwdc_gid	newh1dmwdc_gid"
+			],
+			[
+				"g_mwd",
+				"g_mwdc_wireindex	(check_drift.C)"
+			],
+			[
+				"drift",
+				"drifttime	(extract_minrising_time.C)"
+			],
+			[
+				"line",
+				"lines"
+			],
+			[
+				"p0_s",
+				"p0_stop"
+			],
+			[
+				"fina",
+				"final_track"
+			],
+			[
+				"Draw",
+				"Draw"
+			],
+			[
+				"TP",
+				"TPolyLine3D.h"
+			],
+			[
+				"val",
+				"valid_event"
+			],
+			[
+				"min",
+				"minrising_tot"
+			],
+			[
+				"Setp",
+				"SetParameter"
+			],
+			[
+				"SetP",
+				"SetParameter"
+			],
+			[
+				"pol",
+				"pol5"
+			],
+			[
+				"pl",
+				"pol5"
+			],
+			[
+				"oer",
+				"order"
+			],
+			[
+				"rt_re",
+				"rt_relation"
+			],
+			[
+				"ele",
+				"else	(check_simulate_bunchid.C)"
+			],
+			[
+				"g_mwdc",
+				"g_mwdc_wireplane"
+			],
+			[
+				"TF",
+				"TF1"
+			],
+			[
+				"see",
+				"seed_round"
+			],
+			[
+				"fitte",
+				"fitted_distances"
+			],
+			[
+				"TH",
+				"TH2F"
+			],
+			[
+				"FOrm",
+				"Format"
+			],
+			[
+				"std",
+				"std::cout"
+			],
+			[
+				"For",
+				"Form"
+			],
+			[
+				"calib",
+				"calib_test"
+			],
+			[
+				"binc",
+				"bincenter"
+			],
+			[
+				"h2d_r",
+				"h2d_residuals_pfx"
+			],
+			[
+				"GetBin",
+				"GetBinCenter	(debug_fit_rtrelation.C)"
+			],
+			[
+				"h2d",
+				"h2d_residuals_pfx"
+			],
+			[
+				"h2e",
+				"h2d_residuals"
+			],
+			[
+				"dele",
+				"delete	(check_simulate_bunchid.C)"
+			],
+			[
+				"hist",
+				"hists"
+			],
+			[
+				"p0",
+				"p0_start"
+			],
+			[
+				"index",
+				"index2"
+			],
+			[
+				"ined",
+				"index1"
+			],
+			[
+				"lin",
+				"line2"
+			],
+			[
+				"name",
+				"namespace	(utility.h)"
+			],
+			[
+				"h1d",
+				"h1d_fitteddistances"
+			],
+			[
+				"fDis",
+				"fDistances_Fitted"
+			],
+			[
+				"g_st",
+				"g_str_plane"
+			],
+			[
+				"g_srt",
+				"g_str_location"
+			],
+			[
+				"Deco",
+				"DecodeLocation	(fit_drifttime_edge.C)"
+			],
+			[
+				"Enco",
+				"Encoding"
+			],
+			[
+				"g_mwdc_",
+				"g_mwdc_wireplane"
+			],
+			[
+				"g_mw",
+				"g_mwdc_location"
+			],
+			[
+				"res",
+				"residuals"
+			],
+			[
+				"Do",
+				"Double_t"
+			],
+			[
+				"Reset",
+				"Reset_Unstandard"
+			],
+			[
+				"fail",
+				"failed_evenum"
+			],
+			[
+				"fx",
+				"fx1"
+			],
+			[
+				"exit",
+				"exit(1	(check_simulate_bunchid.C)"
+			],
+			[
+				"hitpos",
+				"hitposUp"
+			],
+			[
+				"hitp",
+				"hitwireUpY"
+			],
+			[
+				"glo",
+				"global.h	(fit_drifttime_edge.C)"
+			],
+			[
+				"p0s",
+				"p0_step"
+			],
+			[
+				"minri",
+				"minrising_drifttime"
+			],
+			[
+				"minrsi",
+				"minrising_gid"
+			],
+			[
+				"TGr",
+				"TGraph.h	(fit_drifttime_edge.C)"
+			],
+			[
+				"TSP",
+				"TSpline.h	(debug_fit_rtrelation.C)"
+			],
+			[
+				"init",
+				"init_track"
+			],
+			[
+				"par",
+				"parrallel"
+			],
+			[
+				"fdi",
+				"fdirection"
+			],
+			[
+				"fd",
+				"fdirection"
+			],
+			[
+				"hitpo",
+				"hitposDown"
+			],
+			[
+				"hitwi",
+				"hitwireDownX"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "eve/EventDisply.h",
+			"settings":
+			{
+				"buffer_size": 2846,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "eve/EventDisply.cxx",
+			"settings":
+			{
+				"buffer_size": 12880,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "# DocBlockr\n\nDocBlockr is a package for [Sublime Text 2 & 3][sublime] which makes writing documentation a breeze. DocBlockr supports **JavaScript** (including ES6), **PHP**, **ActionScript**, **Haxe**, **CoffeeScript**, **TypeScript**, **Java**, **Apex**, **Groovy**, **Objective C**, **C**, **C++** and **Rust**.\n\n## Installation\n\n### [Package Control](https://sublime.wbond.net/installation)\n\n1. Open Package Control: `Preferences -> Package Control`\n2. Select `Package Control: Install Package`\n3. Type `DocBlockr` into the search box and select the package to install it\n\n## Feature requests & bug reports\n\nYou can leave either of these things [here][issues]. Pull requests are welcomed\nheartily, but please read [CONTRIBUTING.md][contrib] first! Basically: in this\nrepo, the main development branch is `develop` and the stable 'production'\nbranch is `master`. Please remember to base your branch from `develop` and issue\nthe pull request back to that branch.\n\n## Show your love\n\n[![Click here to lend your support to: DocBlockr and make a donation at pledgie.com!](https://pledgie.com/campaigns/16316.png?skin_name=chrome)](http://pledgie.com/campaigns/16316)\n\n## Changelog\n\n- **v2.14.1**, *17 Aug 2015*\n  - Fix deindentation bug with reparsing doc blocks\n- **v2.14.0**, *15 Jun 2015*\n  - Adds `jsdocs_function_description` option (thanks to [Gerard Roche](https://github.com/gerardroche))\n  - Better handling of parser errors (thanks to Gerard Roche)\n- **v2.13.3**, *4 Jun 2015*\n  - PHP array shorthand is identified correctly (thanks to [Gerard Roche](https://github.com/gerardroche))\n  - Decorating comments when using tabs for indentation works better (thanks to [Jack Cherng](https://github.com/jfcherng))\n- **v2.13.2**, *30 Mar 2015*\n  - Updated PHPDoc autocompletions to align with the new spec (thanks to [Gerard Roche](https://github.com/gerardroche))\n  - Properly handle the case when commas appear inside a type name in Java\n  - Added link to README in the preferences menu\n- **v2.13.1**, *29 Mar 2015*\n  - Adds support for Apex language (thanks @michacom)\n  - Fixes identifying multidimensional arrays in C/C++\n  - Fixes reformatting and reparsing docblocks in Java\n  - Adds options to disable:\n    - opening an inline docblock with space (`jsdocs_quick_open_inline`)\n    - inline comment decoration (`jsdocs_decorate`)\n\nOlder history can be found in [the history file][history].\n\n## Usage\n\n> Below are some examples of what the package does. Note that there are no keyboard shortcuts required to trigger these completions - just type as normal and it happens for you!\n\n### Docblock completion\n\nPressing **enter** or **tab** after `/**` (or `###*` for Coffee-Script) yields a new line and closes the comment.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/basic.gif)\n\nSingle-asterisk comment blocks behave similarly:\n\n![](http://spadgos.github.io/sublime-jsdocs/images/basic-block.gif)\n\n### Function documentation\n\nHowever, if the line directly afterwards contains a function definition, then its name and parameters are parsed and some documentation is automatically added.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/function-template.gif)\n\nPress <kbd>Tab</kbd> to move forward through the fields, press <kbd>Shift</kbd>+<kbd>Tab</kbd> to move back through the fields.\n\nIf there are many arguments, or long variable names, it is sometimes useful to spread the arguments across multiple lines. DocBlockr handles this situation too:\n\n![](http://spadgos.github.io/sublime-jsdocs/images/long-args.gif)\n\nIn languages which support [type hinting][typehinting] or default values, then those types are prefilled as the datatypes.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/type-hinting.gif)\n\nDocBlockr will try to make an intelligent guess about the return value of the function.\n\n- If the function name is or begins with \"set\" or \"add\", then no `@return` is inserted.\n- If the function name is or begins with \"is\" or \"has\", then it is assumed to return a `Boolean`.\n- In Javascript, if the function begins with an uppercase letter then it is assumed that the function is a class definition. No `@return` tag is added.\n- In PHP, some of the [magic methods][magicmethods] have their values prefilled:\n  - `__construct`, `__destruct`, `__set`, `__unset`, `__wakeup` have no `@return` tag.\n  - `__sleep` returns an `array`.\n  - `__toString` returns a `string`.\n  - `__isset` returns a `bool`.\n- In ES6 Javascript, generator functions get a `@yield` tag instead of `@return`\n\n### Variable documentation\n\nIf the line following the docblock contains a variable declaration, DocBlockr will try to determine the data type of the variable and insert that into the comment.\n\nPress <kbd>space</kbd> or <kbd>shift</kbd>+<kbd>enter</kbd> after an opening `/**` to insert an inline docblock.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/vars.gif)\n\nDocBlockr will also try to determine the type of the variable from its name. Variables starting with `is` or `has` are assumed to be booleans, and `callback`, `cb`, `done`, `fn`, and `next` are assumed to be functions. If you use your own variable naming system, (e.g. hungarian notation: booleans all start with `b`, arrays start with `arr`), you can define these rules yourself. Use the `jsdocs_notation_map` setting, example:\n\n```js\n{\n    \"jsdocs_notation_map\": [\n        {\n            \"prefix\": \"b\", /* a prefix, matches only if followed by an underscore or A-Z */\n            \"type\": \"bool\" /* translates to \"Boolean\" in javascript, \"bool\" in PHP */\n        },\n        {\n            \"regex\": \"tbl_?[Rr]ow\", /* any arbitrary regex to test against the variable name */\n            \"type\": \"TableRow\"      /* you can add your own types */\n        }\n    ]\n}\n```\n\nThe notation map can also be used to add arbitrary tags, according to your own code conventions. For example, if your conventions state that functions beginning with an underscore are private, you could add this to the `jsdocs_notation_map`:\n\n```json\n{\n    \"prefix\": \"_\",\n    \"tags\": [\"@private\"]\n}\n```\n\n### Comment extension\n\nPressing enter inside a docblock will automatically insert a leading asterisk and maintain your indentation.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/auto-indent.gif)\n\n![](http://spadgos.github.io/sublime-jsdocs/images/auto-indent-2.gif)\n\nThis applies to docblock comments `/** like this */` as well as inline double-slash comments `// like this`\n\n![](http://spadgos.github.io/sublime-jsdocs/images/single-line.gif)\n\nIn either case, you can press `shift+enter` to stop the automatic extension.\n\nOftentimes, when documenting a parameter, or adding a description to a tag, your description will cover multiple lines. If the line you are on is directly following a tag line, pressing <kbd>Tab</kbd> will move the indentation to the correct position.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/deep-indent.gif)\n\n### Comment decoration\n\nIf you write a double-slash comment and then press `Ctrl+Enter`, DocBlockr will 'decorate' that line for you.\n\n    // Foo bar baz<<Ctrl+Enter>>\n\n    -- becomes\n\n    /////////////////\n    // Foo bar baz //\n    /////////////////\n\nThis can be disabled by changing the `jsdocs_decorate` setting to `false`.\n\n### Reparsing a DocBlock\n\nSometimes, you'll perform some action which clears the fields (sections of text which you can navigate through using <kbd>Tab</kbd>). This leaves you with a number of placeholders in the DocBlock with no easy way to jump to them.\n\nWith DocBlockr, you can reparse a comment and reactivate the fields by pressing the hotkey `Alt+Shift+Tab` in OS X or Linux, or `Alt+W` in Windows\n\n### Reformatting paragraphs\n\nInside a comment block, hit `Alt+Q` to wrap the lines to make them fit within your rulers. If you would like subsequent lines in a paragraph to be indented, you can adjust the `jsdocs_indentation_spaces_same_para` setting. For example, a value of `3` might look like this:\n\n    /**\n     * Duis sed arcu non tellus eleifend ullamcorper quis non erat. Curabitur\n     *   metus elit, ultrices et tristique a, blandit at justo.\n     * @param  {String} foo Lorem ipsum dolor sit amet.\n     * @param  {Number} bar Nullam fringilla feugiat pretium. Quisque\n     *   consectetur, risus eu pellentesque tincidunt, nulla ipsum imperdiet\n     *   massa, sit amet adipiscing dolor.\n     * @return {[type]}\n     */\n\n### Adding extra tags\n\nFinally, typing `@` inside a docblock will show a completion list for all tags supported by [JSDoc][jsdoc], the [Google Closure Compiler][closure], [YUIDoc][yui] or [PHPDoc][phpdoc]. Extra help is provided for each of these tags by prefilling the arguments each expects. Pressing <kbd>Tab</kbd> will move the cursor to the next argument.\n\n## Configuration\n\nYou can access the configuration settings by selecting `Preferences -> Package Settings -> DocBlockr`.\n\n*The `jsdocs_*` prefix is a legacy from days gone by...*\n\n- `jsdocs_indentation_spaces` *(Number)* The number of spaces to indent after the leading asterisk.\n\n        // jsdocs_indentation_spaces = 1\n        /**\n         * foo\n         */\n\n        // jsdocs_indentation_spaces = 5\n        /**\n         *     foo\n         */\n\n- `jsdocs_align_tags` *(String)* Whether the words following the tags should align. Possible values are `'no'`, `'shallow'` and `'deep'`\n\n    > For backwards compatibility, `false` is equivalent to `'no'`, `true` is equivalent to `'shallow'`\n\n    `'shallow'` will align only the first words after the tag. eg:\n\n        @param    {MyCustomClass} myVariable desc1\n        @return   {String} foo desc2\n        @property {Number} blahblah desc3\n\n    `'deep'` will align each component of the tags, eg:\n\n        @param    {MyCustomClass} myVariable desc1\n        @return   {String}        foo        desc2\n        @property {Number}        blahblah   desc3\n\n\n- `jsdocs_extra_tags` *(Array.String)* An array of strings, each representing extra boilerplate comments to add to *functions*. These can also include arbitrary text (not just tags).\n\n        // jsdocs_extra_tags = ['This is a cool function', '@author nickf', '@version ${1:[version]}']\n        /**<<enter>>\n        function foo (x) {}\n\n        /**\n         * [foo description]\n         * This is a cool function\n         * @author nickf\n         * @version [version]\n         * @param  {[type]} x [description]\n         * @return {[type]}\n         */\n        function foo (x) {}\n\n    Basic variable substitution is supported here for the variables `date` and `datetime`, wrapped in double curly brackets.\n\n        // jsdocs_extra_tags = ['@date {{date}}', '@anotherdate {{datetime}}']\n        /**<<enter>>\n        function foo() {}\n\n        /**\n         * [foo description]\n         * @date     2013-03-25\n         * @datetime 2013-03-25T21:16:25+0100\n         * @return   {[type]}\n         */\n\n- `jsdocs_extra_tags_go_after` *(Boolean)* If true, the extra tags are placed at the end of the block (after param/return). Default: `false`\n\n- `jsdocs_extend_double_slash` *(Boolean)* Whether double-slash comments should be extended. An example of this feature is described above. Default: `true`\n\n- `jsdocs_deep_indent` *(Boolean)* Whether pressing tab at the start of a line in docblock should indent to match the previous line's description field. An example of this feature is described above. Default: `true`\n\n- `jsdocs_notation_map` *(Array)* An array of notation objects. Each notation object must define either a `prefix` OR a `regex` property, and a `type` property.\n\n- `jsdocs_return_tag` *(String)* The text which should be used for a `@return` tag. By default, `@return` is used, however this can be changed to `@returns` if you use that style.\n\n- `jsdocs_spacer_between_sections` *(Boolean|String)* If true, then extra blank lines are inserted between the sections of the docblock. If set to `\"after_description\"` then a spacer will only be added between the description and the first tag. Default: `false`.\n\n- `jsdocs_indentation_spaces_same_para` *(Number)* Described above in the *Reformatting paragraphs* section. Default: `1`\n\n- `jsdocs_autoadd_method_tag` *(Boolean)* Add a `@method` tag to docblocks of functions. Default: `false`\n\n- `jsdocs_simple_mode` *(Boolean)* If true, DocBlockr won't add a template when creating a doc block before a function or variable. Useful if you don't want to write Javadoc-style, but still want your editor to help when writing block comments. Default: `false`\n\n- `jsdocs_lower_case_primitives` *(Boolean)* If true, primitive data types are added in lower case, eg \"number\" instead of \"Number\". Default: `false`\n\n- `jsdocs_short_primitives` *(Boolean)* If true, the primitives `Boolean` and `Integer` are shortened to `Bool` and `Int`. Default: `false`\n\n- `jsdocs_newline_after_block` *(Boolean)* If true, an extra line break is added after the end of a docblock to separate it from the code. Default `false`\n\n- `jsdocs_param_name` *(Boolean)* If true, the name of a function parameter is added to the template. If false, it is omitted. Default: `true`\n\n- `jsdocs_decorate` *(Boolean)* If false, disable decoration of single line comments with <kbd>Ctrl+Enter</kbd>. Default: `true`\n\n- `jsdocs_quick_open_inline` *(Boolean)* If true, an inline docblock will be opened when pressing <kbd>Space</kbd> after an opener (`/**`). When set to `false`, these can be opened by pressing <kbd>Shift+Enter</kbd>. Default: `true`\n\n- `jsdocs_function_description` *(Boolean)* If true, a 'description' line will be added for functions. Default: `true`\n\n## Contributors\n\nThis package was created by [Nick Fisher][spadgos], but has many contributions from others. Please take a look at the [contributors list][contributors] to see who else should get some thanks.\n\n[closure]: http://code.google.com/closure/compiler/docs/js-for-compiler.html\n[contrib]: https://github.com/spadgos/sublime-jsdocs/blob/master/CONTRIBUTING.md\n[contributors]: https://github.com/spadgos/sublime-jsdocs/blob/master/CONTRIBUTORS.md\n[history]: https://github.com/spadgos/sublime-jsdocs/blob/master/HISTORY.md\n[issues]: https://github.com/spadgos/sublime-jsdocs/issues\n[jsdoc]: http://code.google.com/p/jsdoc-toolkit/wiki/TagReference\n[magicmethods]: http://www.php.net/manual/en/language.oop5.magic.php\n[package_control]: http://wbond.net/sublime_packages/package_control\n[phpdoc]: http://phpdoc.org/\n[spadgos]: https://github.com/spadgos\n[sublime]: http://www.sublimetext.com/\n[tags]: https://github.com/spadgos/sublime-jsdocs/tags\n[typehinting]: http://php.net/manual/en/language.oop5.typehinting.php\n[yui]: http://yui.github.com/yuidoc/syntax/index.html\n",
+			"file": "/home/ufan/.config/sublime-text-3/Packages/DocBlockr/README.md",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 14587,
+				"line_ending": "Unix",
+				"scratch": true
+			}
+		},
+		{
+			"file": "eve/MultiView.C",
+			"settings":
+			{
+				"buffer_size": 15830,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 1486,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "kernel/CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 1472,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "kernel/RootNewMacros.cmake",
+			"settings":
+			{
+				"buffer_size": 32375,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "insta",
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"open re",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"gpl",
+				"Licence Snippet: GNU GPL v3.0 [Header]"
+			],
+			[
+				"openre",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"isnta",
+				"Package Control: Install Package"
+			],
+			[
+				"lice",
+				"Licence Snippet: GNU Affero GPL v3.0 [Header]"
+			],
+			[
+				"start",
+				"Text Pastry: Paste"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"text",
+				"Text Pastry: From 1 To X"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"gitdif",
+				"Git: Diff Tool Current File"
+			],
+			[
+				"git log",
+				"Git: Log Current File"
+			],
+			[
+				"git chec",
+				"Git: Change Branch"
+			],
+			[
+				"git stat",
+				"Git: Status"
+			],
+			[
+				"git diff",
+				"Git: Diff Tool Current File"
+			],
+			[
+				"git dif",
+				"Git: Diff All Files"
+			],
+			[
+				"gitchec",
+				"Git: Change Branch"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git ad",
+				"Git: Add All"
+			],
+			[
+				"git co",
+				"Git: Commit"
+			],
+			[
+				"git comi",
+				"Git: Commit"
+			],
+			[
+				"git sta",
+				"Git: Status"
+			],
+			[
+				"git",
+				"Git: Add All"
+			],
+			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"glue",
+				"Glue - Launch"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"gitgu",
+				"GitGutter: Show Comparing Against"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"git ",
+				"Git: Gui"
+			],
+			[
+				"rm",
+				"Package Control: Remove Package"
+			],
+			[
+				"git pull cur",
+				"Git: Pull Current Branch"
+			],
+			[
+				"git bra",
+				"Git: Pull Current Branch"
+			],
+			[
+				"gitstatus",
+				"Git: Status"
+			],
+			[
+				"git:chec",
+				"Git: Checkout"
+			],
+			[
+				"gitc",
+				"Git: Checkout"
+			],
+			[
+				"Ins",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"About"
+			]
+		],
+		"width": 512.0
+	},
+	"console":
+	{
+		"height": 153.0,
+		"history":
+		[
+			"sublime.version()",
+			"sys?",
+			"sys",
+			"import sys",
+			"import ROOT",
+			"sublime.version()",
+			":4"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": true,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": true
+	},
+	"expanded_folders":
+	[
+		"/home/ufan/src/git/mwdc_ana",
+		"/home/ufan/src/git/mwdc_ana/json",
+		"/home/ufan/src/git/mwdc_ana/kernel",
+		"/home/ufan/src/git/mwdc_ana/macros",
+		"/home/ufan/src/git/mwdc_ana/scripts"
+	],
+	"file_history":
+	[
+		"/home/ufan/src/git/root/tree/tree/inc/TBranch.h",
+		"/home/ufan/src/git/root/tree/tree/src/TChain.cxx",
+		"/home/ufan/src/git/mwdc_ana/kernel/global_LinkDef.h",
+		"/home/ufan/src/git/mwdc_ana/macros/fit_drifttime_edge.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_fit_rtrelation.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_meaneventsep_vs_phaseoffset.C",
+		"/home/ufan/src/git/mwdc_ana/macros/draw_drifttime.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_fit_track.C",
+		"/home/ufan/src/git/mwdc_ana/CMakeLists.txt",
+		"/home/ufan/src/git/mwdc_ana/kernel/global.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/utility.cxx",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/rootlogon.C",
+		"/home/ufan/src/git/mwdc_ana/kernel/GeometryInfo.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/GeometryInfo.cxx",
+		"/home/ufan/src/git/mwdc_ana/kernel/CMakeLists.txt",
+		"/home/ufan/src/git/mwdc_ana/kernel/GeometryInfo_LinkDef.h",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/fit_drifttime_edge.C",
+		"/home/ufan/src/git/mwdc_ana/kernel/DriftInfo.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/DriftInfo.cxx",
+		"/home/ufan/src/git/mwdc_ana/kernel/DriftInfo_LinkDef.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/BoardInfo.h",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_fitedge.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/batch_extract_drifttime.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/check_correlation_maxtot.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_trackfit.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_trackfit_test.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_eve.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/MultiView.C",
+		"/home/ufan/src/git/mwdc_ana/eve/EventDisply.h",
+		"/home/ufan/.config/sublime-text-3/Packages/Open-Include/readme.md",
+		"/home/ufan/src/git/mwdc_ana/macros/debug_trackfit_perwire.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/include/TrackFit_polyline.h",
+		"/home/ufan/src/git/mwdc_ana/macros/draw_trajectory.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_fitslice.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_track.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/extrac_rootfile.C",
+		"/home/ufan/.config/sublime-text-3/Packages/C++ Starting Kit/#ifndef-#define-#endif.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/PackageResourceViewer/README.md",
+		"/home/ufan/.config/sublime-text-3/Packages/Licence Snippets/README.md",
+		"/home/ufan/.config/sublime-text-3/Packages/Licence Snippets/snippets/EPL-1.0.full",
+		"/home/ufan/.config/sublime-text-3/Packages/Licence Snippets/snippets/EPL-1.0.header",
+		"/home/ufan/.config/sublime-text-3/Packages/Licence Snippets/snippets/GPL-3.0.header",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_trackfit_perwire.C",
+		"/home/ufan/src/git/mwdc_ana/kernel/TrackFit.h",
+		"/home/ufan/text",
+		"/home/ufan/src/git/mwdc_ana/eve/extract_geom.C",
+		"/home/ufan/src/git/mwdc_ana/macros/debug_trackfit.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/show_extract.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/test_evegeoshape.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/ana_attenuation.C",
+		"/home/ufan/src/git/mwdc_ana/macros/process.C",
+		"/home/ufan/src/git/mwdc_ana/macros/draw_mwdctot.C",
+		"/home/ufan/src/git/mwdc_ana/macros/draw_tof.C",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh2dtof.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh2dmwdc.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/drawh2dtof.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/drawh2dmwdc.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newaxis.sublime-snippet",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/select_entry.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/mk_geom.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/test.C",
+		"/home/ufan/src/git/mwdc_ana/macros/draw_drift.C",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh1dmwdc_gid.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh2dmwdc.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh1dmwdc_gid.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh1dtof_gid.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh2dtof.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/deleteh1dmwdc.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newdir.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh1dmwdc.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/drawh1dmwdc.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/saveh1dmwdc.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/drawh1dtof.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/saveh1dtof.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh1dtof.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh1dtof_gid.sublime-snippet",
+		"/home/ufan/src/git/mwdc_ana/macros/check_bunchid.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/exp_gaus_convolution.C",
+		"/home/ufan/src/software/root/5.34/tutorials/roofit/rf101_basics.C",
+		"/home/ufan/src/software/root/5.34/tutorials/roofit/rf509_wsinteractive.C",
+		"/home/ufan/src/git/mwdc_ana/scripts/maketemplate",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh1dmwdc.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh1dtof.sublime-snippet",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_drifttime.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/extract_minrising_time.C",
+		"/home/ufan/src/git/mwdc_ana/eve/mk_geom.C",
+		"/home/ufan/src/git/mwdc_ana/eve/MultiView.C",
+		"/home/ufan/src/git/mwdc_ana/macros/debug_eve.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/check_maxtot.C",
+		"/home/ufan/src/git/mwdc_ana/crate.json",
+		"/home/ufan/src/git/mwdc_ana/kernel/utility.h",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/check_simulate_bunchid.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/simulate_bunchunsync.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/check_drift.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/check_triggermatching.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/check_starttime.C",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/drawh1dtof_gid.sublime-snippet",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newcanvas.sublime-snippet",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/check_triggermatching_single.C",
+		"/home/ufan/src/git/mwdc_ana/macros/extract_minrising_time.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/get_rtrelation.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/output_txt.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/example56.txt",
+		"/home/ufan/src/software/root/5.34/tutorials/eve/projection_prescale.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/selection_sigs.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/include/TrackFit.h.back",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/include/TrackFit.h",
+		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh2dmwdc_gid.sublime-snippet",
+		"/home/ufan/src/git/mwdc_ana/kernel/fitmethod.h",
+		"/home/ufan/workspace/mwdc/fm/data/test45/fit_rising_falling.C",
+		"/home/ufan/workspace/mwdc/fm/data/test21/analysis/draw_unsync_bunchid_eventindex_separation.C",
+		"/home/ufan/src/git/mwdc_ana/macros/simulate_bunchunsync.C",
+		"/home/ufan/src/git/mwdc_ana/scripts/rootlogon.C",
+		"/home/ufan/src/git/mwdc_ana/macros/extract_event.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/check_toftime.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_noise.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/testfunc.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/check_eventid.C",
+		"/home/ufan/src/git/mwdc_ana/kernel/BoardInfo_LinkDef.h",
+		"/home/ufan/workspace/mwdc/fm/data/test21/analysis/interval_pdf.C",
+		"/home/ufan/src/software/root/5.34/tutorials/roofit/rf513_wsfactory_tools.C",
+		"/home/ufan/src/software/root/5.34/tutorials/roofit/rf512_wsfactory_oper.C",
+		"/home/ufan/src/software/root/5.34/tutorials/math/testrandom.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_interval_raw.C",
+		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_interval.C",
+		"/home/ufan/src/software/root/5.34/tutorials/mc/mass_width_2008.mc.txt",
+		"/home/ufan/src/software/root/5.34/tutorials/unuran/unuranFoamTest.C",
+		"/home/ufan/src/software/root/5.34/tutorials/roofit/rf104_classfactory.C"
+	],
+	"find":
+	{
+		"height": 42.0
+	},
+	"find_in_files":
+	{
+		"height": 114.0,
+		"where_history":
+		[
+			"<current file>",
+			"<current file>,/home/ufan/src/software/root/5.34/tutorials/roofit",
+			"<current file>",
+			"<current file>,/home/ufan/src/software/root/5.34/tutorials/",
+			"<current file>",
+			"",
+			"/home/ufan/src/git/DmpSoftware_Rep1/Reconstruction/Psd",
+			"/home/ufan/src/git/root/bindings/pyroot",
+			"/home/ufan/src/git/root/",
+			"/home/ufan/src/git/root/bindings/pyroot",
+			"/home/ufan/src/git/root",
+			"/home/ufan/src/git/root/cmake",
+			"/home/ufan/src/git/",
+			"/home/ufan/src/git/root",
+			"/home/ufan/src/git/root/bindings/pyroot",
+			"/home/ufan/src/git/Gaudi"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"class",
+			"track",
+			"TGeoNode",
+			"lrange",
+			"kCameraOrthoXOY",
+			"redraw",
+			"zoom",
+			"arrow",
+			"importevent3d",
+			"kGrey",
+			"evegeoshape",
+			"get_c",
+			"get_chamber",
+			"get_c",
+			"tevegeotopnode",
+			"tevegeonode",
+			"fUsePreScale",
+			"getpoint",
+			".\"",
+			"axis",
+			"}\n",
+			"fUpUOZGeomScene",
+			"TEveViewer *sev = gEve->SpawnNewViewer(\"Scaled 3D\");\n   // TEveProjectionManager* smng =\n   //    new TEveProjectionManager(TEveProjection::kPT_3D);\n   // TEveProjection* sp = smng->GetProjection();\n   // sp->SetUsePreScale(kTRUE);\n   // sp->AddPreScaleEntry(2,   0,  1);\n   // sp->AddPreScaleEntry(2, 100,  0.2);\n\n   // TEveScene* ss = gEve->SpawnNewScene(\"Scaled Geom\");\n   // sev->AddScene(ss);\n   // ss->AddElement(smng);\n\n   // smng->ImportElements(gsre);",
+			"Move3LF",
+			"fRPhiMgr",
+			"hitwireUpX",
+			"fRPhiGeomScene",
+			"-89.25",
+			"final_resi",
+			"printf",
+			"fit(",
+			"here",
+			"fit(",
+			"rt_relation[",
+			"here",
+			"herre",
+			"TrackFit::Line",
+			"fPolyline.",
+			"polyline",
+			"linefit",
+			"std::map<UInt_t, Line> GetHittedWires(){\n	// 	return fHittedwires;\n	// }",
+			"fHittedwires",
+			"minrising_gid",
+			"line",
+			"next",
+			"hitted",
+			"hittedwi",
+			"h1d_init_fitteddistances",
+			"fitteddis",
+			"h1d_init_fitteddistances",
+			"error",
+			"h1d_init_fitteddistances",
+			"h1d_final_fitteddistances",
+			"h1d_init_fitteddistances",
+			"h1d_fitteddistances",
+			"h1d_init_fitteddistances",
+			"dir_rtseed",
+			"dir_rtco",
+			"nbins",
+			"dir_rtseed",
+			"dir_rtcorrected",
+			"rt_relation",
+			"h1d_init_fitteddistances",
+			"outfile",
+			"UChar_t l,p;",
+			"tspline",
+			"minrising_drifttime",
+			"print",
+			"Reset",
+			"line",
+			"init_track",
+			"TrackFit::Line",
+			"Reset",
+			"in line",
+			"init_track",
+			"TrackFit::Line",
+			"line",
+			"p0_step",
+			"\n// class LineFit: public ROOT::Math::IBaseFunctionMultiDim\n// {\n// public:\n// 	LineFit(GeometryInfo info): fWirePositions(info) {}\n// 	LineFit() {}\n// 	~LineFit() {}\n// 	// \n// 	ROOT::Math::IBaseFunctionMultiDim* Clone() const {\n// 		return new LineFit(*this);\n// 	}\n// 	unsigned int NDim() const { return 4; }\n\n// 	//  \n// 	void AddHit(UInt_t gid, Double_t distance){\n// 		fDistances[gid]=distance;\n// 	}\n\n// 	void Reset(){\n// 		fDistances.clear();\n// 	}\n\n// private:\n// 	double DoEval(const double * p) const {\n// 		Line track(p);\n// 		Line wire;\n\n// 		Double_t sum=0;\n// 		Int_t size=fDistances.size();\n// 		assert(size==6);\n\n// 		std::map<UInt_t, Double_t>::iterator it;\n// 		UInt_t gid;\n// 		Double_t distance,tmpdistance;\n// 		TVector3 wire_location,wire_direction;\n// 		for(it=fDistances.begin();it!=fDistances.end();it++){\n// 			gid=it->first;distance=it->second;\n// 			// \n// 			fWirePositions.GetPoint(gid,wire_location);\n// 			fWirePositions.GetDirection(gid,wire_direction);\n			\n// 			wire.Reset(wire_location,wire_direction);\n// 			// \n// 			tmpdistance=track.DistanceToLine(wire);\n\n// 			sum+=TMath::Power(tmpdistance-distance,2);\n// 		}\n\n// 		return sum;\n// 	}\n\n\n// private:\n// 	std::map<UInt_t, Double_t> fDistances;//gid -> drift_distance\n// 	GeometryInfo               fWirePositions;\n// };\n",
+			"tmpdistance",
+			"TMath",
+			"h1d_minrising_drifttime_mwdc_single",
+			"DriftInfo_Dict",
+			"Encoding",
+			"Encodeing",
+			"h2d_location_vs_tm",
+			"fit_falling(",
+			"fit_rising",
+			"extract_minrising_time",
+			"h1d_minrising_drifttime_mwdc",
+			"rising_paranames",
+			"minrising_gid",
+			"dir_maxtot",
+			"it_starttime",
+			"rising",
+			"max_drift_time",
+			"x_up_position",
+			"it",
+			"h1d_mwdc_test",
+			"h2d_mwdc_risingtimediff_vs_totdiff",
+			"h1d_mwdc_maxtot_minrising_risingtimediff_adjacent",
+			"h2d_mwdc_risingtimediff_vs_totdiff",
+			"h2d_mwdc_risingtimediff_vs_totdiff_gid",
+			"h1d_starttime_tof",
+			"h1d_startimediff_tof",
+			"utility",
+			"utillity",
+			"calc_starttime",
+			"starttime",
+			"h1d_timetag_tof",
+			"h1d_drifttime_maxhit_mwdc",
+			"for(int l=0;l<g_mwdc_location;l++){\n      //   for(int p=0;p<g_mwdc_wireplane;p++){\n      //     h1d_tot_maxchannel_mwdc[maxtot_gid[l][p]]->Fill(maxtot[l][p]);\n      //     h1d_drifttime_maxhit_mwdc[maxtot_gid[l][p]]->Fill(max_drift_time[l][p]);\n      //   }\n      // }",
+			"h1d_tot_maxchannel_mwdc",
+			"[i]",
+			"mwdc_leading",
+			"histrepo1d_mwdc_global_tot_cut",
+			"histrepo1d_mwdc_global_tot",
+			"histrepo1d_mwdc_global_trailing",
+			"h1d_driftsingle_mwdc",
+			"h1d_drift_mwdc",
+			"evaluate(",
+			"evaluate",
+			"RooExponential",
+			"RooWorkspace",
+			"previous_mwdc_bunchid",
+			"previous_event_index",
+			"previous_tof_bunchid",
+			"previous_mwdc_bunchid"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"maxtot_drifttime",
+			"utility",
+			"utillity::calc_starttime",
+			"histrepo1d_mwdc_global_tot_highcut",
+			"g_range_bunchid",
+			"mwdc_eventid",
+			"clones",
+			"../../..",
+			"ADC_Prerec",
+			"_ADC_Prerec",
+			"Prerec_PsdOnly",
+			"r_",
+			"Right",
+			"rh",
+			"Right",
+			"DmpPsdHKDataManager",
+			"\\tab",
+			"can_raw",
+			"void"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 5,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "eve/EventDisply.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2846,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1182,
+								1182
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 641.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "eve/EventDisply.cxx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12880,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								85,
+								85
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/ufan/.config/sublime-text-3/Packages/DocBlockr/README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14587,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9510,
+								9510
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"buffer_empty": false,
+							"create_dir": true,
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 7222.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "eve/MultiView.C",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15830,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15273,
+								15273
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 13643.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "CMakeLists.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1486,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1436,
+								1436
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CMakeEditor/CMakeEditor.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "kernel/CMakeLists.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1472,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CMakeEditor/CMakeEditor.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "kernel/RootNewMacros.cmake",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 32375,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CMakeEditor/CMakeEditor.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.CMakeEditor":
+	{
+		"height": 256.0
+	},
+	"output.astyle_error_message":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 130.0
+	},
+	"pinned_build_system": "",
+	"project": "mwdc_ana.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"kernel/CMakeLists.txt"
+			],
+			[
+				"rootnew",
+				"kernel/RootNewMacros.cmake"
+			],
+			[
+				"cmak",
+				"kernel/CMakeLists.txt"
+			],
+			[
+				"mult",
+				"eve/MultiView.C"
+			],
+			[
+				"eve",
+				"eve/EventDisply.h"
+			],
+			[
+				"geo",
+				"kernel/GeometryInfo.h"
+			],
+			[
+				"trackfitper",
+				"macros/debug_trackfit_perwire.C"
+			],
+			[
+				"debugtrai",
+				"macros/debug_trackfit.C"
+			],
+			[
+				"trac",
+				"kernel/TrackFit.h"
+			],
+			[
+				"mu",
+				"eve/MultiView.C"
+			],
+			[
+				"mul",
+				"eve/MultiView.C"
+			],
+			[
+				"gol",
+				"kernel/global.h"
+			],
+			[
+				"mk",
+				"eve/mk_geom.C"
+			],
+			[
+				"gl",
+				"kernel/global.h"
+			],
+			[
+				"tra",
+				"kernel/TrackFit.h"
+			],
+			[
+				"debe",
+				"macros/debug_eve.C"
+			],
+			[
+				"p",
+				"~/workspace/mwdc/fm/workspace/install/MultiView.C"
+			],
+			[
+				"g",
+				"kernel/global.h"
+			],
+			[
+				"debu",
+				"~/workspace/mwdc/fm/workspace/install/debug_trackfit.C"
+			],
+			[
+				"tset",
+				"~/workspace/mwdc/fm/workspace/install/test.C"
+			],
+			[
+				"test",
+				"~/workspace/mwdc/fm/workspace/install/test.C"
+			],
+			[
+				"debug_",
+				"~/workspace/mwdc/fm/workspace/install/debug_trackfit_test.C"
+			],
+			[
+				"tr",
+				"kernel/TrackFit.h"
+			],
+			[
+				"draw_tra",
+				"macros/draw_trajectory.C"
+			],
+			[
+				"trakc",
+				"kernel/TrackFit.h"
+			],
+			[
+				"ge",
+				"kernel/GeometryInfo.cxx"
+			],
+			[
+				"go",
+				"kernel/global.h"
+			],
+			[
+				"debt",
+				"~/workspace/mwdc/fm/workspace/install/debug_fit_track.C"
+			],
+			[
+				"glo",
+				"kernel/global.h"
+			],
+			[
+				"draw_drif",
+				"macros/draw_drifttime.C"
+			],
+			[
+				"debug",
+				"~/workspace/mwdc/fm/workspace/install/debug_fit_rtrelation.C"
+			],
+			[
+				"deb",
+				"~/workspace/mwdc/fm/workspace/install/debug_fit_track.C"
+			],
+			[
+				"draw",
+				"macros/draw_mwdctot.C"
+			],
+			[
+				"drif",
+				"kernel/DriftInfo.h"
+			],
+			[
+				"fit_",
+				"macros/fit_drifttime_edge.C"
+			],
+			[
+				"get",
+				"~/workspace/mwdc/fm/workspace/install/get_rtrelation.C"
+			],
+			[
+				"exr",
+				"macros/extract_minrising_time.C"
+			],
+			[
+				"fit",
+				"~/workspace/mwdc/fm/workspace/install/fit_drifttime_edge.C"
+			],
+			[
+				"draw_drf",
+				"~/workspace/mwdc/fm/workspace/install/draw_drifttime.C"
+			],
+			[
+				"bor",
+				"kernel/BoardInfo.h"
+			],
+			[
+				"fited",
+				"~/workspace/mwdc/fm/workspace/install/fit_drifttime_edge.C"
+			],
+			[
+				"bat",
+				"~/workspace/mwdc/fm/workspace/install/batch_extract_drifttime.C"
+			],
+			[
+				"ex",
+				"~/workspace/mwdc/fm/workspace/install/extract_minrising_time.C"
+			],
+			[
+				"r",
+				"~/workspace/mwdc/fm/workspace/install/rootlogon.C"
+			],
+			[
+				"o",
+				"scripts/rootlogon.C"
+			],
+			[
+				"root",
+				"scripts/rootlogon.C"
+			],
+			[
+				"pro",
+				"macros/process.C"
+			],
+			[
+				"extr",
+				"macros/extract_minrising_time.C"
+			],
+			[
+				"ext",
+				"~/workspace/mwdc/fm/workspace/install/extract_minrising_time.C"
+			],
+			[
+				"check_ma",
+				"~/workspace/mwdc/fm/workspace/install/check_correlation_maxtot.C"
+			],
+			[
+				"check",
+				"~/workspace/mwdc/fm/workspace/install/check_triggermatching.C"
+			],
+			[
+				"che",
+				"~/workspace/mwdc/fm/workspace/install/check_maxtot.C"
+			],
+			[
+				"u",
+				"kernel/utility.cxx"
+			],
+			[
+				"ut",
+				"kernel/utility.cxx"
+			],
+			[
+				"chectot",
+				"~/workspace/mwdc/fm/workspace/install/check_maxtot.C"
+			],
+			[
+				"chec",
+				"macros/check_bunchid.C"
+			],
+			[
+				"check_max",
+				"~/workspace/mwdc/fm/workspace/install/check_correlation_maxtot.C"
+			],
+			[
+				"car",
+				"crate.json"
+			],
+			[
+				"checkma",
+				"~/workspace/mwdc/fm/workspace/install/check_maxtot.C"
+			],
+			[
+				"newh1d",
+				"~/.config/sublime-text-3/Packages/User/mwdc/newh1dmwdc_gid.sublime-snippet"
+			],
+			[
+				"newh2d",
+				"~/.config/sublime-text-3/Packages/User/mwdc/newh2dmwdc.sublime-snippet"
+			],
+			[
+				"newh1dm",
+				"~/.config/sublime-text-3/Packages/User/mwdc/newh1dmwdc_gid.sublime-snippet"
+			],
+			[
+				"check_mat",
+				"~/workspace/mwdc/fm/workspace/install/check_correlation_maxtot.C"
+			],
+			[
+				"uti",
+				"kernel/utility.cxx"
+			],
+			[
+				"trig",
+				"~/workspace/mwdc/fm/workspace/install/check_triggermatching.C"
+			],
+			[
+				"bo",
+				"kernel/BoardInfo.h"
+			],
+			[
+				"mer",
+				"macros/extract_event.C"
+			],
+			[
+				"checs",
+				"~/workspace/mwdc/fm/workspace/install/check_starttime.C"
+			],
+			[
+				"newh1dto",
+				"~/.config/sublime-text-3/Packages/User/mwdc/newh1dtof_gid.sublime-snippet"
+			],
+			[
+				"drawh1dtof",
+				"~/.config/sublime-text-3/Packages/User/mwdc/drawh1dtof.sublime-snippet"
+			],
+			[
+				"make",
+				"scripts/maketemplate"
+			],
+			[
+				"check_",
+				"~/workspace/mwdc/fm/workspace/install/check_drift.C"
+			],
+			[
+				"new",
+				"~/.config/sublime-text-3/Packages/User/mwdc/newh2dtof.sublime-snippet"
+			],
+			[
+				"mak",
+				"scripts/maketemplate"
+			],
+			[
+				"drawh",
+				"~/.config/sublime-text-3/Packages/User/mwdc/drawh1dmwdc.sublime-snippet"
+			],
+			[
+				"c",
+				"crate.json"
+			],
+			[
+				"cra",
+				"crate.json"
+			],
+			[
+				"drto",
+				"macros/draw_tof.C"
+			],
+			[
+				"ch",
+				"~/workspace/mwdc/fm/workspace/install/check_drift.C"
+			],
+			[
+				"cr",
+				"crate.json"
+			],
+			[
+				"/",
+				"~/.config/sublime-text-3/Packages/User/mwdc/newh1dmwdc_gid.sublime-snippet"
+			],
+			[
+				"gloa",
+				"kernel/global.h"
+			],
+			[
+				"sim",
+				"macros/simulate_bunchunsync.C"
+			],
+			[
+				"bun",
+				"~/workspace/mwdc/fm/workspace/install/check_bunchid.C"
+			],
+			[
+				"checsi",
+				"~/workspace/mwdc/fm/workspace/install/check_simulate_bunchid.C"
+			],
+			[
+				"inter",
+				"~/workspace/mwdc/fm/data/test21/analysis/interval_pdf.C"
+			],
+			[
+				"int",
+				"docs/tex/fig/tof_interval.eps"
+			],
+			[
+				"clone",
+				"~/workspace/temp/clones_test.cpp"
+			],
+			[
+				"tes",
+				"~/workspace/temp/test.cpp"
+			],
+			[
+				"linkd",
+				"kernel/global_LinkDef.h"
+			],
+			[
+				"clo",
+				"~/workspace/temp/clones_test.cpp"
+			],
+			[
+				"link",
+				"kernel/BoardInfo_LinkDef.h"
+			],
+			[
+				"algpsdpre",
+				"Reconstruction/Psd/src/DmpAlgPsdPreRec.cc"
+			],
+			[
+				"tosimp",
+				"Install/share/TestRelease/Psd/AlgToSimple/share/JobPsd_ToSimple.py"
+			],
+			[
+				"psdbase",
+				"Kernel/src/DmpPsdBase.cc"
+			],
+			[
+				"dmpsdbas",
+				"Install/include/DmpPsdBase.h"
+			],
+			[
+				"evtbgoraw",
+				"Install/include/DmpEvtBgoRaw.h"
+			],
+			[
+				"tosim",
+				"Install/share/TestRelease/Psd/AlgToSimple/src/DmpAlgToSimple.cc"
+			],
+			[
+				"tos",
+				"Install/share/TestRelease/Psd/AlgToSimple/src/DmpAlgToSimple.cc"
+			],
+			[
+				"recpsdma",
+				"Reconstruction/Psd/src/DmpRecPsdManager.cc"
+			],
+			[
+				"pre",
+				"pre-install.sh"
+			],
+			[
+				"dmprecpsdma",
+				"Install/include/DmpRecPsdManager.h"
+			],
+			[
+				"dmprecpsd",
+				"Install/include/DmpRecPsdManager.h"
+			],
+			[
+				"psdmang",
+				"Reconstruction/Psd/src/DmpRecPsdManager.cc"
+			],
+			[
+				"psdrec",
+				"Reconstruction/Psd/src/PsdRecManager.cc"
+			],
+			[
+				"psdalgdy",
+				"Reconstruction/Psd/include/DmpAlgPsdDy58Fit.h"
+			],
+			[
+				"evtpsd",
+				"Install/include/DmpEvtPsdPed.h"
+			],
+			[
+				"psdba",
+				"Install/include/DmpPsdBase.h"
+			],
+			[
+				"psdpedcut",
+				"Reconstruction/Psd/src/DmpAlgPsdPedcut.cc"
+			],
+			[
+				"dmpalgpsdped",
+				"Install/include/DmpAlgPsdPedcut.h"
+			],
+			[
+				"psdprere",
+				"Reconstruction/Psd/src/DmpAlgPsdPreRec.cc"
+			],
+			[
+				"bgora",
+				"Install/include/DmpEvtBgoRaw.h"
+			],
+			[
+				"algpsddy",
+				"Reconstruction/Psd/src/DmpAlgPsdDy58Fit.cc"
+			],
+			[
+				"pedfit",
+				"Reconstruction/Psd/src/DmpAlgPsdPedfit.cc"
+			],
+			[
+				"cnct",
+				"Install/share/Connector/Psd/EQM/Q1_FEE0x20.cnct"
+			],
+			[
+				"dmpevtpsdra",
+				"Install/include/DmpEvtPsdRaw.h"
+			],
+			[
+				"dmpsdbase.c",
+				"Kernel/src/DmpPsdBase.cc"
+			],
+			[
+				"dmppsd",
+				"Install/include/DmpPsdBase.h"
+			],
+			[
+				"dmpevtpsdped",
+				"Install/include/DmpEvtPsdPed.h"
+			],
+			[
+				"recpsd",
+				"Install/include/DmpRecPsdManager.h"
+			],
+			[
+				"pedcut",
+				"Reconstruction/Psd/src/DmpAlgPsdPedcut.cc"
+			],
+			[
+				"dmpalgpsd",
+				"Install/include/DmpAlgPsdPedcut.h"
+			],
+			[
+				"dmpalgpsdbto",
+				"Reconstruction/Psd/src/DmpAlgPsdBtOther.cc"
+			],
+			[
+				"scons",
+				"SConstruct"
+			],
+			[
+				"cppyy",
+				"bindings/pyroot/cppyy.py"
+			],
+			[
+				"root.p",
+				"bindings/pyroot/ROOT.py"
+			],
+			[
+				"root.py",
+				"bindings/pyroot/ROOT.py"
+			],
+			[
+				"str",
+				"test/stress.cxx"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/src/git/Gaudi/gaudi.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"AIDATupleAlgorithmWrite"
+			],
+			[
+				"cmak",
+				"cmakelists"
+			],
+			[
+				"Alg",
+				"Algorithm"
+			],
+			[
+				"tctost",
+				"TimeCode2TimeStamp"
+			],
+			[
+				"tcto",
+				"TCtoString"
+			],
+			[
+				"re",
+				"ReadEvent"
+			],
+			[
+				"DmpAlgpsdped",
+				"DmpAlgPsdPedfit"
+			],
+			[
+				"DmpAlgPsdPed",
+				"DmpAlgPsdPedfit"
+			],
+			[
+				"DmpAlgPsdDy",
+				"DmpAlgPsdDy58Fit"
+			],
+			[
+				"DmpAlgDy",
+				"DmpAlgPsdDy58Fit"
+			],
+			[
+				"Dmpalgpsdmipfit",
+				"DmpAlgPsdMipFit"
+			],
+			[
+				"DmpAlgPsdMipfit",
+				"DmpAlgPsdMipFit"
+			],
+			[
+				"DmpAlgPsdPedfit",
+				"DmpAlgPsdPedfit"
+			],
+			[
+				"DmpEvtPsd",
+				"DmpEvtPsdDy58"
+			],
+			[
+				"DmpCore",
+				"DmpCore"
+			],
+			[
+				"DmpPsdBase",
+				"DmpPsdBase_H"
+			]
+		],
+		"width": 880.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 241.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 2
+	}
+}

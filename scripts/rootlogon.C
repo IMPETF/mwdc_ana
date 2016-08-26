@@ -1,9 +1,8 @@
 {
 
-//gSystem->AddIncludePath("-I/home/ufan/workspace/mwdc/formal_test/pre/install/include");
-//gSystem->Load("/home/ufan/workspace/mwdc/formal_test/pre/install/lib/libmwdc.so");
 gSystem->AddIncludePath("-I${CMAKE_INSTALL_PREFIX}/include");
-gSystem->Load("${CMAKE_INSTALL_PREFIX}/lib/libmwdc.so");
+gSystem->Load("${CMAKE_INSTALL_PREFIX}/lib/libmwdc_kernel.so");
+gSystem->Load("${CMAKE_INSTALL_PREFIX}/lib/libmwdc_eve.so");
   
 gROOT->ProcessLine(".L draw_multihit.C+");
 gROOT->ProcessLine(".L draw_noise.C+");
