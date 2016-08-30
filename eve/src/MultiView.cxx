@@ -1,4 +1,7 @@
 #include "MultiView.h"
+#include <TEveManager.h>
+#include <TGTableHeader.h>
+#include <TGFrame.h>
 
 /////////////
 // MultiView
@@ -9,6 +12,7 @@ MultiView::MultiView()
 {
 	// Constructor --- creates required scenes, projection managers
 	// and GL viewers.
+	TEveManager::Create();
 
 	// Scenes
 	//========
@@ -138,11 +142,42 @@ MultiView::MultiView()
 
 	TEveWindowSlot *slot = 0;
 	TEveWindowPack *pack = 0;
+	TEveWindowFrame *frame = 0;
+
 	// 3D Simplified
+	slot = TEveWindow::CreateWindowInTab(gEve->GetBrowser()->GetTabRight());
+	pack = slot->MakePack();
+	pack->SetElementName("3D Simplified View");
+	pack->SetShowTitleBar(kFALSE);
+	pack->SetHorizontal();
+
+	slot=pack->NewSlot();
+	frame=slot->MakeFrame();
+	frame->SetElementName("Event Summary");
+	frame->SetShowTitleBar(kTRUE);
+	TGCompositeFrame* cf = frame->GetGUICompositeFrame();
+	TGVerticalFrame* hf = new TGVerticalFrame(cf);
+	hf->SetCleanup(kLocalCleanup);
+	cf->AddFrame(hf, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY));
+	{
+		for(int i=0;i<6;i++){
+			fTableDistanceBufferTemp[i]=fTableDistanceBuffer[i];
+		}
+		fTableDistance = new TGSimpleTable(hf, 99, fTableDistanceBufferTemp, 6, 3);
+		hf->AddFrame(fTableDistance, new TGLayoutHints(kLHintsTop| kLHintsCenterX| kLHintsExpandX | kLHintsExpandY));
+		DefaultColumnName();
+		DefaultRowName();
+	}
+	cf->MapSubwindows();
+	cf->Layout();
+	cf->MapWindow();
+
+	pack->NewSlot()->MakeCurrent();
 	f3DView = gEve->SpawnNewViewer("3D Simplified View", "");
 	f3DView->GetGLViewer()->SetStyle(TGLRnrCtx::kOutline);
 	f3DView->AddScene(f3DEventScene);
 	gEve->AddToListTree(f3DEventScene, kFALSE);
+
 	// XY
 	slot = TEveWindow::CreateWindowInTab(gEve->GetBrowser()->GetTabRight());
 	pack = slot->MakePack();
@@ -419,4 +454,59 @@ void MultiView::EnablePreScale()
 	fDownUOZMgr->ProjectChildren();
 
 	gEve->Redraw3D();
+}
+
+void MultiView::DefaultRowName()
+{
+	const char rowname[6][10]={"Down X","Down Y","Down U","Up X","Up Y","Up U"};
+
+	TGTableHeader* header;
+	for(int row=0;row<6;row++){
+		header=fTableDistance->GetRowHeader(row);
+		header->SetLabel(rowname[row]);
+	}
+}
+
+void MultiView::DefaultColumnName()
+{
+	const char colname[3][10]={"Drift R","Init FD","Final FD"};
+
+	TGTableHeader* header;
+	for(int col=0;col<3;col++){
+		header=fTableDistance->GetColumnHeader(col);
+		header->SetLabel(colname[col]);
+	}
+}
+
+void MultiView::UpdateDriftRadius(Double_t value[2][3])
+{
+	for(int l=0;l<2;l++){
+		for(int p=0;p<3;p++){
+			fTableDistanceBuffer[l*3+p][0]=value[l][p];
+		}
+	}
+
+	fTableDistance->UpdateView();
+}
+
+void MultiView::UpdateInitialFittedDistance(Double_t value[2][3])
+{
+	for(int l=0;l<2;l++){
+		for(int p=0;p<3;p++){
+			fTableDistanceBuffer[l*3+p][1]=value[l][p];
+		}
+	}
+
+	fTableDistance->UpdateView();
+}
+
+void MultiView::UpdateFinalFittedDistance(Double_t value[2][3])
+{
+	for(int l=0;l<2;l++){
+		for(int p=0;p<3;p++){
+			fTableDistanceBuffer[l*3+p][2]=value[l][p];
+		}
+	}
+
+	fTableDistance->UpdateView();
 }

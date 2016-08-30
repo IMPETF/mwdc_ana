@@ -24,6 +24,7 @@
 #include <TEveProjectionAxes.h>
 #include <TEveBrowser.h>
 #include <TEveWindow.h>
+#include <TGSimpleTable.h>
 
 ///////////////////////////////////////////
 // MultiView: Cutomized Eve Browser Tabs //
@@ -63,6 +64,13 @@ public:
 	void DisablePreScale();
 	void EnablePreScale();
 
+	void DefaultColumnName();
+	void DefaultRowName();
+	void UpdateDriftRadius(Double_t value[2][3]);
+	void UpdateInitialFittedDistance(Double_t value[2][3]);
+	void UpdateFinalFittedDistance(Double_t value[2][3]);
+
+private:
 	TEveProjectionManager *fUpUOZMgr;
 	TEveProjectionManager *fDownUOZMgr;
 	TEveProjectionManager *fXOZMgr;
@@ -89,6 +97,10 @@ private:
 	Double_t lrange;
 	Double_t hrange;//z-axis in the range [lrange,hrange] will be scaled
 	
+	TGSimpleTable*  fTableDistance;
+	Double_t        fTableDistanceBuffer[6][3];
+	Double_t*       fTableDistanceBufferTemp[6];
+
 	ClassDef(MultiView, 0);
 };
 #endif

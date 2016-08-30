@@ -4,7 +4,7 @@ project(mwdc)
 #---------find ROOT------------------------
 
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
-find_package(ROOT 5.34 REQUIRED CONFIG COMPONENTS Eve RGL Geom)
+find_package(ROOT 5.34 REQUIRED CONFIG COMPONENTS Eve RGL Geom Gui)
 
 if(NOT ROOT_FOUND)
 	MESSAGE(FATAL_ERROR "ROOT not found")
