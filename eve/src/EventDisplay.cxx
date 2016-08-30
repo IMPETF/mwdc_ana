@@ -20,7 +20,7 @@
 #include <TGLabel.h>
 #include <TSystem.h>
 #include <TGNumberEntry.h>
-
+#include <TGSimpleTable.h>
 
 ClassImp(EventDisplay)
 
@@ -36,16 +36,27 @@ EventDisplay* EventDisplay::Create()
 }
 
 EventDisplay::EventDisplay()
-: fEventHandler(0)
+: fEventHandler(0),
+  fHittedCells("Hitted Cells Highlight")
 {
 	TEveManager::Create();
 
 	fMultiView = new MultiView();
+
+	for(int i=0;i<6;i++){
+		fTableDistanceBufferTemp[i]=fTableDistanceBuffer[i];
+		for(int j=0;j<3;j++){
+			fTableDistanceBuffer[i][j]=-1;
+		}
+	}
+
+	fHittedCells.SetHighlightMode();
+	fHittedCells.ActivateSelection();
 }
 
 EventDisplay::~EventDisplay()
 {
-	delete fMultiView;
+	// delete fMultiView;
 
 	// TEveManager::Terminate();
 }
@@ -263,8 +274,8 @@ void EventDisplay::MakeGui()
 	// Event Status
 	// TGGroupFrame* statusf = new TGGroupFrame(frmMain, "Event Status");
 	{
-		TGLabel* fLabelStatus = new TGLabel(frmMain, "Event Status");
-		frmMain->AddFrame(fLabelStatus, new TGLayoutHints(kLHintsTop | kLHintsCenterX | kLHintsExpandX, 2, 10, 10, 10));
+		TGLabel* fLabelStatus = new TGLabel(frmMain, "Event Status:");
+		frmMain->AddFrame(fLabelStatus, new TGLayoutHints(kLHintsTop | kLHintsCenterX | kLHintsExpandX, 2, 2, 10, 2));
 		fTextEntryStatus = new TGTextEntry(frmMain);
 		fTextEntryStatus->SetEnabled(kFALSE);
 		frmMain->AddFrame(fTextEntryStatus, new TGLayoutHints(kLHintsCenterX | kLHintsTop | kLHintsExpandX, 2, 10, 10, 10));
@@ -332,18 +343,46 @@ void EventDisplay::MakeGui()
 	{
 		TGTextButton* b = 0;
 
-		b = new TGTextButton(hf, "EnableScale");
+		b = new TGTextButton(hf, "Enable Scale");
 		hf->AddFrame(b, new TGLayoutHints(kLHintsTop | kLHintsExpandX, 2, 0, 2, 2));
 		b->Connect("Clicked()", "MultiView", fMultiView, "EnablePreScale()");
 
-		b = new TGTextButton(hf, "DisableScale");
+		b = new TGTextButton(hf, "Disable Scale");
 		hf->AddFrame(b, new TGLayoutHints(kLHintsTop | kLHintsExpandX, 3, 2, 2, 2));
 		b->Connect("Clicked()", "MultiView", fMultiView, "DisablePreScale()");
 	}
 	scalef->AddFrame(hf, new TGLayoutHints(kLHintsExpandX, 2, 2, 5, 1));
 	frmMain->AddFrame(scalef, new TGLayoutHints(kLHintsExpandX, 2, 2, 5, 1));
 
+	// Highlight Management
+	TGGroupFrame* highlightf = new TGGroupFrame(frmMain, "Hitted Cells");
+	TGHorizontalFrame* hf_highlight = new TGHorizontalFrame(highlightf);
+	{
+		TGTextButton* b = 0;
 
+		b = new TGTextButton(hf_highlight, "Enable Highlight");
+		hf_highlight->AddFrame(b, new TGLayoutHints(kLHintsTop | kLHintsExpandX, 2, 0, 2, 2));
+		b->Connect("Clicked()", "EventDisplay", this, "DoActivateHighlight()");
+
+		b = new TGTextButton(hf_highlight, "Disable Highlight");
+		hf_highlight->AddFrame(b, new TGLayoutHints(kLHintsTop | kLHintsExpandX, 3, 2, 2, 2));
+		b->Connect("Clicked()", "EventDisplay", this , "DoDeactivateHighlight()");
+	}
+	highlightf->AddFrame(hf_highlight, new TGLayoutHints(kLHintsExpandX, 2, 2, 5, 1));
+	frmMain->AddFrame(highlightf, new TGLayoutHints(kLHintsExpandX, 2, 2, 5, 1));
+
+	// Summary Table
+	{
+		TGLabel* fLabelSummary = new TGLabel(frmMain, "Summary Table:");
+		frmMain->AddFrame(fLabelSummary, new TGLayoutHints(kLHintsTop | kLHintsCenterX | kLHintsExpandX, 2, 10, 20, 10));
+		
+		fTableDistance = new TGSimpleTable(frmMain, 997, fTableDistanceBufferTemp, 6, 3);
+		DefaultColumnName();
+		DefaultRowName();	
+		frmMain->AddFrame(fTableDistance, new TGLayoutHints(kLHintsBottom| kLHintsCenterX| kLHintsExpandX | kLHintsExpandY));
+	}
+
+	// Resize
 	frmMain->MapSubwindows();
 	frmMain->Resize();
 	frmMain->MapWindow();
@@ -438,19 +477,69 @@ TEveElement* EventDisplay::GetWire(Int_t l, Int_t p, Int_t index)
 	return wire;
 }
 
+// Summary Table
+void EventDisplay::DefaultRowName()
+{
+	const char rowname[6][10]={"Down X","Down Y","Down U","Up X","Up Y","Up U"};
+
+	TGTableHeader* header;
+	for(int row=0;row<6;row++){
+		header=fTableDistance->GetRowHeader(row);
+		header->SetLabel(rowname[row]);
+	}
+}
+
+void EventDisplay::DefaultColumnName()
+{
+	const char colname[3][20]={"Drift R(mm)","Init FD(mm)","Final FD(mm)"};
+
+	TGTableHeader* header;
+	for(int col=0;col<3;col++){
+		header=fTableDistance->GetColumnHeader(col);
+		header->SetLabel(colname[col]);
+	}
+}
+
 void EventDisplay::UpdateDriftRadius(Double_t value[2][3])
 {
-	fMultiView->UpdateDriftRadius(value);
+	for(int l=0;l<2;l++){
+		for(int p=0;p<3;p++){
+			fTableDistanceBuffer[l*3+p][0]=value[l][p];
+		}
+	}
+
+	fTableDistance->UpdateView();
+	DefaultRowName();
+	DefaultColumnName();
+	// fMultiView->UpdateDriftRadius(value);
 }
 
 void EventDisplay::UpdateInitialFittedDistance(Double_t value[2][3])
 {
-	fMultiView->UpdateInitialFittedDistance(value);
+	for(int l=0;l<2;l++){
+		for(int p=0;p<3;p++){
+			fTableDistanceBuffer[l*3+p][1]=value[l][p];
+		}
+	}
+
+	fTableDistance->UpdateView();
+	DefaultRowName();
+	DefaultColumnName();
+	// fMultiView->UpdateInitialFittedDistance(value);
 }
 
 void EventDisplay::UpdateFinalFittedDistance(Double_t value[2][3])
 {
-	fMultiView->UpdateFinalFittedDistance(value);
+	for(int l=0;l<2;l++){
+		for(int p=0;p<3;p++){
+			fTableDistanceBuffer[l*3+p][2]=value[l][p];
+		}
+	}
+
+	fTableDistance->UpdateView();
+	DefaultRowName();
+	DefaultColumnName();
+	// fMultiView->UpdateFinalFittedDistance(value);
 }
 
 void EventDisplay::DoGotoEvent()
@@ -467,4 +556,35 @@ void EventDisplay::DoConfigStep()
 	printf("DoConfigStep: %d\n",step);
 	
 	fEventHandler->SetNavigationStep(step);
+}
+
+void EventDisplay::AddCellToHighlight(int l, int p, int index)
+{
+	TEveElement* el=GetCell(l,p,index);
+	fHittedCells.AddElement(el);
+}
+
+void EventDisplay::RemoveCellFromHighlight(int l,int p, int index)
+{
+	TEveElement* el=GetCell(l,p,index);
+	fHittedCells.RemoveElement(el);
+}
+
+void EventDisplay::RemoveHightedCells()
+{
+	fHittedCells.RemoveElements();
+}
+
+void EventDisplay::DoActivateHighlight()
+{
+	// printf("DoActivateHighlight\n");
+	fHittedCells.ActivateSelection();
+	gEve->Redraw3D();
+}
+
+void EventDisplay::DoDeactivateHighlight()
+{
+	// printf("DoDeactivateHighlight\n");
+	fHittedCells.DeactivateSelection();
+	gEve->Redraw3D();
 }

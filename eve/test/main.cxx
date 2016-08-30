@@ -11,6 +11,8 @@
 #include <TEveGeoShape.h>
 #include <TEveTrans.h>
 #include "EventHandler.h"
+#include <TEveSelection.h>
+#include <TEveManager.h>
 
 void add_debug_event()
 {
@@ -107,8 +109,7 @@ void add_debug_event()
       UShort_t index;
       Encoding::Decode(gid[l][p],type,location,direction,index);
       TEveElement *cell=gEvtDisplay->GetCell(location,direction,index);
-      cell->HighlightElement(kTRUE);
-      // cell->SelectElement(kTRUE);
+      gEvtDisplay->AddCellToHighlight(location,direction,index);
 
       TEveGeoShape* shape=dynamic_cast<TEveGeoShape*>(cell);
       TEveGeoShape* cell_clone=new TEveGeoShape(shape->GetName(),shape->GetTitle());
@@ -119,6 +120,7 @@ void add_debug_event()
       gEvtDisplay->AddTo3D(cell_clone);
     }
   }
+  
 
   gEvtDisplay->AddGuides();
 
@@ -140,15 +142,14 @@ int main(int argc, char **argv)
   
   // See arguments to Create() and constructor -- you can choose not to show the window
   // or some GUI parts.
-  EventHandler *handler=new EventHandler();
+  
   EventDisplay::Create();
-  gEvtDisplay->SetEventHandler(handler);
   
   if(gEvtDisplay->ImportGeometry(filename.Data())){
-    printf("Success\n");
-    gEvtDisplay->Initialize();
 
-    
+    EventHandler *handler=new EventHandler();
+    gEvtDisplay->SetEventHandler(handler); 
+    gEvtDisplay->Initialize();
 
     add_debug_event();
 
@@ -164,7 +165,7 @@ int main(int argc, char **argv)
   // TEveManager::Terminate();
   app->Terminate(0);
 
-  delete handler;
+  // delete handler;
 
   return 0;
 }

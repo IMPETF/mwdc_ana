@@ -17,6 +17,7 @@
 #define __EventDisply__ 
 
 #include <Rtypes.h>
+#include <TEveSelection.h>
 class EventHandler;
 class TEveElement;
 class TEveGeoShape;
@@ -26,6 +27,7 @@ class MultiView;
 class TGSimpleTable;
 class TGTextEntry;
 class TGNumberEntry;
+class TGSimpleTable;
 
 /**
  * EventDisplay: The Main Class for Event Display
@@ -42,10 +44,13 @@ public:
 	~EventDisplay();
 	static EventDisplay* Create();
 	
+	// init interface
 	bool   ImportGeometry(const char* filename, const char* geo_name="mwdc");
+	void   SetEventHandler(EventHandler* evthandler) {fEventHandler=evthandler;}
 	void   Initialize();
 	void   Draw(Bool_t resetCameras=kFALSE, Bool_t dropLogicals=kFALSE);
 
+	// event scene manipulations
 	void   AddGuides();
 	void   AddToAll(TEveElement* el);
 	template<class T> void   AddToProjection(T* el[2][3]);
@@ -64,17 +69,23 @@ public:
 	void   Clean3D();
 	void   CleanDefaultView();
 
-	// void   HighlightCell();
-	// void   DeHighlightCell();
+	// hight/dehight cells
+	void   AddCellToHighlight(int l, int p, int index);
+	void   RemoveCellFromHighlight(int l,int p, int index);
+	void   RemoveHightedCells();
 
+	// summary table
+	void   DefaultColumnName();
+	void   DefaultRowName();
 	void   UpdateDriftRadius(Double_t value[2][3]);
 	void   UpdateInitialFittedDistance(Double_t value[2][3]);
 	void   UpdateFinalFittedDistance(Double_t value[2][3]);
 
-	void   SetEventHandler(EventHandler* evthandler) {fEventHandler=evthandler;}
-
+	// gui related slots
 	void   DoGotoEvent();
 	void   DoConfigStep();
+	void   DoActivateHighlight();
+	void   DoDeactivateHighlight();
 	
 private:
 	EventDisplay();
@@ -93,6 +104,7 @@ private:
 	EventHandler*   fEventHandler;
 
 private:
+	// guides
 	TEveText*	fTextUp;
 	TEveText*   fTextDown;
 	TEveText*   fTextX;
@@ -100,9 +112,18 @@ private:
 	TEveArrow*  fArrowX;
 	TEveArrow*  fArrowY;
 
+	// gui
 	TGTextEntry* fTextEntryStatus;
 	TGNumberEntry* fNumberEntryGoto;
 	TGNumberEntry* fNumberEntryConfig;
+
+	// summary table
+	TGSimpleTable*  fTableDistance;
+	Double_t        fTableDistanceBuffer[6][3];
+	Double_t*       fTableDistanceBufferTemp[6];
+
+	// highlight
+	TEveSelection   fHittedCells;
 
 	ClassDef(EventDisplay, 0);
 };

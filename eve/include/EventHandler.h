@@ -37,6 +37,8 @@ public:
 	Bool_t GotoEvent(UInt_t ev){ 
 		printf("GotoEvent: %d\n",ev);
 		fCurrentEvent = ev;
+
+		return kTRUE;
 	}
 
 	void SetNavigationStep(Int_t step) {
