@@ -21,6 +21,7 @@
 #include <TSystem.h>
 #include <TGNumberEntry.h>
 #include <TGSimpleTable.h>
+#include <TApplication.h>
 
 ClassImp(EventDisplay)
 
@@ -36,29 +37,46 @@ EventDisplay* EventDisplay::Create()
 }
 
 EventDisplay::EventDisplay()
-: fEventHandler(0),
-  fHittedCells("Hitted Cells Highlight")
+	: fEventHandler(0)
 {
+	// printf("EventDisplay Constructor\n");
 	TEveManager::Create();
 
+	// maximize the main window
+	Maximize();
+
+	// init the multiview
 	fMultiView = new MultiView();
 
-	for(int i=0;i<6;i++){
-		fTableDistanceBufferTemp[i]=fTableDistanceBuffer[i];
-		for(int j=0;j<3;j++){
-			fTableDistanceBuffer[i][j]=-1;
+	// init the table
+	for (int i = 0; i < 6; i++) {
+		fTableDistanceBufferTemp[i] = fTableDistanceBuffer[i];
+		for (int j = 0; j < 3; j++) {
+			fTableDistanceBuffer[i][j] = -1;
 		}
 	}
 
-	fHittedCells.SetHighlightMode();
-	fHittedCells.ActivateSelection();
+	// init the hitted cells hightlight TEveSelection
+	fHittedCells = new TEveSelection("Hitted Cells Highlight");
+	fHittedCells->IncDenyDestroy();
+	fHittedCells->SetHighlightMode();
+	fHittedCells->ActivateSelection();
+	fHighlighted = kTRUE;
+
+	// Re-implement the close window action.
+	// The default action is TEveBrowser::CloseWindow() when the "close" button
+	// is clicked, which may have undesired actions.
+	// To add some customized action before close the window, we can screen the 
+	// calling the CloseWindow method and connect the "CloseWindow" signal to a
+	// customized Close slot.
+	TEveBrowser* browser = gEve->GetBrowser();
+	browser->DontCallClose();
+	browser->Connect("CloseWindow()", "EventDisplay", this, "DoClose()");
 }
 
 EventDisplay::~EventDisplay()
 {
-	// delete fMultiView;
-
-	// TEveManager::Terminate();
+	fHittedCells->DecDenyDestroy();
 }
 
 /**
@@ -257,6 +275,40 @@ void EventDisplay::UseDefaultSetting()
 	gEve->GetBrowser()->GetTabRight()->SetTab(1);
 }
 
+void EventDisplay::Maximize()
+{
+	// maximize
+	Int_t screen_x, screen_y;
+	UInt_t gScreenWidth, gScreenHeight;
+	gVirtualX->GetWindowSize(gClient->GetRoot()->GetId(), screen_x, screen_y, gScreenWidth, gScreenHeight );
+	gEve->GetBrowser()->MoveResize(0, 0, gScreenWidth, gScreenHeight);
+	//
+
+	gEve->GetBrowser()->MapWindow();
+	gEve->GetBrowser()->GetTabLeft()->Resize(500, 400);
+	gEve->GetBrowser()->MapSubwindows();
+}
+
+void EventDisplay::DoClose()
+{
+	// printf("DoClose\n");
+	// TRootBrowser::CloseTabs will emit CloseWindow singnal too.
+	// To avoid this slot is called two times, the signal/slot connection
+	// must be disconnected after receive the first CloseWindow signal. 
+	gEve->GetBrowser()->Disconnect("CloseWindow()", this, "DoClose()");
+
+	// RemoveElements in the TEveSelection before TEveManager::Terminate()
+	fHittedCells->RemoveElements();
+
+	// The default CloseWindow action, which invokes TEveManager::Terminate()
+	gEve->GetBrowser()->CloseWindow();
+
+	// Terminate the application, so that once "close" button is clicked,
+	// the whole program will be terminated. Otherwise, the command line 
+	// interface will still be in alive.
+	gApplication->Terminate(0);
+}
+
 /**
  * [EventDisplay::MakeGui description]
  * Contruct other GUI components(except Viewers)
@@ -289,17 +341,17 @@ void EventDisplay::MakeGui()
 		TString icondir( Form("%s/icons/", gSystem->Getenv("ROOTSYS")) );
 		TGPictureButton* b = 0;
 
-		TGLabel* fLabelPre=new TGLabel(hf_nav,"Previous:");
+		TGLabel* fLabelPre = new TGLabel(hf_nav, "Previous:");
 		hf_nav->AddFrame(fLabelPre, new TGLayoutHints(kLHintsLeft | kLHintsCenterY, 10, 2, 10, 10));
 		b = new TGPictureButton(hf_nav, gClient->GetPicture(icondir + "GoBack.gif"));
 		hf_nav->AddFrame(b, new TGLayoutHints(kLHintsLeft | kLHintsCenterY, 10, 2, 10, 10));
 		b->Connect("Clicked()", "EventHandler", fEventHandler, "PreviousEvent()");
 
-		
+
 		b = new TGPictureButton(hf_nav, gClient->GetPicture(icondir + "GoForward.gif"));
 		hf_nav->AddFrame(b, new TGLayoutHints(kLHintsRight | kLHintsCenterY, 2, 10, 10, 10));
 		b->Connect("Clicked()", "EventHandler", fEventHandler, "NextEvent()");
-		TGLabel* fLabelNext=new TGLabel(hf_nav,"Next:");
+		TGLabel* fLabelNext = new TGLabel(hf_nav, "Next:");
 		hf_nav->AddFrame(fLabelNext, new TGLayoutHints(kLHintsRight | kLHintsCenterY, 10, 2, 10, 10));
 
 		navf->AddFrame(hf_nav, new TGLayoutHints(kLHintsExpandX, 2, 2, 5, 1) );
@@ -308,10 +360,10 @@ void EventDisplay::MakeGui()
 	{
 		TGHorizontalFrame* hf_goto = new TGHorizontalFrame(navf);
 
-		TGLabel* fLabelGoto=new TGLabel(hf_goto,"Goto Event:");
+		TGLabel* fLabelGoto = new TGLabel(hf_goto, "Goto Event:");
 		hf_goto->AddFrame(fLabelGoto, new TGLayoutHints(kLHintsLeft | kLHintsCenterY, 10, 2, 10, 10));
 
-		fNumberEntryGoto = new TGNumberEntry(hf_goto, 0, 9,998, TGNumberFormat::kNESInteger,TGNumberFormat::kNEANonNegative, TGNumberFormat::kNELNoLimits);
+		fNumberEntryGoto = new TGNumberEntry(hf_goto, 0, 9, 998, TGNumberFormat::kNESInteger, TGNumberFormat::kNEANonNegative, TGNumberFormat::kNELNoLimits);
 		fNumberEntryGoto->Connect("ValueSet(Long_t)", "EventDisplay", this, "DoGotoEvent()");
 		// (fNumberEntryGoto->GetNumberEntry())->Connect("ReturnPressed()", "EventDisplay", this, "DoGotoEvent()");
 		hf_goto->AddFrame(fNumberEntryGoto, new TGLayoutHints(kLHintsLeft | kLHintsCenterY, 10, 2, 10, 10));
@@ -325,10 +377,10 @@ void EventDisplay::MakeGui()
 	{
 		TGHorizontalFrame* hf_config = new TGHorizontalFrame(configf);
 
-		TGLabel* fLabelConfig=new TGLabel(hf_config,"Step:");
+		TGLabel* fLabelConfig = new TGLabel(hf_config, "Step:");
 		hf_config->AddFrame(fLabelConfig, new TGLayoutHints(kLHintsLeft | kLHintsCenterY, 10, 2, 10, 10));
 
-		fNumberEntryConfig = new TGNumberEntry(hf_config, 1, 9,997, TGNumberFormat::kNESInteger,TGNumberFormat::kNEANonNegative, TGNumberFormat::kNELLimitMin, 1);
+		fNumberEntryConfig = new TGNumberEntry(hf_config, 1, 9, 997, TGNumberFormat::kNESInteger, TGNumberFormat::kNEANonNegative, TGNumberFormat::kNELLimitMin, 1);
 		fNumberEntryConfig->Connect("ValueSet(Long_t)", "EventDisplay", this, "DoConfigStep()");
 		// (fNumberEntryConfig->GetNumberEntry())->Connect("ReturnPressed()", "EventDisplay", this, "DoConfigStep()");
 		hf_config->AddFrame(fNumberEntryConfig, new TGLayoutHints(kLHintsLeft | kLHintsCenterY, 10, 2, 10, 10));
@@ -375,11 +427,11 @@ void EventDisplay::MakeGui()
 	{
 		TGLabel* fLabelSummary = new TGLabel(frmMain, "Summary Table:");
 		frmMain->AddFrame(fLabelSummary, new TGLayoutHints(kLHintsTop | kLHintsCenterX | kLHintsExpandX, 2, 10, 20, 10));
-		
+
 		fTableDistance = new TGSimpleTable(frmMain, 997, fTableDistanceBufferTemp, 6, 3);
 		DefaultColumnName();
-		DefaultRowName();	
-		frmMain->AddFrame(fTableDistance, new TGLayoutHints(kLHintsBottom| kLHintsCenterX| kLHintsExpandX | kLHintsExpandY));
+		DefaultRowName();
+		frmMain->AddFrame(fTableDistance, new TGLayoutHints(kLHintsBottom | kLHintsCenterX | kLHintsExpandX | kLHintsExpandY));
 	}
 
 	// Resize
@@ -389,6 +441,7 @@ void EventDisplay::MakeGui()
 
 	browser->StopEmbedding();
 	browser->SetTabTitle("Management", 0);
+
 }
 
 /**
@@ -480,31 +533,31 @@ TEveElement* EventDisplay::GetWire(Int_t l, Int_t p, Int_t index)
 // Summary Table
 void EventDisplay::DefaultRowName()
 {
-	const char rowname[6][10]={"Down X","Down Y","Down U","Up X","Up Y","Up U"};
+	const char rowname[6][10] = {"Down X", "Down Y", "Down U", "Up X", "Up Y", "Up U"};
 
 	TGTableHeader* header;
-	for(int row=0;row<6;row++){
-		header=fTableDistance->GetRowHeader(row);
+	for (int row = 0; row < 6; row++) {
+		header = fTableDistance->GetRowHeader(row);
 		header->SetLabel(rowname[row]);
 	}
 }
 
 void EventDisplay::DefaultColumnName()
 {
-	const char colname[3][20]={"Drift R(mm)","Init FD(mm)","Final FD(mm)"};
+	const char colname[3][20] = {"Drift R(mm)", "Init FD(mm)", "Final FD(mm)"};
 
 	TGTableHeader* header;
-	for(int col=0;col<3;col++){
-		header=fTableDistance->GetColumnHeader(col);
+	for (int col = 0; col < 3; col++) {
+		header = fTableDistance->GetColumnHeader(col);
 		header->SetLabel(colname[col]);
 	}
 }
 
 void EventDisplay::UpdateDriftRadius(Double_t value[2][3])
 {
-	for(int l=0;l<2;l++){
-		for(int p=0;p<3;p++){
-			fTableDistanceBuffer[l*3+p][0]=value[l][p];
+	for (int l = 0; l < 2; l++) {
+		for (int p = 0; p < 3; p++) {
+			fTableDistanceBuffer[l * 3 + p][0] = value[l][p];
 		}
 	}
 
@@ -516,9 +569,9 @@ void EventDisplay::UpdateDriftRadius(Double_t value[2][3])
 
 void EventDisplay::UpdateInitialFittedDistance(Double_t value[2][3])
 {
-	for(int l=0;l<2;l++){
-		for(int p=0;p<3;p++){
-			fTableDistanceBuffer[l*3+p][1]=value[l][p];
+	for (int l = 0; l < 2; l++) {
+		for (int p = 0; p < 3; p++) {
+			fTableDistanceBuffer[l * 3 + p][1] = value[l][p];
 		}
 	}
 
@@ -530,9 +583,9 @@ void EventDisplay::UpdateInitialFittedDistance(Double_t value[2][3])
 
 void EventDisplay::UpdateFinalFittedDistance(Double_t value[2][3])
 {
-	for(int l=0;l<2;l++){
-		for(int p=0;p<3;p++){
-			fTableDistanceBuffer[l*3+p][2]=value[l][p];
+	for (int l = 0; l < 2; l++) {
+		for (int p = 0; p < 3; p++) {
+			fTableDistanceBuffer[l * 3 + p][2] = value[l][p];
 		}
 	}
 
@@ -544,47 +597,56 @@ void EventDisplay::UpdateFinalFittedDistance(Double_t value[2][3])
 
 void EventDisplay::DoGotoEvent()
 {
-	UInt_t cur=fNumberEntryGoto->GetNumberEntry()->GetIntNumber();
-	printf("DoGotoEvent: %d\n",cur);
+	UInt_t cur = fNumberEntryGoto->GetNumberEntry()->GetIntNumber();
+	printf("DoGotoEvent: %d\n", cur);
 
 	fEventHandler->GotoEvent(cur);
 }
 
 void EventDisplay::DoConfigStep()
 {
-	Int_t step=fNumberEntryConfig->GetNumberEntry()->GetIntNumber();
-	printf("DoConfigStep: %d\n",step);
-	
+	Int_t step = fNumberEntryConfig->GetNumberEntry()->GetIntNumber();
+	printf("DoConfigStep: %d\n", step);
+
 	fEventHandler->SetNavigationStep(step);
 }
 
 void EventDisplay::AddCellToHighlight(int l, int p, int index)
 {
-	TEveElement* el=GetCell(l,p,index);
-	fHittedCells.AddElement(el);
+
+	TEveElement* el = GetCell(l, p, index);
+	fHittedCells->AddElement(el);
 }
 
-void EventDisplay::RemoveCellFromHighlight(int l,int p, int index)
+void EventDisplay::RemoveCellFromHighlight(int l, int p, int index)
 {
-	TEveElement* el=GetCell(l,p,index);
-	fHittedCells.RemoveElement(el);
+	TEveElement* el = GetCell(l, p, index);
+	fHittedCells->RemoveElement(el);
 }
 
 void EventDisplay::RemoveHightedCells()
 {
-	fHittedCells.RemoveElements();
+	fHittedCells->RemoveElements();
 }
 
 void EventDisplay::DoActivateHighlight()
 {
 	// printf("DoActivateHighlight\n");
-	fHittedCells.ActivateSelection();
-	gEve->Redraw3D();
+	if (!fHighlighted) {
+		fHittedCells->ActivateSelection();
+		fHighlighted = kTRUE;
+
+		gEve->Redraw3D();
+	}
 }
 
 void EventDisplay::DoDeactivateHighlight()
 {
 	// printf("DoDeactivateHighlight\n");
-	fHittedCells.DeactivateSelection();
-	gEve->Redraw3D();
+	if (fHighlighted) {
+		fHittedCells->DeactivateSelection();
+		fHighlighted=kFALSE;
+
+		gEve->Redraw3D();
+	}
 }

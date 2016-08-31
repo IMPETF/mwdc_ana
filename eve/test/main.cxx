@@ -120,7 +120,6 @@ void add_debug_event()
       gEvtDisplay->AddTo3D(cell_clone);
     }
   }
-  
 
   gEvtDisplay->AddGuides();
 

@@ -70,9 +70,9 @@ public:
 	void   CleanDefaultView();
 
 	// hight/dehight cells
-	void   AddCellToHighlight(int l, int p, int index);
+	void   AddCellToHighlight(int l, int p, int index);//should be used with RemoveHightedCells() 
 	void   RemoveCellFromHighlight(int l,int p, int index);
-	void   RemoveHightedCells();
+	void   RemoveHightedCells();//should be called before close window
 
 	// summary table
 	void   DefaultColumnName();
@@ -86,9 +86,11 @@ public:
 	void   DoConfigStep();
 	void   DoActivateHighlight();
 	void   DoDeactivateHighlight();
-	
+	void   DoClose();
+
 private:
 	EventDisplay();
+	void   Maximize();
 	void   MakeGui();
 	void   AddGeometryGuides();
 	void   AddGeometry();
@@ -123,8 +125,9 @@ private:
 	Double_t*       fTableDistanceBufferTemp[6];
 
 	// highlight
-	TEveSelection   fHittedCells;
-
+	TEveSelection*   fHittedCells;
+	Bool_t           fHighlighted;
+	
 	ClassDef(EventDisplay, 0);
 };
 
