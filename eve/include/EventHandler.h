@@ -21,37 +21,67 @@
 class EventHandler
 {
 public:
-	EventHandler(): fTotalEvents(0),fCurrentEvent(0),fNavigationStep(1){}
+	EventHandler(): fTotalEvents(10),fCurrentEvent(0),fNavigationStep(1){}
 	~EventHandler(){}
 
 	void NextEvent(){
-		printf("NextEvent: %d \n", fCurrentEvent+1);
-
-		fCurrentEvent++;
+		// printf("NextEvent: %d \n", fCurrentEvent+fNavigationStep);
+		GotoEvent(fCurrentEvent+fNavigationStep);
 	}
+
 	void PreviousEvent(){ 
-		printf("PreviousEvent: %d\n", fCurrentEvent-1);
-
-		fCurrentEvent--;
+		// printf("PreviousEvent: %d\n", fCurrentEvent- fNavigationStep);
+		GotoEvent(fCurrentEvent- fNavigationStep);
 	}
-	Bool_t GotoEvent(UInt_t ev){ 
-		printf("GotoEvent: %d\n",ev);
+
+	Bool_t GotoEvent(Long_t ev){ 
+		// printf("GotoEvent: %d\n",ev);
 		fCurrentEvent = ev;
+		// check bounds
+		if(fCurrentEvent>=fTotalEvents){
+			PrintWarningMessage(Form("%d is Beyond the total event limit %d",fCurrentEvent, fTotalEvents));
+			return kFALSE;
+		}
+		else if(fCurrentEvent<0){
+			PrintWarningMessage(Form("%d is an invalid event num.",fCurrentEvent));
+			return kFALSE;
+		}
+
+		// new event 
+		PrintWarningMessage(Form("Loading event %d ...",ev));
+		DropEvent();
+		ReadEvent();
+		AddEvent();
+
+		// finish
+		PrintCurrentStatus();
 
 		return kTRUE;
 	}
 
 	void SetNavigationStep(Int_t step) {
-		printf("SetNavigationStep: %d\n",step);
+		// printf("SetNavigationStep: %d\n",step);
 		fNavigationStep=step;
+
+		PrintCurrentStatus();
 	}
 
+	void PrintCurrentStatus(){
+		gEvtDisplay->SetTextEntryStatus(Form("Current: %d, Total: %d, Step: %d",fCurrentEvent,fTotalEvents,fNavigationStep));
+	}
+
+	void PrintWarningMessage(const char* mesg){
+		gEvtDisplay->SetTextEntryStatus(mesg,kFALSE);
+	}
+
+private:
 	virtual void DropEvent() {};
+	virtual void ReadEvent() {};
 	virtual void AddEvent() {};
 
 private:
-	UInt_t fTotalEvents;
-	UInt_t fCurrentEvent;
+	Long_t fTotalEvents;
+	Long_t fCurrentEvent;
 	Int_t  fNavigationStep;
 
 ClassDef(EventHandler,0);

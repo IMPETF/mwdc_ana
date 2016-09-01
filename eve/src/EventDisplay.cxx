@@ -598,7 +598,7 @@ void EventDisplay::UpdateFinalFittedDistance(Double_t value[2][3])
 void EventDisplay::DoGotoEvent()
 {
 	UInt_t cur = fNumberEntryGoto->GetNumberEntry()->GetIntNumber();
-	printf("DoGotoEvent: %d\n", cur);
+	// printf("DoGotoEvent: %d\n", cur);
 
 	fEventHandler->GotoEvent(cur);
 }
@@ -606,7 +606,7 @@ void EventDisplay::DoGotoEvent()
 void EventDisplay::DoConfigStep()
 {
 	Int_t step = fNumberEntryConfig->GetNumberEntry()->GetIntNumber();
-	printf("DoConfigStep: %d\n", step);
+	// printf("DoConfigStep: %d\n", step);
 
 	fEventHandler->SetNavigationStep(step);
 }
@@ -649,4 +649,21 @@ void EventDisplay::DoDeactivateHighlight()
 
 		gEve->Redraw3D();
 	}
+}
+
+/**
+ * [EventDisplay::SetTextEntryStatus description]
+ * @param mesg The message to display
+ * @param flag kTRUE = status message, backgroud color normal
+ *             kFALSE = warning message, backgroud color red
+ */
+void EventDisplay::SetTextEntryStatus(const char* mesg, Bool_t flag)
+{
+	if(flag){
+		fTextEntryStatus->SetTextColor(Pixel_t(0x000000));
+	}
+	else{
+		fTextEntryStatus->SetTextColor(0xff0000);
+	}
+	fTextEntryStatus->SetText(mesg);
 }

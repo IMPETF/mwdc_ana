@@ -88,6 +88,9 @@ public:
 	void   DoDeactivateHighlight();
 	void   DoClose();
 
+	// text entry status
+	void   SetTextEntryStatus(const char* mesg, Bool_t flag=kTRUE);
+
 private:
 	EventDisplay();
 	void   Maximize();
