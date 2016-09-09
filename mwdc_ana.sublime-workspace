@@ -4,6 +4,382 @@
 		"selected_items":
 		[
 			[
+				"Pix",
+				"Pixel_t	(TGTextEntry.cxx)"
+			],
+			[
+				"Print",
+				"PrintWarningMessage"
+			],
+			[
+				"SetTex",
+				"SetTextEntryStatus	(EventDisplay.cxx)"
+			],
+			[
+				"SetText",
+				"SetTextEntryStatus	(EventDisplay.h)"
+			],
+			[
+				"fHi",
+				"fHighlighted"
+			],
+			[
+				"Clos",
+				"CloseWindow"
+			],
+			[
+				"TEve",
+				"TEveManager"
+			],
+			[
+				"Remo",
+				"RemoveElements"
+			],
+			[
+				"Eve",
+				"EventDisplay"
+			],
+			[
+				"dele",
+				"delete"
+			],
+			[
+				"Dec",
+				"DecDenyDestroy"
+			],
+			[
+				"Map",
+				"MapWindow"
+			],
+			[
+				"gSc",
+				"gScreenHeight"
+			],
+			[
+				"scree",
+				"screen_x"
+			],
+			[
+				"Even",
+				"EventDisplay.cxx"
+			],
+			[
+				"Event",
+				"EventDisplay"
+			],
+			[
+				"fHit",
+				"fHittedCells"
+			],
+			[
+				"TEev",
+				"TEveSelection"
+			],
+			[
+				"fhigh",
+				"fhighlighted"
+			],
+			[
+				"inl",
+				"include	(CMakeLists.txt)"
+			],
+			[
+				"Defa",
+				"DefaultColumnName"
+			],
+			[
+				"Def",
+				"DefaultRowName"
+			],
+			[
+				"fDist",
+				"fTableDistanceBuffer"
+			],
+			[
+				"TGT",
+				"TGTableCell"
+			],
+			[
+				"he",
+				"height"
+			],
+			[
+				"fT",
+				"fTableDistance"
+			],
+			[
+				"SetNa",
+				"SetNavigationStep"
+			],
+			[
+				"del",
+				"delete	(alice_esd_split.C)"
+			],
+			[
+				"hf",
+				"hf_config"
+			],
+			[
+				"fEve",
+				"fEventHandler"
+			],
+			[
+				"TGNum",
+				"TGNumberEntry"
+			],
+			[
+				"fLb",
+				"fLabelPre"
+			],
+			[
+				"na",
+				"navf"
+			],
+			[
+				"kLHintsCen",
+				"kLHintsCenterX	(MultiView.cxx)"
+			],
+			[
+				"fTex",
+				"fTextEntryStatus"
+			],
+			[
+				"TGTex",
+				"TGTextEntry"
+			],
+			[
+				"UPda",
+				"UpdateFinalFittedDistance	(MultiView.cxx)"
+			],
+			[
+				"Upda",
+				"UpdateFinalFittedDistance"
+			],
+			[
+				"UPd",
+				"UpdateFinalFittedDistance	(MultiView.cxx)"
+			],
+			[
+				"Updat",
+				"UpdateDriftRadius	(MultiView.cxx)"
+			],
+			[
+				"fTba",
+				"fTableDistanceBuffer"
+			],
+			[
+				"TGFra",
+				"TGFrame.h	(EventDisplay.cxx)"
+			],
+			[
+				"fTab",
+				"fTableDistance"
+			],
+			[
+				"fNTb",
+				"fNTableColumns"
+			],
+			[
+				"fNTa",
+				"fNTableRows"
+			],
+			[
+				"frm",
+				"frmMain"
+			],
+			[
+				"EventHand",
+				"EventHandler.cxx"
+			],
+			[
+				"Clas",
+				"ClassDef	(BoardInfo.h)"
+			],
+			[
+				"def",
+				"def	#ifndef … #define … #endif"
+			],
+			[
+				"Des",
+				"DestroyElements	(MultiView.cxx)"
+			],
+			[
+				"Dele",
+				"DeleteAnnotations	(alice_vsd.C)"
+			],
+			[
+				"gE",
+				"gEve"
+			],
+			[
+				"targ",
+				"target_link_libraries"
+			],
+			[
+				"Impo",
+				"ImportGeometry	(EventDisplay.cxx)"
+			],
+			[
+				"gDi",
+				"gEvtDisplay"
+			],
+			[
+				"hitt",
+				"hitted_wire_line"
+			],
+			[
+				"glo",
+				"global.h	(BoardInfo.h)"
+			],
+			[
+				"Trac",
+				"TrackFit.h	(debug_eve.C)"
+			],
+			[
+				"Geom",
+				"GeometryInfo.h	(TrackFit.h)"
+			],
+			[
+				"geom",
+				"geom_files"
+			],
+			[
+				"for",
+				"foreach"
+			],
+			[
+				"RT",
+				"Rtypes.h	(global.h)"
+			],
+			[
+				"TEv",
+				"TEveText"
+			],
+			[
+				"ImportEve",
+				"ImportEventXOZ	(EventDisply.h)"
+			],
+			[
+				"TEV",
+				"TEveElement"
+			],
+			[
+				"AddTo",
+				"AddToXOZ"
+			],
+			[
+				"fAr",
+				"fArrowY"
+			],
+			[
+				"fTe",
+				"fTextY"
+			],
+			[
+				"TE",
+				"TEveText"
+			],
+			[
+				"UseDef",
+				"UseDefaultSetting	(EventDisplay.cxx)"
+			],
+			[
+				"Add",
+				"AddGeometry"
+			],
+			[
+				"Evet",
+				"EventDisplay"
+			],
+			[
+				"gs",
+				"gse"
+			],
+			[
+				"geo",
+				"geo_name	(EventDisplay.cxx)"
+			],
+			[
+				"gEv",
+				"gEvtDisplay"
+			],
+			[
+				"CO",
+				"COMPONENT	(RootNewMacros.cmake)"
+			],
+			[
+				"mwdc",
+				"mwdc_kernel"
+			],
+			[
+				"inc",
+				"incdirs"
+			],
+			[
+				"std",
+				"std::vector	(kernel_LinkDef.h)"
+			],
+			[
+				"RE",
+				"RELATIVE	(CMakeLists.txt)"
+			],
+			[
+				"inclu",
+				"includedir"
+			],
+			[
+				"kern",
+				"kernel_LinkDef.h"
+			],
+			[
+				"WAR",
+				"WARNING	(ROOTConfig.cmake)"
+			],
+			[
+				"end",
+				"endif	(CMakeLists.txt)"
+			],
+			[
+				"src",
+				"srcs"
+			],
+			[
+				"WA",
+				"WARNING	(ROOTConfig.cmake)"
+			],
+			[
+				"ROOT",
+				"ROOT_FOUND"
+			],
+			[
+				"Cra",
+				"CrateInfo.h"
+			],
+			[
+				"targe",
+				"target_link_libraries	(RootNewMacros.cmake)"
+			],
+			[
+				"Tr",
+				"TrackFit.h"
+			],
+			[
+				"Drif",
+				"DriftInfo_Dict.cxx"
+			],
+			[
+				"Ge",
+				"GeometryInfo.cxx"
+			],
+			[
+				"ut",
+				"utility_Dict.cxx"
+			],
+			[
+				"Bor",
+				"BoardInfo_Dict.cxx"
+			],
+			[
 				"re-r",
 				"re-running"
 			],
@@ -36,10 +412,6 @@
 				"t_pos"
 			],
 			[
-				"Impo",
-				"ImportEvent3D"
-			],
-			[
 				"t",
 				"t_up"
 			],
@@ -62,10 +434,6 @@
 			[
 				"CloneE",
 				"CloneElementRecurse(-1"
-			],
-			[
-				"TEv",
-				"TEveElement"
 			],
 			[
 				"Hihg",
@@ -98,10 +466,6 @@
 			[
 				"Int",
 				"Int_t	(extract_minrising_time.C)"
-			],
-			[
-				"TE",
-				"TEveElement"
 			],
 			[
 				"mk",
@@ -150,432 +514,98 @@
 			[
 				"z",
 				"z_display"
-			],
-			[
-				"up",
-				"up_z"
-			],
-			[
-				"x_p",
-				"x_plane"
-			],
-			[
-				"x_pl",
-				"x_plane_0"
-			],
-			[
-				"fRohZ",
-				"fRhoZGeomScene"
-			],
-			[
-				"TEV",
-				"TEveManager"
-			],
-			[
-				"TS",
-				"TString"
-			],
-			[
-				"SetN",
-				"SetNextPoint"
-			],
-			[
-				"hiit",
-				"hitted_wire"
-			],
-			[
-				"hit",
-				"hitted_wire_line"
-			],
-			[
-				"tra",
-				"track"
-			],
-			[
-				"track",
-				"track_line"
-			],
-			[
-				"GetDre",
-				"GetDirection"
-			],
-			[
-				"hitte",
-				"hitted_wire"
-			],
-			[
-				"tur",
-				"turnoff_chamber"
-			],
-			[
-				"file",
-				"filename"
-			],
-			[
-				"dle",
-				"delete	(check_simulate_bunchid.C)"
-			],
-			[
-				"h2d_re",
-				"h2d_residual_init_vs_final"
-			],
-			[
-				"vali",
-				"valid_event"
-			],
-			[
-				"rt",
-				"rt_relation_corrected"
-			],
-			[
-				"h2d_",
-				"h2d_rtrelation"
-			],
-			[
-				"dir_",
-				"dir_h2d_rtrelation"
-			],
-			[
-				"dir_h2d",
-				"dir_h2d_residuals"
-			],
-			[
-				"US",
-				"UShort_t"
-			],
-			[
-				"TH1",
-				"TH1F"
-			],
-			[
-				"SetPara",
-				"SetParameters"
-			],
-			[
-				"newh",
-				"newh1dmwdc_gid	newh1dmwdc_gid"
-			],
-			[
-				"g_mwd",
-				"g_mwdc_wireindex	(check_drift.C)"
-			],
-			[
-				"drift",
-				"drifttime	(extract_minrising_time.C)"
-			],
-			[
-				"line",
-				"lines"
-			],
-			[
-				"p0_s",
-				"p0_stop"
-			],
-			[
-				"fina",
-				"final_track"
-			],
-			[
-				"Draw",
-				"Draw"
-			],
-			[
-				"TP",
-				"TPolyLine3D.h"
-			],
-			[
-				"val",
-				"valid_event"
-			],
-			[
-				"min",
-				"minrising_tot"
-			],
-			[
-				"Setp",
-				"SetParameter"
-			],
-			[
-				"SetP",
-				"SetParameter"
-			],
-			[
-				"pol",
-				"pol5"
-			],
-			[
-				"pl",
-				"pol5"
-			],
-			[
-				"oer",
-				"order"
-			],
-			[
-				"rt_re",
-				"rt_relation"
-			],
-			[
-				"ele",
-				"else	(check_simulate_bunchid.C)"
-			],
-			[
-				"g_mwdc",
-				"g_mwdc_wireplane"
-			],
-			[
-				"TF",
-				"TF1"
-			],
-			[
-				"see",
-				"seed_round"
-			],
-			[
-				"fitte",
-				"fitted_distances"
-			],
-			[
-				"TH",
-				"TH2F"
-			],
-			[
-				"FOrm",
-				"Format"
-			],
-			[
-				"std",
-				"std::cout"
-			],
-			[
-				"For",
-				"Form"
-			],
-			[
-				"calib",
-				"calib_test"
-			],
-			[
-				"binc",
-				"bincenter"
-			],
-			[
-				"h2d_r",
-				"h2d_residuals_pfx"
-			],
-			[
-				"GetBin",
-				"GetBinCenter	(debug_fit_rtrelation.C)"
-			],
-			[
-				"h2d",
-				"h2d_residuals_pfx"
-			],
-			[
-				"h2e",
-				"h2d_residuals"
-			],
-			[
-				"dele",
-				"delete	(check_simulate_bunchid.C)"
-			],
-			[
-				"hist",
-				"hists"
-			],
-			[
-				"p0",
-				"p0_start"
-			],
-			[
-				"index",
-				"index2"
-			],
-			[
-				"ined",
-				"index1"
-			],
-			[
-				"lin",
-				"line2"
-			],
-			[
-				"name",
-				"namespace	(utility.h)"
-			],
-			[
-				"h1d",
-				"h1d_fitteddistances"
-			],
-			[
-				"fDis",
-				"fDistances_Fitted"
-			],
-			[
-				"g_st",
-				"g_str_plane"
-			],
-			[
-				"g_srt",
-				"g_str_location"
-			],
-			[
-				"Deco",
-				"DecodeLocation	(fit_drifttime_edge.C)"
-			],
-			[
-				"Enco",
-				"Encoding"
-			],
-			[
-				"g_mwdc_",
-				"g_mwdc_wireplane"
-			],
-			[
-				"g_mw",
-				"g_mwdc_location"
-			],
-			[
-				"res",
-				"residuals"
-			],
-			[
-				"Do",
-				"Double_t"
-			],
-			[
-				"Reset",
-				"Reset_Unstandard"
-			],
-			[
-				"fail",
-				"failed_evenum"
-			],
-			[
-				"fx",
-				"fx1"
-			],
-			[
-				"exit",
-				"exit(1	(check_simulate_bunchid.C)"
-			],
-			[
-				"hitpos",
-				"hitposUp"
-			],
-			[
-				"hitp",
-				"hitwireUpY"
-			],
-			[
-				"glo",
-				"global.h	(fit_drifttime_edge.C)"
-			],
-			[
-				"p0s",
-				"p0_step"
-			],
-			[
-				"minri",
-				"minrising_drifttime"
-			],
-			[
-				"minrsi",
-				"minrising_gid"
-			],
-			[
-				"TGr",
-				"TGraph.h	(fit_drifttime_edge.C)"
-			],
-			[
-				"TSP",
-				"TSpline.h	(debug_fit_rtrelation.C)"
-			],
-			[
-				"init",
-				"init_track"
-			],
-			[
-				"par",
-				"parrallel"
-			],
-			[
-				"fdi",
-				"fdirection"
-			],
-			[
-				"fd",
-				"fdirection"
-			],
-			[
-				"hitpo",
-				"hitposDown"
-			],
-			[
-				"hitwi",
-				"hitwireDownX"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "eve/EventDisply.h",
+			"file": "eve/src/EventDisplay.cxx",
 			"settings":
 			{
-				"buffer_size": 2846,
+				"buffer_size": 18888,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "eve/EventDisply.cxx",
+			"file": "eve/include/EventHandler.h",
 			"settings":
 			{
-				"buffer_size": 12880,
+				"buffer_size": 2300,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "# DocBlockr\n\nDocBlockr is a package for [Sublime Text 2 & 3][sublime] which makes writing documentation a breeze. DocBlockr supports **JavaScript** (including ES6), **PHP**, **ActionScript**, **Haxe**, **CoffeeScript**, **TypeScript**, **Java**, **Apex**, **Groovy**, **Objective C**, **C**, **C++** and **Rust**.\n\n## Installation\n\n### [Package Control](https://sublime.wbond.net/installation)\n\n1. Open Package Control: `Preferences -> Package Control`\n2. Select `Package Control: Install Package`\n3. Type `DocBlockr` into the search box and select the package to install it\n\n## Feature requests & bug reports\n\nYou can leave either of these things [here][issues]. Pull requests are welcomed\nheartily, but please read [CONTRIBUTING.md][contrib] first! Basically: in this\nrepo, the main development branch is `develop` and the stable 'production'\nbranch is `master`. Please remember to base your branch from `develop` and issue\nthe pull request back to that branch.\n\n## Show your love\n\n[![Click here to lend your support to: DocBlockr and make a donation at pledgie.com!](https://pledgie.com/campaigns/16316.png?skin_name=chrome)](http://pledgie.com/campaigns/16316)\n\n## Changelog\n\n- **v2.14.1**, *17 Aug 2015*\n  - Fix deindentation bug with reparsing doc blocks\n- **v2.14.0**, *15 Jun 2015*\n  - Adds `jsdocs_function_description` option (thanks to [Gerard Roche](https://github.com/gerardroche))\n  - Better handling of parser errors (thanks to Gerard Roche)\n- **v2.13.3**, *4 Jun 2015*\n  - PHP array shorthand is identified correctly (thanks to [Gerard Roche](https://github.com/gerardroche))\n  - Decorating comments when using tabs for indentation works better (thanks to [Jack Cherng](https://github.com/jfcherng))\n- **v2.13.2**, *30 Mar 2015*\n  - Updated PHPDoc autocompletions to align with the new spec (thanks to [Gerard Roche](https://github.com/gerardroche))\n  - Properly handle the case when commas appear inside a type name in Java\n  - Added link to README in the preferences menu\n- **v2.13.1**, *29 Mar 2015*\n  - Adds support for Apex language (thanks @michacom)\n  - Fixes identifying multidimensional arrays in C/C++\n  - Fixes reformatting and reparsing docblocks in Java\n  - Adds options to disable:\n    - opening an inline docblock with space (`jsdocs_quick_open_inline`)\n    - inline comment decoration (`jsdocs_decorate`)\n\nOlder history can be found in [the history file][history].\n\n## Usage\n\n> Below are some examples of what the package does. Note that there are no keyboard shortcuts required to trigger these completions - just type as normal and it happens for you!\n\n### Docblock completion\n\nPressing **enter** or **tab** after `/**` (or `###*` for Coffee-Script) yields a new line and closes the comment.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/basic.gif)\n\nSingle-asterisk comment blocks behave similarly:\n\n![](http://spadgos.github.io/sublime-jsdocs/images/basic-block.gif)\n\n### Function documentation\n\nHowever, if the line directly afterwards contains a function definition, then its name and parameters are parsed and some documentation is automatically added.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/function-template.gif)\n\nPress <kbd>Tab</kbd> to move forward through the fields, press <kbd>Shift</kbd>+<kbd>Tab</kbd> to move back through the fields.\n\nIf there are many arguments, or long variable names, it is sometimes useful to spread the arguments across multiple lines. DocBlockr handles this situation too:\n\n![](http://spadgos.github.io/sublime-jsdocs/images/long-args.gif)\n\nIn languages which support [type hinting][typehinting] or default values, then those types are prefilled as the datatypes.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/type-hinting.gif)\n\nDocBlockr will try to make an intelligent guess about the return value of the function.\n\n- If the function name is or begins with \"set\" or \"add\", then no `@return` is inserted.\n- If the function name is or begins with \"is\" or \"has\", then it is assumed to return a `Boolean`.\n- In Javascript, if the function begins with an uppercase letter then it is assumed that the function is a class definition. No `@return` tag is added.\n- In PHP, some of the [magic methods][magicmethods] have their values prefilled:\n  - `__construct`, `__destruct`, `__set`, `__unset`, `__wakeup` have no `@return` tag.\n  - `__sleep` returns an `array`.\n  - `__toString` returns a `string`.\n  - `__isset` returns a `bool`.\n- In ES6 Javascript, generator functions get a `@yield` tag instead of `@return`\n\n### Variable documentation\n\nIf the line following the docblock contains a variable declaration, DocBlockr will try to determine the data type of the variable and insert that into the comment.\n\nPress <kbd>space</kbd> or <kbd>shift</kbd>+<kbd>enter</kbd> after an opening `/**` to insert an inline docblock.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/vars.gif)\n\nDocBlockr will also try to determine the type of the variable from its name. Variables starting with `is` or `has` are assumed to be booleans, and `callback`, `cb`, `done`, `fn`, and `next` are assumed to be functions. If you use your own variable naming system, (e.g. hungarian notation: booleans all start with `b`, arrays start with `arr`), you can define these rules yourself. Use the `jsdocs_notation_map` setting, example:\n\n```js\n{\n    \"jsdocs_notation_map\": [\n        {\n            \"prefix\": \"b\", /* a prefix, matches only if followed by an underscore or A-Z */\n            \"type\": \"bool\" /* translates to \"Boolean\" in javascript, \"bool\" in PHP */\n        },\n        {\n            \"regex\": \"tbl_?[Rr]ow\", /* any arbitrary regex to test against the variable name */\n            \"type\": \"TableRow\"      /* you can add your own types */\n        }\n    ]\n}\n```\n\nThe notation map can also be used to add arbitrary tags, according to your own code conventions. For example, if your conventions state that functions beginning with an underscore are private, you could add this to the `jsdocs_notation_map`:\n\n```json\n{\n    \"prefix\": \"_\",\n    \"tags\": [\"@private\"]\n}\n```\n\n### Comment extension\n\nPressing enter inside a docblock will automatically insert a leading asterisk and maintain your indentation.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/auto-indent.gif)\n\n![](http://spadgos.github.io/sublime-jsdocs/images/auto-indent-2.gif)\n\nThis applies to docblock comments `/** like this */` as well as inline double-slash comments `// like this`\n\n![](http://spadgos.github.io/sublime-jsdocs/images/single-line.gif)\n\nIn either case, you can press `shift+enter` to stop the automatic extension.\n\nOftentimes, when documenting a parameter, or adding a description to a tag, your description will cover multiple lines. If the line you are on is directly following a tag line, pressing <kbd>Tab</kbd> will move the indentation to the correct position.\n\n![](http://spadgos.github.io/sublime-jsdocs/images/deep-indent.gif)\n\n### Comment decoration\n\nIf you write a double-slash comment and then press `Ctrl+Enter`, DocBlockr will 'decorate' that line for you.\n\n    // Foo bar baz<<Ctrl+Enter>>\n\n    -- becomes\n\n    /////////////////\n    // Foo bar baz //\n    /////////////////\n\nThis can be disabled by changing the `jsdocs_decorate` setting to `false`.\n\n### Reparsing a DocBlock\n\nSometimes, you'll perform some action which clears the fields (sections of text which you can navigate through using <kbd>Tab</kbd>). This leaves you with a number of placeholders in the DocBlock with no easy way to jump to them.\n\nWith DocBlockr, you can reparse a comment and reactivate the fields by pressing the hotkey `Alt+Shift+Tab` in OS X or Linux, or `Alt+W` in Windows\n\n### Reformatting paragraphs\n\nInside a comment block, hit `Alt+Q` to wrap the lines to make them fit within your rulers. If you would like subsequent lines in a paragraph to be indented, you can adjust the `jsdocs_indentation_spaces_same_para` setting. For example, a value of `3` might look like this:\n\n    /**\n     * Duis sed arcu non tellus eleifend ullamcorper quis non erat. Curabitur\n     *   metus elit, ultrices et tristique a, blandit at justo.\n     * @param  {String} foo Lorem ipsum dolor sit amet.\n     * @param  {Number} bar Nullam fringilla feugiat pretium. Quisque\n     *   consectetur, risus eu pellentesque tincidunt, nulla ipsum imperdiet\n     *   massa, sit amet adipiscing dolor.\n     * @return {[type]}\n     */\n\n### Adding extra tags\n\nFinally, typing `@` inside a docblock will show a completion list for all tags supported by [JSDoc][jsdoc], the [Google Closure Compiler][closure], [YUIDoc][yui] or [PHPDoc][phpdoc]. Extra help is provided for each of these tags by prefilling the arguments each expects. Pressing <kbd>Tab</kbd> will move the cursor to the next argument.\n\n## Configuration\n\nYou can access the configuration settings by selecting `Preferences -> Package Settings -> DocBlockr`.\n\n*The `jsdocs_*` prefix is a legacy from days gone by...*\n\n- `jsdocs_indentation_spaces` *(Number)* The number of spaces to indent after the leading asterisk.\n\n        // jsdocs_indentation_spaces = 1\n        /**\n         * foo\n         */\n\n        // jsdocs_indentation_spaces = 5\n        /**\n         *     foo\n         */\n\n- `jsdocs_align_tags` *(String)* Whether the words following the tags should align. Possible values are `'no'`, `'shallow'` and `'deep'`\n\n    > For backwards compatibility, `false` is equivalent to `'no'`, `true` is equivalent to `'shallow'`\n\n    `'shallow'` will align only the first words after the tag. eg:\n\n        @param    {MyCustomClass} myVariable desc1\n        @return   {String} foo desc2\n        @property {Number} blahblah desc3\n\n    `'deep'` will align each component of the tags, eg:\n\n        @param    {MyCustomClass} myVariable desc1\n        @return   {String}        foo        desc2\n        @property {Number}        blahblah   desc3\n\n\n- `jsdocs_extra_tags` *(Array.String)* An array of strings, each representing extra boilerplate comments to add to *functions*. These can also include arbitrary text (not just tags).\n\n        // jsdocs_extra_tags = ['This is a cool function', '@author nickf', '@version ${1:[version]}']\n        /**<<enter>>\n        function foo (x) {}\n\n        /**\n         * [foo description]\n         * This is a cool function\n         * @author nickf\n         * @version [version]\n         * @param  {[type]} x [description]\n         * @return {[type]}\n         */\n        function foo (x) {}\n\n    Basic variable substitution is supported here for the variables `date` and `datetime`, wrapped in double curly brackets.\n\n        // jsdocs_extra_tags = ['@date {{date}}', '@anotherdate {{datetime}}']\n        /**<<enter>>\n        function foo() {}\n\n        /**\n         * [foo description]\n         * @date     2013-03-25\n         * @datetime 2013-03-25T21:16:25+0100\n         * @return   {[type]}\n         */\n\n- `jsdocs_extra_tags_go_after` *(Boolean)* If true, the extra tags are placed at the end of the block (after param/return). Default: `false`\n\n- `jsdocs_extend_double_slash` *(Boolean)* Whether double-slash comments should be extended. An example of this feature is described above. Default: `true`\n\n- `jsdocs_deep_indent` *(Boolean)* Whether pressing tab at the start of a line in docblock should indent to match the previous line's description field. An example of this feature is described above. Default: `true`\n\n- `jsdocs_notation_map` *(Array)* An array of notation objects. Each notation object must define either a `prefix` OR a `regex` property, and a `type` property.\n\n- `jsdocs_return_tag` *(String)* The text which should be used for a `@return` tag. By default, `@return` is used, however this can be changed to `@returns` if you use that style.\n\n- `jsdocs_spacer_between_sections` *(Boolean|String)* If true, then extra blank lines are inserted between the sections of the docblock. If set to `\"after_description\"` then a spacer will only be added between the description and the first tag. Default: `false`.\n\n- `jsdocs_indentation_spaces_same_para` *(Number)* Described above in the *Reformatting paragraphs* section. Default: `1`\n\n- `jsdocs_autoadd_method_tag` *(Boolean)* Add a `@method` tag to docblocks of functions. Default: `false`\n\n- `jsdocs_simple_mode` *(Boolean)* If true, DocBlockr won't add a template when creating a doc block before a function or variable. Useful if you don't want to write Javadoc-style, but still want your editor to help when writing block comments. Default: `false`\n\n- `jsdocs_lower_case_primitives` *(Boolean)* If true, primitive data types are added in lower case, eg \"number\" instead of \"Number\". Default: `false`\n\n- `jsdocs_short_primitives` *(Boolean)* If true, the primitives `Boolean` and `Integer` are shortened to `Bool` and `Int`. Default: `false`\n\n- `jsdocs_newline_after_block` *(Boolean)* If true, an extra line break is added after the end of a docblock to separate it from the code. Default `false`\n\n- `jsdocs_param_name` *(Boolean)* If true, the name of a function parameter is added to the template. If false, it is omitted. Default: `true`\n\n- `jsdocs_decorate` *(Boolean)* If false, disable decoration of single line comments with <kbd>Ctrl+Enter</kbd>. Default: `true`\n\n- `jsdocs_quick_open_inline` *(Boolean)* If true, an inline docblock will be opened when pressing <kbd>Space</kbd> after an opener (`/**`). When set to `false`, these can be opened by pressing <kbd>Shift+Enter</kbd>. Default: `true`\n\n- `jsdocs_function_description` *(Boolean)* If true, a 'description' line will be added for functions. Default: `true`\n\n## Contributors\n\nThis package was created by [Nick Fisher][spadgos], but has many contributions from others. Please take a look at the [contributors list][contributors] to see who else should get some thanks.\n\n[closure]: http://code.google.com/closure/compiler/docs/js-for-compiler.html\n[contrib]: https://github.com/spadgos/sublime-jsdocs/blob/master/CONTRIBUTING.md\n[contributors]: https://github.com/spadgos/sublime-jsdocs/blob/master/CONTRIBUTORS.md\n[history]: https://github.com/spadgos/sublime-jsdocs/blob/master/HISTORY.md\n[issues]: https://github.com/spadgos/sublime-jsdocs/issues\n[jsdoc]: http://code.google.com/p/jsdoc-toolkit/wiki/TagReference\n[magicmethods]: http://www.php.net/manual/en/language.oop5.magic.php\n[package_control]: http://wbond.net/sublime_packages/package_control\n[phpdoc]: http://phpdoc.org/\n[spadgos]: https://github.com/spadgos\n[sublime]: http://www.sublimetext.com/\n[tags]: https://github.com/spadgos/sublime-jsdocs/tags\n[typehinting]: http://php.net/manual/en/language.oop5.typehinting.php\n[yui]: http://yui.github.com/yuidoc/syntax/index.html\n",
-			"file": "/home/ufan/.config/sublime-text-3/Packages/DocBlockr/README.md",
-			"file_size": -1,
-			"file_write_time": -1,
+			"file": "eve/include/EventDisplay.h",
 			"settings":
 			{
-				"buffer_size": 14587,
+				"buffer_size": 4088,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ufan/src/git/root/tutorials/eve/alice_esd_split.C",
+			"settings":
+			{
+				"buffer_size": 17414,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 55 files for \"SetTextColor\"\n\n/home/ufan/src/git/root/tutorials/eve/SplitGLView.C:\n  101     void           SetHisto(TH1 *hist);\n  102     void           SetText(const char *text);\n  103:    void           SetTextColor(const char *col);\n  104     void           SetTextAttributes(Int_t tx, Int_t ty, Int_t th, const char *col=0);\n  105     void           Show(Int_t x, Int_t y, const char *text = 0, TH1 *hist = 0);\n  ...\n  372  \n  373  //______________________________________________________________________________\n  374: void TGShapedToolTip::SetTextColor(const char *col)\n  375  {\n  376     // Set text color.\n\n/home/ufan/src/git/root/tutorials/eve/alice_esd_split.C:\n  260  \n  261     printf(\"Loading event %d.\\n\", esd_event_id);\n  262:    gTextEntry->SetTextColor(0xff0000);\n  263     gTextEntry->SetText(Form(\"Loading event %d...\",esd_event_id));\n  264     gSystem->ProcessEvents();\n  ...\n  272  \n  273     gEve->Redraw3D(kFALSE, kTRUE);\n  274:    gTextEntry->SetTextColor(0x000000);\n  275     gTextEntry->SetText(Form(\"Event %d loaded\",esd_event_id));\n  276     gROOT->ProcessLine(\"SplitGLView::UpdateSummary()\");\n  ...\n  314           update_projections();\n  315        } else {\n  316:          gTextEntry->SetTextColor(0xff0000);\n  317           gTextEntry->SetText(\"Already at last event\");\n  318           printf(\"Already at last event.\\n\");\n  ...\n  326           update_projections();\n  327        } else {\n  328:          gTextEntry->SetTextColor(0xff0000);\n  329           gTextEntry->SetText(\"Already at first event\");\n  330           printf(\"Already at first event.\\n\");\n\n6 matches across 2 files\n\n\nSearching 735 files for \"SetTextColor\"\n\n/home/ufan/src/git/root/tutorials/benchmarks.C:\n    4     TPaveText *summary = (TPaveText*)bench->GetPrimitive(\"TPave\");\n    5     TText *tmacro = summary->GetLineWith(macro);\n    6:    if (tmacro) tmacro->SetTextColor(4);\n    7     bench->Modified(); bench->Update();\n    8  \n    .\n   11     TPaveText *summary2 = (TPaveText*)bench->GetPrimitive(\"TPave\");\n   12     TText *tmacro2 = summary2->GetLineWith(macro);\n   13:    if (tmacro2) tmacro2->SetTextColor(2);\n   14     bench->Modified(); bench->Update();\n   15  }\n\n/home/ufan/src/git/root/tutorials/cocoa/transp_text.C:\n   60     //Add new color with index 1042.\n   61     new TColor(colors[1], 0., 0., 0., \"transparent_black\", 0.5);\n   62:    pt->SetTextColor(colors[1]);\n   63     pt->SetTextSize(0.5);\n   64     pt->SetTextAlign(12);\n\n/home/ufan/src/git/root/tutorials/demoshelp.C:\n    6     welcome->AddText(\"Welcome to the ROOT demos\");\n    7     welcome->SetTextFont(32);\n    8:    welcome->SetTextColor(4);\n    9     welcome->SetFillColor(24);\n   10     welcome->Draw();\n\n/home/ufan/src/git/root/tutorials/eve/SplitGLView.C:\n  101     void           SetHisto(TH1 *hist);\n  102     void           SetText(const char *text);\n  103:    void           SetTextColor(const char *col);\n  104     void           SetTextAttributes(Int_t tx, Int_t ty, Int_t th, const char *col=0);\n  105     void           Show(Int_t x, Int_t y, const char *text = 0, TH1 *hist = 0);\n  ...\n  372  \n  373  //______________________________________________________________________________\n  374: void TGShapedToolTip::SetTextColor(const char *col)\n  375  {\n  376     // Set text color.\n\n/home/ufan/src/git/root/tutorials/eve/alice_esd_split.C:\n  260  \n  261     printf(\"Loading event %d.\\n\", esd_event_id);\n  262:    gTextEntry->SetTextColor(0xff0000);\n  263     gTextEntry->SetText(Form(\"Loading event %d...\",esd_event_id));\n  264     gSystem->ProcessEvents();\n  ...\n  272  \n  273     gEve->Redraw3D(kFALSE, kTRUE);\n  274:    gTextEntry->SetTextColor(0x000000);\n  275     gTextEntry->SetText(Form(\"Event %d loaded\",esd_event_id));\n  276     gROOT->ProcessLine(\"SplitGLView::UpdateSummary()\");\n  ...\n  314           update_projections();\n  315        } else {\n  316:          gTextEntry->SetTextColor(0xff0000);\n  317           gTextEntry->SetText(\"Already at last event\");\n  318           printf(\"Already at last event.\\n\");\n  ...\n  326           update_projections();\n  327        } else {\n  328:          gTextEntry->SetTextColor(0xff0000);\n  329           gTextEntry->SetText(\"Already at first event\");\n  330           printf(\"Already at first event.\\n\");\n\n/home/ufan/src/git/root/tutorials/fit/minuit2FitBench.C:\n   93     TPaveLabel *p = new TPaveLabel(0.45,0.7,0.88,0.8,Form(\"%s CPU= %g s\",fitter,cputime),\"brNDC\");\n   94     p->Draw();\n   95:    p->SetTextColor(kRed+3);\n   96     p->SetFillColor(kYellow-8);\n   97     pad->Update();\n\n/home/ufan/src/git/root/tutorials/geom/RadioNuclides.C:\n   94     pt->SetFillColor(5);\n   95     pt->SetTextAlign(12);\n   96:    pt->SetTextColor(4);\n   97     text = pt->AddText(\"Time evolution of a population of radionuclides.\");\n   98     text = pt->AddText(\"The concentration of a nuclide X represent the  \");\n   ..\n  109     tex = new TLatex(0.019,0.861,\"C_{Ca^{53}_{20}}\");\n  110     tex->SetTextSize(0.0388601);\n  111:    tex->SetTextColor(1);\n  112     tex->Draw();\n  113     tex = new TLatex(0.0311,0.078064,\"C_{Sc^{52}_{21}}\");\n  114     tex->SetTextSize(0.0388601);\n  115:    tex->SetTextColor(2);\n  116     tex->Draw();\n  117     tex = new TLatex(0.1337,0.010208,\"C_{Ti^{52}_{22}}\");\n  118     tex->SetTextSize(0.0388601);\n  119:    tex->SetTextColor(3);\n  120     tex->Draw();\n  121     tex = new TLatex(1.54158,0.00229644,\"C_{V^{52}_{23}}\");\n  122     tex->SetTextSize(0.0388601);\n  123:    tex->SetTextColor(4);\n  124     tex->Draw();\n  125     tex = new TLatex(25.0522,0.00135315,\"C_{Cr^{52}_{24}}\");\n  126     tex->SetTextSize(0.0388601);\n  127:    tex->SetTextColor(5);\n  128     tex->Draw();\n  129     tex = new TLatex(0.1056,0.5429,\"C_{Sc^{53}_{21}}\");\n  130     tex->SetTextSize(0.0388601);\n  131:    tex->SetTextColor(6);\n  132     tex->Draw();\n  133     tex = new TLatex(0.411,0.1044,\"C_{Ti^{53}_{22}}\");\n  134     tex->SetTextSize(0.0388601);\n  135:    tex->SetTextColor(7);\n  136     tex->Draw();\n  137     tex = new TLatex(2.93358,0.0139452,\"C_{V^{53}_{23}}\");\n  138     tex->SetTextSize(0.0388601);\n  139:    tex->SetTextColor(8);\n  140     tex->Draw();\n  141     tex = new TLatex(10.6235,0.00440327,\"C_{Cr^{53}_{24}}\");\n  142     tex->SetTextSize(0.0388601);\n  143:    tex->SetTextColor(9);\n  144     tex->Draw();\n  145     tex = new TLatex(15.6288,0.782976,\"C_{Sr^{78}_{38}}\");\n  146     tex->SetTextSize(0.0388601);\n  147:    tex->SetTextColor(1);\n  148     tex->Draw();\n  149     tex = new TLatex(20.2162,0.141779,\"C_{Rb^{78}_{37}}\");\n  150     tex->SetTextSize(0.0388601);\n  151:    tex->SetTextColor(2);\n  152     tex->Draw();\n  153     tex = new TLatex(32.4055,0.0302101,\"C_{Kr^{78}_{36}}\");\n  154     tex->SetTextSize(0.0388601);\n  155:    tex->SetTextColor(3);\n  156     tex->Draw();\n  157     tex = new TLatex(117.,1.52,\"C_{X}=#frac{N_{X}(t)}{N_{0}(t=0)}=#sum_{j}\\\n\n/home/ufan/src/git/root/tutorials/geom/csgdemo.C:\n   73     pt->SetLineColor(1);\n   74     TText *text = pt->AddText(\"TGeoCompositeShape - composite shape class\");\n   75:    text->SetTextColor(2);\n   76     pt->AddText(\"----- It's an example of boolean union operation : A + B\");\n   77     pt->AddText(\"----- A == part of sphere (5-175, 0-340), B == pgon\");\n   ..\n  131     TText *text = pt->AddText(\"TGeoCompositeShape - composite shape class\");\n  132  \n  133:    text->SetTextColor(2);\n  134     pt->AddText(\"----- Here is an example of boolean intersection operation : A * B\");\n  135     pt->AddText(\"----- A == sphere (with inner radius non-zero), B == box\");\n  ...\n  184     TText *text = pt->AddText(\"TGeoCompositeShape - composite shape class\");\n  185  \n  186:    text->SetTextColor(2);\n  187  \n  188     pt->AddText(\"----- It's an example of boolean difference: A - B\");\n  ...\n  251     pt->SetLineColor(1);\n  252     TText *text = pt->AddText(\"TGeoCompositeShape - composite shape class\");\n  253:    text->SetTextColor(2);\n  254     pt->AddText(\"----- (sphere * box) + (sphere - box) \");\n  255  \n  ...\n  310     sprintf(line, \"Division of %s on axis %d (%s)\", volume->GetName(), iaxis,sh->GetAxisName(iaxis));\n  311     TText *text = pave->AddText(line);\n  312:    text->SetTextColor(3);\n  313     text->SetTextAlign(12);\n  314     AddText(pave, \"fNdiv\",finder->GetNdiv(),\"number of divisions\");\n  ...\n  342     welcome->AddText(\"Welcome to the new geometry package\");\n  343     welcome->SetTextFont(32);\n  344:    welcome->SetTextColor(4);\n  345     welcome->SetFillColor(24);\n  346     welcome->Draw();\n\n/home/ufan/src/git/root/tutorials/geom/geodemo.C:\n  170     TGeoBBox *box = (TGeoBBox*)(vol->GetShape());\n  171     TText *text = pt->AddText(\"TGeoBBox - box class\");\n  172:    text->SetTextColor(2);\n  173     AddText(pt,\"fDX\",box->GetDX(),\"half length in X\");\n  174     AddText(pt,\"fDY\",box->GetDY(),\"half length in Y\");\n  ...\n  234     TGeoPara *para = (TGeoPara*)(vol->GetShape());\n  235     TText *text = pt->AddText(\"TGeoPara - parallelipiped class\");\n  236:    text->SetTextColor(2);\n  237     AddText(pt,\"fX\",para->GetX(),\"half length in X\");\n  238     AddText(pt,\"fY\",para->GetY(),\"half length in Y\");\n  ...\n  302     TGeoTube *tube = (TGeoTube*)(vol->GetShape());\n  303     TText *text = pt->AddText(\"TGeoTube - tube class\");\n  304:    text->SetTextColor(2);\n  305     AddText(pt,\"fRmin\",tube->GetRmin(),\"minimum radius\");\n  306     AddText(pt,\"fRmax\",tube->GetRmax(),\"maximum radius\");\n  ...\n  367     TGeoTubeSeg *tubeseg = (TGeoTubeSeg*)(vol->GetShape());\n  368     TText *text = pt->AddText(\"TGeoTubeSeg - tube segment class\");\n  369:    text->SetTextColor(2);\n  370     AddText(pt,\"fRmin\",tubeseg->GetRmin(),\"minimum radius\");\n  371     AddText(pt,\"fRmax\",tubeseg->GetRmax(),\"maximum radius\");\n  ...\n  446     TGeoTubeSeg *tubeseg = (TGeoTubeSeg*)(vol->GetShape());\n  447     TText *text = pt->AddText(\"TGeoTubeSeg - tube segment class\");\n  448:    text->SetTextColor(2);\n  449     AddText(pt,\"fRmin\",tubeseg->GetRmin(),\"minimum radius\");\n  450     AddText(pt,\"fRmax\",tubeseg->GetRmax(),\"maximum radius\");\n  ...\n  506     TGeoCone *cone = (TGeoCone*)(vol->GetShape());\n  507     TText *text = pt->AddText(\"TGeoCone - cone class\");\n  508:    text->SetTextColor(2);\n  509     AddText(pt,\"fDZ\",  cone->GetDZ(),    \"half length in Z\");\n  510     AddText(pt,\"fRmin1\",cone->GetRmin1(),\"inner radius at -dz\");\n  ...\n  572     TGeoConeSeg *coneseg = (TGeoConeSeg*)(vol->GetShape());\n  573     TText *text = pt->AddText(\"TGeoConeSeg - coneseg class\");\n  574:    text->SetTextColor(2);\n  575     AddText(pt,\"fDZ\",  coneseg->GetDZ(),    \"half length in Z\");\n  576     AddText(pt,\"fRmin1\",coneseg->GetRmin1(),\"inner radius at -dz\");\n  ...\n  636     TGeoEltu *eltu = (TGeoEltu*)(vol->GetShape());\n  637     TText *text = pt->AddText(\"TGeoEltu - eltu class\");\n  638:    text->SetTextColor(2);\n  639     AddText(pt,\"fA\",eltu->GetA(), \"semi-axis along x\");\n  640     AddText(pt,\"fB\",eltu->GetB(), \"semi-axis along y\");\n  ...\n  700     TGeoSphere *sphere = (TGeoSphere*)(vol->GetShape());\n  701     TText *text = pt->AddText(\"TGeoSphere- sphere class\");\n  702:    text->SetTextColor(2);\n  703     AddText(pt,\"fRmin\",sphere->GetRmin(),\"inner radius\");\n  704     AddText(pt,\"fRmax\",sphere->GetRmax(),\"outer radius\");\n  ...\n  755     TGeoTorus *tor = (TGeoTorus*)(vol->GetShape());\n  756     TText *text = pt->AddText(\"TGeoTorus - torus class\");\n  757:    text->SetTextColor(2);\n  758     AddText(pt,\"fR\",tor->GetR(),\"radius of the ring\");\n  759     AddText(pt,\"fRmin\",tor->GetRmin(),\"minimum radius\");\n  ...\n  814     TGeoTrd1 *trd1 = (TGeoTrd1*)(vol->GetShape());\n  815     TText *text = pt->AddText(\"TGeoTrd1 - Trd1 class\");\n  816:    text->SetTextColor(2);\n  817     AddText(pt,\"fDx1\",trd1->GetDx1(),\"half length in X at lower Z surface(-dz)\");\n  818     AddText(pt,\"fDx2\",trd1->GetDx2(),\"half length in X at higher Z surface(+dz)\");\n  ...\n  870     pt->SetLineColor(1);\n  871     TText *text = pt->AddText(\"TGeoParaboloid - Paraboloid class\");\n  872:    text->SetTextColor(2);\n  873     AddText(pt,\"fRlo\",par->GetRlo(),\"radius at Z=-dz\");\n  874     AddText(pt,\"fRhi\",par->GetRhi(),\"radius at Z=+dz\");\n  ...\n  923     pt->SetLineColor(1);\n  924     TText *text = pt->AddText(\"TGeoHype - Hyperboloid class\");\n  925:    text->SetTextColor(2);\n  926     AddText(pt,\"fRmin\",hype->GetRmin(),\"minimum inner radius\");\n  927     AddText(pt,\"fStIn\",hype->GetStIn(),\"inner surface stereo angle [deg]\");\n  ...\n  993     pt->SetLineColor(1);\n  994     TText *text = pt->AddText(\"TGeoPcon - pcon class\");\n  995:    text->SetTextColor(2);\n  996     AddText(pt,\"fPhi1\",pcon->GetPhi1(),\"lower phi limit\");\n  997     AddText(pt,\"fDphi\",pcon->GetDphi(),\"phi range\");\n  ...\n 1002                j,pcon->GetZ()[j],j,pcon->GetRmin()[j],j,pcon->GetRmax()[j]);\n 1003        text = pt->AddText(line);\n 1004:       text->SetTextColor(4);\n 1005        text->SetTextAlign(12);\n 1006     }   \n ....\n 1073     pt->SetLineColor(1);\n 1074     TText *text = pt->AddText(\"TGeoPgon - pgon class\");\n 1075:    text->SetTextColor(2);\n 1076     AddText(pt,\"fPhi1\",pgon->GetPhi1(),\"lower phi limit\");\n 1077     AddText(pt,\"fDphi\",pgon->GetDphi(),\"phi range\");\n ....\n 1083                j,pgon->GetZ()[j],j,pgon->GetRmin()[j],j,pgon->GetRmax()[j]);\n 1084        text = pt->AddText(line);\n 1085:       text->SetTextColor(4);\n 1086        text->SetTextAlign(12);\n 1087     }   \n ....\n 1155     pt->SetLineColor(1);\n 1156     TText *text = pt->AddText(\"TGeoArb8 - arb8 class\");\n 1157:    text->SetTextColor(2);\n 1158     AddText(pt,\"fDz\",arb->GetDz(),\"Z half length\");\n 1159     char line[128];\n 1160     Double_t *vert = arb->GetVertices();\n 1161     text = pt->AddText(\"Vertices on lower Z plane:\");\n 1162:    text->SetTextColor(3);\n 1163     Int_t i;\n 1164     for (i=0; i<4; i++) {\n ....\n 1166        text = pt->AddText(line);\n 1167        text->SetTextSize(0.043);\n 1168:       text->SetTextColor(4);\n 1169     }      \n 1170     text = pt->AddText(\"Vertices on higher Z plane:\");\n 1171:    text->SetTextColor(3);\n 1172     for (i=4; i<8; i++) {\n 1173        sprintf(line,\"   fXY[%d] = (%5.2f, %5.2f)\", i, vert[2*i], vert[2*i+1]);\n 1174        text = pt->AddText(line);\n 1175        text->SetTextSize(0.043);\n 1176:       text->SetTextColor(4);\n 1177     }      \n 1178        \n ....\n 1226     TGeoTrd2 *trd2 = (TGeoTrd2*)(vol->GetShape());\n 1227     TText *text = pt->AddText(\"TGeoTrd2 - Trd2 class\");\n 1228:    text->SetTextColor(2);\n 1229     AddText(pt,\"fDx1\",trd2->GetDx1(),\"half length in X at lower Z surface(-dz)\");\n 1230     AddText(pt,\"fDx2\",trd2->GetDx2(),\"half length in X at higher Z surface(+dz)\");\n ....\n 1292     TGeoTrap *trap = (TGeoTrap*)(vol->GetShape());\n 1293     TText *text = pt->AddText(\"TGeoTrap - Trapezoid class\");\n 1294:    text->SetTextColor(2);\n 1295     AddText(pt,\"fDz\",trap->GetDz(),\"half length in Z\");\n 1296     AddText(pt,\"fTheta\",trap->GetTheta(),\"theta angle of trapezoid axis\");\n ....\n 1364     TGeoGtra *trap = (TGeoGtra*)(vol->GetShape());\n 1365     TText *text = pt->AddText(\"TGeoGtra - Twisted trapezoid class\");\n 1366:    text->SetTextColor(2);\n 1367     AddText(pt,\"fDz\",trap->GetDz(),\"half length in Z\");\n 1368     AddText(pt,\"fTheta\",trap->GetTheta(),\"theta angle of trapezoid axis\");\n ....\n 1435     pt->SetLineColor(1);\n 1436     TText *text = pt->AddText(\"TGeoXtru - Polygonal extrusion class\");\n 1437:    text->SetTextColor(2);\n 1438     AddText(pt,\"fNvert\",xtru->GetNvert(),\"number of polygone vertices\");\n 1439     AddText(pt,\"fNz\",xtru->GetNz(),\"number of Z sections\");\n ....\n 1504     pt->SetLineColor(1);\n 1505     TText *text = pt->AddText(\"TGeoCompositeShape - composite shape class\");\n 1506:    text->SetTextColor(2);\n 1507     pt->AddText(\"----- Define the shape components and don't forget to name them\");\n 1508     pt->AddText(\"----- Define geometrical transformations that apply to shape components\");\n ....\n 1591     pt->SetLineColor(1);\n 1592     TText *text = pt->AddText(\"Ideal / Aligned geometry\");\n 1593:    text->SetTextColor(2);\n 1594     pt->AddText(\"-- Create physical nodes for the objects you want to align\");\n 1595     pt->AddText(\"-- You must start from a valid CLOSED geometry\");\n ....\n 1676     sprintf(&line[30], \"%s\",comment);\n 1677     TText *text = pave->AddText(line);\n 1678: //   text->SetTextColor(4);\n 1679     text->SetTextAlign(12);//12\n 1680  }\n ....\n 1694     sprintf(&line[30], \"%s\",comment);\n 1695     TText *text = pave->AddText(line);\n 1696: //   text->SetTextColor(4);\n 1697     text->SetTextAlign(12);\n 1698  }\n ....\n 1709     sprintf(line, \"Division of %s on axis %d (%s)\", volume->GetName(), iaxis,sh->GetAxisName(iaxis));\n 1710     TText *text = pave->AddText(line);\n 1711:    text->SetTextColor(3);\n 1712     text->SetTextAlign(12);\n 1713     AddText(pave, \"fNdiv\",finder->GetNdiv(),\"number of divisions\");\n ....\n 1763     welcome->AddText(\"Welcome to the new geometry package\");\n 1764     welcome->SetTextFont(32);\n 1765:    welcome->SetTextColor(4);\n 1766     welcome->SetFillColor(24);\n 1767     welcome->Draw();\n\n/home/ufan/src/git/root/tutorials/geom/mp3player.C:\n  552  \n  553     Tex.SetTextSize(0.04);\n  554:    Tex.SetTextColor(31);\n  555     Tex.DrawLatex(0.3,0.81,\"Mariah Carey - Shake it off\");  \n  556   \n  557     Tex.SetTextSize(0.04);\n  558:    Tex.SetTextColor(31);\n  559     Tex.DrawLatex(0.3,0.71,\"Alicia keys - If I ain't got you\");  \n  560  \n  561     Tex.SetTextSize(0.04);\n  562:    Tex.SetTextColor(31);\n  563     Tex.DrawLatex(0.3,0.61,\"Michael Jackson - Billie Jean\");  \n  564  \n  565     Tex.SetTextSize(0.04);\n  566:    Tex.SetTextColor(31);\n  567     Tex.DrawLatex(0.3,0.51,\"Christina Milian - Am to Pm\");  \n  568  \n  569     Tex.SetTextSize(0.04);\n  570:    Tex.SetTextColor(31);\n  571     Tex.DrawLatex(0.3,0.41,\"Zapp&Roger - Slow and Easy\");  \n  572  \n  573     Tex.SetTextSize(0.04);\n  574:    Tex.SetTextColor(31);\n  575     Tex.DrawLatex(0.3,0.31,\"Black Eyes Peas - Let's get retarded\");  \n  576   \n  577     Tex.SetTextSize(0.04);\n  578:    Tex.SetTextColor(31);\n  579     Tex.DrawLatex(0.3,0.21,\"Bosson - One in a Millin\");\n  580    \n  581     Tex.SetTextSize(0.04);\n  582:    Tex.SetTextColor(15);\n  583     Tex.DrawLatex(0.2,0.11,\"Click Button!! You Can Listen to Musics\");\n  584     TButton *but1=new TButton(\"\",\"Sound(1)\",0.2,0.8,0.25,0.85);\n  ...\n  628  \n  629     Tex.SetTextSize(0.08);\n  630:    Tex.SetTextColor(10);\n  631     Tex.DrawLatex(0.06,0.85,\"IAudio U3 Mp3 Player\");  \n  632    \n  ...\n  637  \n  638     Tex.SetTextSize(0.06);\n  639:    Tex.SetTextColor(10);\n  640     Tex.DrawLatex(0.06,0.75,\"+ Color LCD\");  \n  641  \n  642     Tex.SetTextSize(0.06);\n  643:    Tex.SetTextColor(10);\n  644     Tex.DrawLatex(0.06,0.65,\"+ 60mW High Generating Power\");  \n  645  \n  646     Tex.SetTextSize(0.06);\n  647:    Tex.SetTextColor(10);\n  648     Tex.DrawLatex(0.06,0.55,\"+ GUI Theme Skin\");  \n  649  \n  650     Tex.SetTextSize(0.06);\n  651:    Tex.SetTextColor(10);\n  652     Tex.DrawLatex(0.06,0.45,\"+ Noble White&Black\");  \n  653  \n  654     Tex.SetTextSize(0.06);\n  655:    Tex.SetTextColor(10);\n  656     Tex.DrawLatex(0.06,0.35,\"+ Text Viewer+Image Viewer\");  \n  657     \n  658     Tex.SetTextSize(0.06);\n  659:    Tex.SetTextColor(10);\n  660     Tex.DrawLatex(0.06,0.25,\"+ 20 Hours Playing\");  \n  661  \n  662     Tex.SetTextSize(0.06);\n  663:    Tex.SetTextColor(10);\n  664     Tex.DrawLatex(0.06,0.15,\"+ The Best Quality of Sound\");  \n  665  \n\n/home/ufan/src/git/root/tutorials/gl/gldemos.C:\n   24     hdemo->SetTextAlign(12);\n   25     hdemo->SetTextFont(52);\n   26:    hdemo->SetTextColor(kBlue);\n   27     hdemo->AddText(\"1. Glsurfaces demo shows glsurf4, glsurf1, glsurf3, glsurf1cyl, glsurfpol, gltf3 options.\");\n   28     hdemo->AddText(\"2. Glrose demontrates \\\"glsurf2pol\\\" drawing option and user-defined palette.\");\n\n/home/ufan/src/git/root/tutorials/gl/transp_text.C:\n   64     //Add new color with index 1002.\n   65     new TColor(idx[1], 0., 0., 0., \"transparent_black\", 0.5);\n   66:    pt->SetTextColor(idx[1]);\n   67     pt->SetTextSize(0.5);\n   68     pt->SetTextAlign(12);\n\n/home/ufan/src/git/root/tutorials/graphics/analyze.C:\n  100     ta.SetTextFont(71);\n  101     ta.SetTextSize(0.015);\n  102:    ta.SetTextColor(4);\n  103     ta.SetTextAlign(12);\n  104     ta.Draw();\n  ...\n  108     tb.SetTextFont(71);\n  109     tb.SetTextSize(0.015);\n  110:    tb.SetTextColor(4);\n  111     tb.SetTextAlign(11);\n  112     tb.Draw();\n\n/home/ufan/src/git/root/tutorials/graphics/basic3d.C:\n   93     title->AddText(\"Examples of 3-D primitives\");\n   94     TText *click=title->AddText(\"Click anywhere on the picture to rotate\");\n   95:    click->SetTextColor(4);\n   96     title->Draw();\n   97  }\n\n/home/ufan/src/git/root/tutorials/graphics/canvas.C:\n   88       line1->SetLineColor(color);\n   89       t1->SetTextSize(t10 + t1ds*i);\n   90:      t1->SetTextColor(color);\n   91       t1->SetX(xt1+dxt1*i);\n   92       t1->SetY(yt1+dyt1*i);\n\n/home/ufan/src/git/root/tutorials/graphics/eval.C:\n   22     t5.SetTextAlign(22);\n   23     t6.SetTextAlign(22);\n   24:    t5.SetTextColor(4);\n   25:    t6.SetTextColor(2);\n   26     pt3.Draw();\n   27     TPaveLabel pt4(4,0.5,12,2.5,\"return result = value[i]\");\n\n/home/ufan/src/git/root/tutorials/graphics/quarks.C:\n   11     \n   12     TLatex *texf = new TLatex(0.90,0.455,\"Force Carriers\");\n   13:    texf->SetTextColor(forceColor);\n   14     texf->SetTextAlign(22); texf->SetTextSize(0.07); \n   15     texf->SetTextAngle(90);\n   ..\n   17     \n   18     TLatex *texl = new TLatex(0.11,0.288,\"Leptons\");\n   19:    texl->SetTextColor(leptonColor);\n   20     texl->SetTextAlign(22); texl->SetTextSize(0.07); \n   21     texl->SetTextAngle(90);\n   ..\n   23     \n   24     TLatex *texq = new TLatex(0.11,0.624,\"Quarks\");\n   25:    texq->SetTextColor(quarkColor);\n   26     texq->SetTextAlign(22); texq->SetTextSize(0.07); \n   27     texq->SetTextAngle(90);\n   ..\n   29     \n   30     TLatex tex(0.5,0.5,\"u\");\n   31:    tex.SetTextColor(titleColor); tex.SetTextFont(32); \n   32     tex.SetTextAlign(22);\n   33     tex.SetTextSize(0.14); \n   ..\n   38     tex.DrawLatex(0.5,0.067,\"Three Generations of Matter\");\n   39  \n   40:    tex.SetTextColor(kBlack); tex.SetTextSize(0.8);\n   41           \n   42  // ------------>Create main pad and its subdivisions\n\n/home/ufan/src/git/root/tutorials/graphs/exclusiongraph2.C:\n   43     TLatex *tex = new TLatex(140.841,37.9762,\n   44        \"#leftarrow t #rightarrow bH^{+}, H^{+} #rightarrow #tau#nu\");\n   45:    tex->SetTextColor(6);\n   46     tex->Draw();\n   47  \n   ..\n  104     tex = new TLatex(188.151,9.36035,\n  105        \"gb #rightarrow tH^{+}, H^{+} #rightarrow #tau#nu\");\n  106:    tex->SetTextColor(2);\n  107     tex->Draw();\n  108  \n  ...\n  127     tex = new TLatex(165.,1.15498,\n  128        \"gb #rightarrow tH^{+}, H^{+} #rightarrow tb\");\n  129:    tex->SetTextColor(4);\n  130     tex->Draw();\n  131  \n\n/home/ufan/src/git/root/tutorials/graphs/graphpolar.C:\n   46     // Update, otherwise GetPolargram returns 0\n   47     CPol->Update();\n   48:    grP1->GetPolargram()->SetTextColor(8);\n   49     grP1->GetPolargram()->SetRangePolar(-TMath::Pi(),TMath::Pi());\n   50     grP1->GetPolargram()->SetNdivPolar(703);\n\n/home/ufan/src/git/root/tutorials/graphs/graphstruct.C:\n   24     n3->SetTextFont(132);\n   25  \n   26:    n0->SetTextColor(kRed);\n   27  \n   28     n9->SetFillColor(kRed-10);\n\n/home/ufan/src/git/root/tutorials/graphs/multigraph.C:\n   40     TPaveStats *stats1 = (TPaveStats*)gr1->GetListOfFunctions()->FindObject(\"stats\");\n   41     TPaveStats *stats2 = (TPaveStats*)gr2->GetListOfFunctions()->FindObject(\"stats\");\n   42:    stats1->SetTextColor(kBlue); \n   43:    stats2->SetTextColor(kRed); \n   44     stats1->SetX1NDC(0.12); stats1->SetX2NDC(0.32); stats1->SetY1NDC(0.75);\n   45     stats2->SetX1NDC(0.72); stats2->SetX2NDC(0.92); stats2->SetY1NDC(0.78);\n\n/home/ufan/src/git/root/tutorials/graphs/timeonaxis3.C:\n   49     tex3->SetTextFont(102);\n   50     tex3->SetTextSize(0.07*f);\n   51:    tex3->SetTextColor(kBlue+2);\n   52  \n   53     TLatex* tex2 = new TLatex;\n   ..\n   55     tex2->SetTextFont(102);\n   56     tex2->SetTextSize(0.07*f);\n   57:    tex2->SetTextColor(kOrange+3);\n   58  \n   59     time_t offset[] = {0,                   0, 1325376000, 1341100800};\n\n/home/ufan/src/git/root/tutorials/graphs/zdemo.C:\n   48     pl->SetFillColor(18);\n   49     pl->SetTextFont(32);\n   50:    pl->SetTextColor(49);\n   51     pl->Draw();\n   52  \n   53     TLatex *t = new TLatex();\n   54     t->SetTextFont(32);\n   55:    t->SetTextColor(1);\n   56     t->SetTextSize(0.03);\n   57     t->SetTextAlign(12);\n   ..\n   87     t->SetNDC();\n   88     t->SetTextFont(62);\n   89:    t->SetTextColor(36);\n   90     t->SetTextSize(0.08);\n   91     t->SetTextAlign(12);\n   ..\n  100  \n  101     t->SetTextSize(0.045);\n  102:    t->SetTextColor(kBlue);\n  103     t->DrawLatex(0.22,0.260,\"#sqrt{s} = 63(GeV)\");\n  104:    t->SetTextColor(kRed);\n  105     t->DrawLatex(0.22,0.205,\"#sqrt{s} = 200(GeV)\");\n  106:    t->SetTextColor(6);\n  107     t->DrawLatex(0.22,0.15,\"#sqrt{s} = 500(GeV)\");\n  108  \n  109     t->SetTextSize(0.05);\n  110:    t->SetTextColor(1);\n  111     t->DrawLatex(0.6,0.06,\"q_{T} (Gev/c)\");\n  112  \n  ...\n  201     t->SetNDC();\n  202     t->SetTextFont(62);\n  203:    t->SetTextColor(36);\n  204     t->SetTextSize(0.08);\n  205     t->SetTextAlign(12);\n  ...\n  214  \n  215     t->SetTextSize(0.045);\n  216:    t->SetTextColor(46);\n  217     t->DrawLatex(0.20,0.30,\"#sqrt{s}, GeV\");\n  218     t->DrawLatex(0.22,0.26,\"63\");\n  ...\n  221  \n  222     t->SetTextSize(0.05);\n  223:    t->SetTextColor(1);\n  224     t->DrawLatex(0.88,0.06,\"z\");\n  225  \n\n/home/ufan/src/git/root/tutorials/gui/drag_and_drop.C:\n  162     fStatus = new TGLabel(hf, new TGHotString(gReadyMsg));\n  163     fStatus->SetTextJustify(kTextLeft);\n  164:    fStatus->SetTextColor(0x0000ff);\n  165     hf->AddFrame(fStatus, new TGLayoutHints(kLHintsExpandX | kLHintsCenterY,\n  166                  10, 10, 10, 10));\n  ...\n  265     // list tree item and copy the received data into it.\n  266  \n  267:    fStatus->SetTextColor(0xff0000);\n  268     fStatus->ChangeText(\"I received data!!!\");\n  269     if (data) {\n  ...\n  400     // Restore the original text of the status label and its original color.\n  401  \n  402:    fStatus->SetTextColor(0x0000ff);\n  403     fStatus->ChangeText(gReadyMsg);\n  404  }\n\n/home/ufan/src/git/root/tutorials/gui/guilabels.C:\n   76                         labelfont, kChildFrame, bcolor);\n   77     AddFrame(fLbl1, new TGLayoutHints(kLHintsNormal, 5, 5, 3, 4));\n   78:    fLbl1->SetTextColor(ycolor);\n   79  \n   80     fLbl2 = new TGLabel(this, \"Own Font & ForegroundColor\", fTextGC->GetGC(),\n   81                         labelfont);\n   82     AddFrame(fLbl2,  new TGLayoutHints(kLHintsCenterX, 5, 5, 3, 4));\n   83:    fLbl2->SetTextColor(ycolor);\n   84     \n   85     fLbl3 = new TGLabel(this, \"Normal Label\");\n   ..\n   89                         fTextGC->GetGC(), labelfont, kChildFrame, bcolor);\n   90     AddFrame(fLbl4, new TGLayoutHints(kLHintsCenterX, 5, 5, 3, 4));\n   91:    fLbl4->SetTextColor(ycolor);\n   92     fLbl4->ChangeOptions(fLbl4->GetOptions() | kFixedSize);\n   93     fLbl4->Resize(350, 80);\n\n/home/ufan/src/git/root/tutorials/hist/h1draw.C:\n   80     pave->SetFillColor(42);\n   81     TText *t1=pave->AddText(\"You can move\");\n   82:    t1->SetTextColor(4);\n   83     t1->SetTextSize(0.05);\n   84     pave->AddText(\"Title and Stats pads\");\n\n/home/ufan/src/git/root/tutorials/hist/statsEditing.C:\n   28     myt ->SetTextFont(42);\n   29     myt ->SetTextSize(0.04);\n   30:    myt ->SetTextColor(kRed);\n   31     list->Add(myt);\n   32  \n\n/home/ufan/src/git/root/tutorials/hist/transpad.C:\n   42     TPaveStats *ps2 = (TPaveStats*)h2->GetListOfFunctions()->FindObject(\"stats\");\n   43     ps2->SetX1NDC(0.65); ps2->SetX2NDC(0.85);\n   44:    ps2->SetTextColor(kRed);\n   45     \n   46     // draw axis on the right side of the pad\n\n/home/ufan/src/git/root/tutorials/math/Bessel.C:\n   59  p1->SetFillColor(0);\n   60  p1->SetTextFont(22);\n   61: p1->SetTextColor(kBlack);\n   62  \n   63  //setting the legend\n   ..\n   98      p2->SetFillColor(0);\n   99      p2->SetTextFont(22);\n  100:     p2->SetTextColor(kBlack);\n  101  \n  102      //setting legend\n  ...\n  139      p3->SetFillColor(0);\n  140      p3->SetTextFont(22);\n  141:     p3->SetTextColor(kBlack);\n  142  \n  143      //setting legend\n  ...\n  181      p4->SetFillColor(0);\n  182      p4->SetTextFont(22);\n  183:     p4->SetTextColor(kBlack);\n  184  \n  185      //setting legend\n\n/home/ufan/src/git/root/tutorials/math/GammaFun.C:\n   48  p1->SetFillColor(0);\n   49  p1->SetTextFont(22);\n   50: p1->SetTextColor(kBlack);\n   51  \n   52  //setting graph \n   ..\n   83     p2->SetFillColor(0);\n   84     p2->SetTextFont(22);\n   85:    p2->SetTextColor(kBlack);\n   86  f2a->SetLineColor(kBlue);\n   87  f2a->SetLineWidth(2);\n   ..\n  100     p3->SetFillColor(0);\n  101     p3->SetTextFont(22);\n  102:    p3->SetTextColor(kBlack);\n  103  f3a->SetLineWidth(2);\n  104  f3a->GetXaxis()->SetTitle(\"x\");\n  ...\n  118     p4->SetFillColor(0);\n  119     p4->SetTextFont(22);\n  120:    p4->SetTextColor(kBlack);\n  121  f4a->SetTitle(\"erf(x) and erfc(x)\");\n  122  f4a->SetLineWidth(2);\n\n/home/ufan/src/git/root/tutorials/math/goftest.C:\n  116     pt1->SetFillColor(18);\n  117     pt1->SetTextFont(20);\n  118:    pt1->SetTextColor(4);\n  119     Char_t str2[50];\n  120     sprintf(str2, \"p-value for K-S 1-smp test: %f\", pvalueKS_1);\n  ...\n  200     pt2->SetFillColor(18);\n  201     pt2->SetTextFont(20);\n  202:    pt2->SetTextColor(4);\n  203     sprintf(str2, \"p-value for K-S 2-smps test: %f\", pvalueKS_1);\n  204     pt2-> AddText(str2);\n\n/home/ufan/src/git/root/tutorials/pyroot/benchmarks.py:\n   20     tmacro = summary.GetLineWith( macro )\n   21     if tmacro:\n   22:       tmacro.SetTextColor( 4 )\n   23     bench.Modified()\n   24     bench.Update()\n   ..\n   29     tmacro2 = summary2.GetLineWith( macro )\n   30     if tmacro2:\n   31:       tmacro2.SetTextColor( 2 )\n   32     bench.Modified()\n   33     bench.Update()\n\n/home/ufan/src/git/root/tutorials/pyroot/demoshelp.py:\n   11  welcome.AddText( 'Welcome to the ROOT demos' )\n   12  welcome.SetTextFont( 32 )\n   13: welcome.SetTextColor( 4 )\n   14  welcome.SetFillColor( 24 )\n   15  welcome.Draw()\n\n/home/ufan/src/git/root/tutorials/pyroot/h1draw.py:\n   69  pave.SetFillColor( 42 )\n   70  t1 = pave.AddText( 'You can move' )\n   71: t1.SetTextColor( 4 )\n   72  t1.SetTextSize( 0.05 )\n   73  pave.AddText( 'Title and Stats pads' )\n\n/home/ufan/src/git/root/tutorials/pyroot/zdemo.py:\n   43     pl.SetFillColor(18)\n   44     pl.SetTextFont(32)\n   45:    pl.SetTextColor(49)\n   46     pl.Draw()\n   47     saves[ 'pl' ] = pl\n   ..\n   49     t = ROOT.TLatex()\n   50     t.SetTextFont(32)\n   51:    t.SetTextColor(1)\n   52     t.SetTextSize(0.03)\n   53     t.SetTextAlign(12)\n   ..\n   85     t.SetNDC()\n   86     t.SetTextFont( 62 )\n   87:    t.SetTextColor( 36 )\n   88     t.SetTextSize( 0.08 )\n   89     t.SetTextAlign( 12 )\n   ..\n   98  \n   99     t.SetTextSize( 0.045 )\n  100:    t.SetTextColor( ROOT.kBlue )\n  101     t.DrawLatex( 0.22, 0.260, '#sqrt{s} = 63(GeV)' )\n  102:    t.SetTextColor( ROOT.kRed )\n  103     t.DrawLatex( 0.22, 0.205,'#sqrt{s} = 200(GeV)' )\n  104:    t.SetTextColor( 6 )\n  105     t.DrawLatex( 0.22, 0.15, '#sqrt{s} = 500(GeV)' )\n  106  \n  107     t.SetTextSize( 0.05 )\n  108:    t.SetTextColor( 1 )\n  109     t.DrawLatex( 0.6, 0.06, 'q_{T} (Gev/c)' )\n  110     saves[ 't2' ] = t                         # note the label that is used!\n  ...\n  205     t.SetNDC()\n  206     t.SetTextFont( 62 )\n  207:    t.SetTextColor( 36 )\n  208     t.SetTextSize( 0.08 )\n  209     t.SetTextAlign( 12 )\n  ...\n  218  \n  219     t.SetTextSize( 0.045 )\n  220:    t.SetTextColor( 46 )\n  221     t.DrawLatex( 0.20, 0.30, '#sqrt{s}, GeV' )\n  222     t.DrawLatex( 0.22, 0.26, '63' )\n  ...\n  225  \n  226     t.SetTextSize( 0.05 )\n  227:    t.SetTextColor( 1 )\n  228     t.DrawLatex( 0.88, 0.06, 'z' )\n  229     saves[ 't3' ] = t                         # note the label that is used!\n\n/home/ufan/src/git/root/tutorials/pythia/pythiaExample.C:\n  210    TLatex* latex = new TLatex(1.5, 1e-4, expression);\n  211    latex->SetTextSize(.1);\n  212:   latex->SetTextColor(4);\n  213    latex->Draw();\n  214  \n\n/home/ufan/src/git/root/tutorials/roofit/rf106_plotdecoration.C:\n   76    TText* txt = new TText(2,100,\"Signal\") ;\n   77    txt->SetTextSize(0.04) ;\n   78:   txt->SetTextColor(kRed) ;\n   79    frame->addObject(txt) ;\n   80  \n\n/home/ufan/src/git/root/tutorials/rootalias.C:\n   55     TPaveText *summary = (TPaveText*)bench->GetPrimitive(\"TPave\");\n   56     TText *tmacro = summary->GetLineWith(macro);\n   57:    if (tmacro) tmacro->SetTextColor(4);\n   58     bench->Modified(); bench->Update();\n   59  \n   ..\n   62     TPaveText *summary2 = (TPaveText*)bench->GetPrimitive(\"TPave\");\n   63     TText *tmacro2 = summary2->GetLineWith(macro);\n   64:    if (tmacro2) tmacro2->SetTextColor(2);\n   65     bench->Modified(); bench->Update();\n   66  }\n\n/home/ufan/src/git/root/tutorials/rootenv.C:\n    5  TPaveLabel title(3,27.1,15,28.7,\"ROOT Environment and Tools\");\n    6  title.SetFillColor(42);\n    7: title.SetTextColor(5);\n    8  title.SetTextFont(62);\n    9  title.Draw();\n   ..\n   27  TText *t1=UserChtml.AddText(\"*User.C.html\");\n   28  TText *t2=UserChtml.AddText(\"*User.mac.html\");\n   29: t1.SetTextColor(4);\n   30: t2.SetTextColor(4);\n   31  UserChtml.Draw();\n   32  ar.DrawArrow(2.5,4.5,2.5,3.5,0.015,\"|>\");\n   ..\n   36  UserTree.AddText(\"Inheritance graphs\");\n   37  TText *t3=UserTree.AddText(\"*User_Tree.ps\");\n   38: t3.SetTextColor(4);\n   39  UserTree.Draw();\n   40  ar.DrawArrow(9,5.5,9,3.5,0.015,\"|>\");\n   ..\n   44  Userhtml.AddText(\"with references\");\n   45  TText *t4=Userhtml.AddText(\"*User.html\");\n   46: t4.SetTextColor(4);\n   47  Userhtml.Draw();\n   48  ar.DrawArrow(15.5,4.5,15.5,3.5,0.015,\"|>\");\n   ..\n   53  TText *t5=Macros.AddText(\"*User.mac\");\n   54  TText *t5a=Macros.AddText(\"*User.log\");\n   55: t5.SetTextColor(4);\n   56: t5a.SetTextColor(4);\n   57  Macros.Draw();\n   58  //\n   ..\n   61  UserC.AddText(\"source code\");\n   62  TText *t6=UserC.AddText(\"*User.C\");\n   63: t6.SetTextColor(4);\n   64  UserC.Draw();\n   65  ar.DrawArrow(4.5,11,5.8,11,0.015,\"|>\");\n   ..\n   68  Userh.AddText(\"C++ header files\");\n   69  TText *t7=Userh.AddText(\"*User.h\");\n   70: t7.SetTextColor(4);\n   71  Userh.SetFillColor(11);\n   72  Userh.Draw();\n   ..\n   77  UserUI.AddText(\"User Interface and I/O\");\n   78  TText *t8=UserUI.AddText(\"*UserUI.C\");\n   79: t8.SetTextColor(4);\n   80  UserUI.Draw();\n   81  ar.DrawArrow(9,18.5,9,17.3,0.015,\"|>\");\n   ..\n   86  Usersl.AddText(\"Libraries\");\n   87  TText *t9=Usersl.AddText(\"*User.sl\");\n   88: t9.SetTextColor(4);\n   89  Usersl.Draw();\n   90  ar.DrawArrow(13,11,12.1,11,0.015,\"|>\");\n   ..\n   95  TText *t10=Rootlib.AddText(\"Root.sl\");\n   96  TText *t11=Rootlib.AddText(\"Root/include\");\n   97: t10.SetTextColor(4);\n   98: t11.SetTextColor(4);\n   99  Rootlib.Draw();\n  100  //\n  ...\n  130  exe.AddText(\"Interactive or Batch\");\n  131  TText *t12=exe.AddText(\"User.exe\");\n  132: t12.SetTextColor(2);\n  133  exe.Draw();\n  134  \n\n/home/ufan/src/git/root/tutorials/ruby/demoshelp.rb:\n    7  welcome.AddText( \"Welcome to the ROOT demos\" )\n    8  welcome.SetTextFont( 32 )\n    9: welcome.SetTextColor( 4 )\n   10  welcome.SetFillColor( 24 )\n   11  welcome.Draw()\n\n/home/ufan/src/git/root/tutorials/ruby/multigraph.rb:\n   49      stats2 = gr2.GetListOfFunctions.find { |f| f.GetName == \"stats\" }.as(\"TPaveStats\")\n   50  \n   51:     stats1.SetTextColor kBlue\n   52:     stats2.SetTextColor kRed \n   53      stats1.SetX1NDC(0.12); stats1.SetX2NDC(0.32); stats1.SetY1NDC(0.75);\n   54      stats2.SetX1NDC(0.72); stats2.SetX2NDC(0.92); stats2.SetY1NDC(0.78);\n\n/home/ufan/src/git/root/tutorials/splot/TestSPlot.C:\n   83     pt->SetFillColor(18);\n   84     pt->SetTextFont(20);\n   85:    pt->SetTextColor(4);\n   86     pt->AddText(\"sPlots of Mes and F signal and background,\");\n   87     pt->AddText(\"obtained by the tutorial TestSPlot.C on BABAR MC \"\n   ..\n   89     TText *t3=pt->AddText(\n   90        \"M. Pivk and F. R. Le Diberder, Nucl.Inst.Meth.A, physics/0402083\");\n   91:    t3->SetTextColor(1);\n   92     t3->SetTextFont(30);\n   93     pt->Draw();\n\n166 matches across 42 files\n",
+			"settings":
+			{
+				"buffer_size": 36193,
 				"line_ending": "Unix",
+				"name": "Find Results",
 				"scratch": true
 			}
 		},
 		{
-			"file": "eve/MultiView.C",
+			"file": "/home/ufan/src/git/root/tutorials/graphics/quarks.C",
 			"settings":
 			{
-				"buffer_size": 15830,
+				"buffer_size": 3323,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "CMakeLists.txt",
+			"file": "/home/ufan/src/git/root/gui/gui/src/TGTextEntry.cxx",
 			"settings":
 			{
-				"buffer_size": 1486,
+				"buffer_size": 61967,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "kernel/CMakeLists.txt",
+			"file": "/home/ufan/src/git/root/core/base/inc/TColor.h",
 			"settings":
 			{
-				"buffer_size": 1472,
+				"buffer_size": 6769,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "kernel/RootNewMacros.cmake",
+			"file": "/home/ufan/src/git/root/core/base/src/TColor.cxx",
 			"settings":
 			{
-				"buffer_size": 32375,
+				"buffer_size": 57881,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ufan/src/git/root/core/base/inc/Rtypes.h",
+			"settings":
+			{
+				"buffer_size": 18204,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ufan/.config/sublime-text-3/Packages/SublimeGDB/SublimeGDB.sublime-settings",
+			"settings":
+			{
+				"buffer_size": 7372,
 				"line_ending": "Unix"
 			}
 		}
@@ -588,9 +618,25 @@
 	"command_palette":
 	{
 		"height": 392.0,
-		"last_filter": "insta",
+		"last_filter": "instal",
 		"selected_items":
 		[
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"liscegp",
+				"Licence Snippet: GNU GPL v3.0 [Header]"
+			],
+			[
+				"ligp",
+				"Licence Snippet: GNU GPL v3.0 [Header]"
+			],
+			[
+				"diffy",
+				"Diffy Compare"
+			],
 			[
 				"insta",
 				"Package Control: Install Package"
@@ -716,10 +762,6 @@
 				"GitGutter: Show Comparing Against"
 			],
 			[
-				"instal",
-				"Package Control: Install Package"
-			],
-			[
 				"git ",
 				"Git: Gui"
 			],
@@ -783,14 +825,118 @@
 	},
 	"expanded_folders":
 	[
-		"/home/ufan/src/git/mwdc_ana",
-		"/home/ufan/src/git/mwdc_ana/json",
-		"/home/ufan/src/git/mwdc_ana/kernel",
-		"/home/ufan/src/git/mwdc_ana/macros",
-		"/home/ufan/src/git/mwdc_ana/scripts"
 	],
 	"file_history":
 	[
+		"/home/ufan/src/git/mwdc_ana/mwdc_ana.sublime-project",
+		"/home/ufan/src/git/root/tutorials/eve/SplitGLView.C",
+		"/home/ufan/src/git/root/core/base/src/TColor.cxx",
+		"/home/ufan/src/git/root/core/base/inc/TColor.h",
+		"/home/ufan/src/git/root/gui/gui/inc/TGTextEntry.h",
+		"/home/ufan/src/git/root/core/base/inc/GuiTypes.h",
+		"/home/ufan/.config/sublime-text-3/Packages/User/SublimeGDB.sublime-settings",
+		"/home/ufan/src/git/mwdc_ana/eve/include/eve_LinkDef.h",
+		"/home/ufan/src/git/mwdc_ana/eve/src/MultiView.cxx",
+		"/home/ufan/src/git/root/tutorials/eve/alice_esd_split.C",
+		"/home/ufan/src/git/mwdc_ana/eve/CMakeLists.txt",
+		"/home/ufan/src/git/mwdc_ana/eve/test/main.cxx",
+		"/home/ufan/src/git/root/graf3d/eve/inc/TEveElement.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/include/TrackFit.h",
+		"/home/ufan/src/git/mwdc_ana/macros/debug_trackfit_perwire.C",
+		"/home/ufan/src/git/mwdc_ana/kernel/include/global.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/include/BoardInfo.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/include/CrateInfo.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/include/DriftInfo.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/include/kernel_LinkDef.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/include/utility.h",
+		"/home/ufan/src/git/mwdc_ana/scripts/rootlogon.C",
+		"/home/ufan/src/git/mwdc_ana/eve/test/debug_eve.C",
+		"/home/ufan/src/git/root/core/base/inc/TApplication.h",
+		"/home/ufan/src/git/root/core/base/src/TApplication.cxx",
+		"/home/ufan/src/git/root/core/base/inc/TQObject.h",
+		"/home/ufan/src/git/root/core/base/src/TVirtualX.cxx",
+		"/home/ufan/src/git/root/graf3d/eve/inc/TEveBrowser.h",
+		"/home/ufan/src/git/root/gui/gui/src/TGTab.cxx",
+		"/home/ufan/src/git/root/gui/gui/inc/TGTab.h",
+		"/home/ufan/workspace/mwdc/fm/workspace/test/build/eve/eve_Dict.cxx",
+		"/home/ufan/src/git/root/gui/gui/inc/TGLabel.h",
+		"/home/ufan/src/git/root/gui/gui/inc/TGLayout.h",
+		"/home/ufan/src/git/root/graf3d/eve/inc/TEveWindow.h",
+		"/home/ufan/src/git/root/tutorials/gui/splitbuttonTest.C",
+		"/home/ufan/src/git/root/tutorials/gui/splitterHorizontal.C",
+		"/home/ufan/src/git/mwdc_ana/eve/include/EventHandler.h",
+		"/home/ufan/src/git/root/graf3d/eve/src/TEveWindow.cxx",
+		"/home/ufan/src/git/root/tutorials/gui/buttonTest.C",
+		"/home/ufan/src/git/root/graf3d/eve/src/TEveBrowser.cxx",
+		"/home/ufan/src/git/root/gui/gui/src/TRootBrowser.cxx",
+		"/home/ufan/src/git/root/gui/gui/src/TGFileBrowser.cxx",
+		"/home/ufan/src/git/root/core/base/inc/TBrowserImp.h",
+		"/home/ufan/src/git/root/core/base/src/TBrowserImp.cxx",
+		"/home/ufan/src/git/root/gui/gui/inc/TRootBrowser.h",
+		"/home/ufan/src/git/root/gui/gui/src/TGFrame.cxx",
+		"/home/ufan/src/git/root/graf2d/graf/inc/TFrame.h",
+		"/home/ufan/src/git/root/graf3d/eve/src/TEveElement.cxx",
+		"/home/ufan/src/git/root/tutorials/eve/selection_sigs.C",
+		"/home/ufan/src/git/root/graf3d/eve/src/TEveSelection.cxx",
+		"/home/ufan/src/git/root/graf3d/eve/inc/TEveSelection.h",
+		"/home/ufan/src/git/root/tutorials/gui/numberEntry.C",
+		"/home/ufan/src/git/root/tutorials/gui/splitterVertical.C",
+		"/home/ufan/src/git/root/tutorials/gui/guitest.C",
+		"/home/ufan/src/git/root/gui/gui/inc/TGNumberEntry.h",
+		"/home/ufan/src/git/root/gui/gui/src/TGNumberEntry.cxx",
+		"/home/ufan/src/git/root/tutorials/gui/simpleTableTest.C",
+		"/home/ufan/src/software/root/5.34/tutorials/gui/simpleTableTest.C",
+		"/home/ufan/src/git/root/gui/gui/inc/TGTable.h",
+		"/home/ufan/src/git/root/gui/gui/inc/TGTableCell.h",
+		"/home/ufan/src/git/root/gui/gui/inc/TGTableHeader.h",
+		"/home/ufan/src/git/root/gui/gui/src/TGTable.cxx",
+		"/home/ufan/src/git/root/gui/gui/inc/TGSimpleTableInterface.h",
+		"/home/ufan/src/git/root/core/base/inc/TVirtualTableInterface.h",
+		"/home/ufan/src/git/root/gui/gui/inc/TGSimpleTable.h",
+		"/home/ufan/src/git/root/gui/gui/src/TGSimpleTable.cxx",
+		"/home/ufan/src/git/root/gui/gui/src/TGSimpleTableInterface.cxx",
+		"/home/ufan/src/git/mwdc_ana/eve/include/MultiView.h",
+		"/home/ufan/src/git/root/tutorials/eve/alice_vsd.C",
+		"/home/ufan/src/git/root/tutorials/eve/alice_esd.C",
+		"/home/ufan/src/git/root/tutorials/eve/alice_esd_html_summary.C",
+		"/home/ufan/src/git/mwdc_ana/eve/include/EventDisplay.h",
+		"/home/ufan/src/git/root/cmake/modules/RootNewMacros.cmake",
+		"/home/ufan/src/git/root/core/base/inc/Rtypes.h",
+		"/home/ufan/src/git/root/core/base/inc/RtypesCint.h",
+		"/home/ufan/src/git/root/graf3d/eve/inc/TEveText.h",
+		"/home/ufan/src/git/root/graf3d/eve/inc/TEveManager.h",
+		"/home/ufan/src/git/root/graf3d/eve/src/TEveViewer.cxx",
+		"/home/ufan/src/git/root/graf3d/gl/inc/TGLViewerBase.h",
+		"/home/ufan/src/git/root/graf3d/eve/src/TEveManager.cxx",
+		"/home/ufan/src/git/root/graf3d/eve/src/TEveScene.cxx",
+		"/home/ufan/src/git/root/graf3d/eve/inc/TEveGeoShape.h",
+		"/home/ufan/src/git/root/graf3d/eve/inc/TEveShape.h",
+		"/home/ufan/src/git/root/graf3d/eve/src/TEveShape.cxx",
+		"/home/ufan/src/git/root/graf3d/eve/src/TEveGeoShape.cxx",
+		"/home/ufan/src/git/mwdc_ana/eve/src/EventHandler.cxx",
+		"/home/ufan/src/git/mwdc_ana/eve/main.cxx",
+		"/home/ufan/src/git/mwdc_ana/macros/check_bunchid.C",
+		"/home/ufan/src/git/mwdc_ana/eve/EventDisply.h",
+		"/home/ufan/src/git/mwdc_ana/eve/EventDisply.cxx",
+		"/home/ufan/src/git/mwdc_ana/eve/MultiView.C",
+		"/home/ufan/src/git/mwdc_ana/CMakeLists.txt",
+		"/home/ufan/src/git/mwdc_ana/eve/include/test.h",
+		"/home/ufan/src/git/root/etc/cmake/FindROOT.cmake",
+		"/home/ufan/src/software/root/5.34/cmake/modules/RootNewMacros.cmake",
+		"/home/ufan/src/software/root/5.34/cmake/ROOTConfig.cmake",
+		"/home/ufan/src/software/root/5.34/cmake/ROOTUseFile.cmake",
+		"/home/ufan/src/git/mwdc_ana/kernel/RootNewMacros.cmake",
+		"/home/ufan/src/git/mwdc_ana/macros/debug_eve.C",
+		"/home/ufan/src/git/mwdc_ana/kernel/CMakeLists.txt",
+		"/home/ufan/src/git/mwdc_ana/eve/src/EventDisply.cxx",
+		"/home/ufan/src/git/mwdc_ana/eve/include/EventDisply.h",
+		"/home/ufan/src/git/mwdc_ana/kernel/src/GeometryInfo.cxx",
+		"/home/ufan/src/git/mwdc_ana/kernel/include/GeometryInfo.h",
+		"/home/ufan/src/software/root/5.34/etc/cmake/FindROOT.cmake",
+		"/home/ufan/src/git/mwdc_ana/json/json.h",
+		"/home/ufan/src/git/mwdc_ana/json/jsoncpp.cpp",
+		"/home/ufan/.config/sublime-text-3/Packages/DocBlockr/README.md",
+		"/home/ufan/src/git/mwdc_ana/kernel/FindROOT.cmake",
 		"/home/ufan/src/git/root/tree/tree/inc/TBranch.h",
 		"/home/ufan/src/git/root/tree/tree/src/TChain.cxx",
 		"/home/ufan/src/git/mwdc_ana/kernel/global_LinkDef.h",
@@ -799,136 +945,46 @@
 		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_meaneventsep_vs_phaseoffset.C",
 		"/home/ufan/src/git/mwdc_ana/macros/draw_drifttime.C",
 		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_fit_track.C",
-		"/home/ufan/src/git/mwdc_ana/CMakeLists.txt",
 		"/home/ufan/src/git/mwdc_ana/kernel/global.h",
 		"/home/ufan/src/git/mwdc_ana/kernel/utility.cxx",
 		"/home/ufan/workspace/mwdc/fm/workspace/install/rootlogon.C",
 		"/home/ufan/src/git/mwdc_ana/kernel/GeometryInfo.h",
 		"/home/ufan/src/git/mwdc_ana/kernel/GeometryInfo.cxx",
-		"/home/ufan/src/git/mwdc_ana/kernel/CMakeLists.txt",
 		"/home/ufan/src/git/mwdc_ana/kernel/GeometryInfo_LinkDef.h",
 		"/home/ufan/workspace/mwdc/fm/workspace/install/fit_drifttime_edge.C",
 		"/home/ufan/src/git/mwdc_ana/kernel/DriftInfo.h",
 		"/home/ufan/src/git/mwdc_ana/kernel/DriftInfo.cxx",
 		"/home/ufan/src/git/mwdc_ana/kernel/DriftInfo_LinkDef.h",
-		"/home/ufan/src/git/mwdc_ana/kernel/BoardInfo.h",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_fitedge.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/batch_extract_drifttime.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/check_correlation_maxtot.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_trackfit.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_trackfit_test.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_eve.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/MultiView.C",
-		"/home/ufan/src/git/mwdc_ana/eve/EventDisply.h",
-		"/home/ufan/.config/sublime-text-3/Packages/Open-Include/readme.md",
-		"/home/ufan/src/git/mwdc_ana/macros/debug_trackfit_perwire.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/include/TrackFit_polyline.h",
-		"/home/ufan/src/git/mwdc_ana/macros/draw_trajectory.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_fitslice.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_track.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/extrac_rootfile.C",
-		"/home/ufan/.config/sublime-text-3/Packages/C++ Starting Kit/#ifndef-#define-#endif.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/PackageResourceViewer/README.md",
-		"/home/ufan/.config/sublime-text-3/Packages/Licence Snippets/README.md",
-		"/home/ufan/.config/sublime-text-3/Packages/Licence Snippets/snippets/EPL-1.0.full",
-		"/home/ufan/.config/sublime-text-3/Packages/Licence Snippets/snippets/EPL-1.0.header",
-		"/home/ufan/.config/sublime-text-3/Packages/Licence Snippets/snippets/GPL-3.0.header",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/debug_trackfit_perwire.C",
-		"/home/ufan/src/git/mwdc_ana/kernel/TrackFit.h",
-		"/home/ufan/text",
-		"/home/ufan/src/git/mwdc_ana/eve/extract_geom.C",
-		"/home/ufan/src/git/mwdc_ana/macros/debug_trackfit.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/show_extract.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/test_evegeoshape.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/ana_attenuation.C",
-		"/home/ufan/src/git/mwdc_ana/macros/process.C",
-		"/home/ufan/src/git/mwdc_ana/macros/draw_mwdctot.C",
-		"/home/ufan/src/git/mwdc_ana/macros/draw_tof.C",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh2dtof.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh2dmwdc.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/drawh2dtof.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/drawh2dmwdc.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newaxis.sublime-snippet",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/select_entry.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/mk_geom.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/test.C",
-		"/home/ufan/src/git/mwdc_ana/macros/draw_drift.C",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh1dmwdc_gid.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh2dmwdc.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh1dmwdc_gid.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh1dtof_gid.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh2dtof.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/deleteh1dmwdc.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newdir.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh1dmwdc.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/drawh1dmwdc.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/saveh1dmwdc.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/drawh1dtof.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/saveh1dtof.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/fillh1dtof.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh1dtof_gid.sublime-snippet",
-		"/home/ufan/src/git/mwdc_ana/macros/check_bunchid.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/exp_gaus_convolution.C",
-		"/home/ufan/src/software/root/5.34/tutorials/roofit/rf101_basics.C",
-		"/home/ufan/src/software/root/5.34/tutorials/roofit/rf509_wsinteractive.C",
-		"/home/ufan/src/git/mwdc_ana/scripts/maketemplate",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh1dmwdc.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh1dtof.sublime-snippet",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_drifttime.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/extract_minrising_time.C",
-		"/home/ufan/src/git/mwdc_ana/eve/mk_geom.C",
-		"/home/ufan/src/git/mwdc_ana/eve/MultiView.C",
-		"/home/ufan/src/git/mwdc_ana/macros/debug_eve.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/check_maxtot.C",
-		"/home/ufan/src/git/mwdc_ana/crate.json",
-		"/home/ufan/src/git/mwdc_ana/kernel/utility.h",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/check_simulate_bunchid.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/simulate_bunchunsync.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/check_drift.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/check_triggermatching.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/check_starttime.C",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/drawh1dtof_gid.sublime-snippet",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newcanvas.sublime-snippet",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/check_triggermatching_single.C",
-		"/home/ufan/src/git/mwdc_ana/macros/extract_minrising_time.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/get_rtrelation.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/output_txt.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/example56.txt",
-		"/home/ufan/src/software/root/5.34/tutorials/eve/projection_prescale.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/selection_sigs.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/include/TrackFit.h.back",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/include/TrackFit.h",
-		"/home/ufan/.config/sublime-text-3/Packages/User/mwdc/newh2dmwdc_gid.sublime-snippet",
-		"/home/ufan/src/git/mwdc_ana/kernel/fitmethod.h",
-		"/home/ufan/workspace/mwdc/fm/data/test45/fit_rising_falling.C",
-		"/home/ufan/workspace/mwdc/fm/data/test21/analysis/draw_unsync_bunchid_eventindex_separation.C",
-		"/home/ufan/src/git/mwdc_ana/macros/simulate_bunchunsync.C",
-		"/home/ufan/src/git/mwdc_ana/scripts/rootlogon.C",
-		"/home/ufan/src/git/mwdc_ana/macros/extract_event.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/check_toftime.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_noise.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/testfunc.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/check_eventid.C",
-		"/home/ufan/src/git/mwdc_ana/kernel/BoardInfo_LinkDef.h",
-		"/home/ufan/workspace/mwdc/fm/data/test21/analysis/interval_pdf.C",
-		"/home/ufan/src/software/root/5.34/tutorials/roofit/rf513_wsfactory_tools.C",
-		"/home/ufan/src/software/root/5.34/tutorials/roofit/rf512_wsfactory_oper.C",
-		"/home/ufan/src/software/root/5.34/tutorials/math/testrandom.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_interval_raw.C",
-		"/home/ufan/workspace/mwdc/fm/workspace/install/draw_interval.C",
-		"/home/ufan/src/software/root/5.34/tutorials/mc/mass_width_2008.mc.txt",
-		"/home/ufan/src/software/root/5.34/tutorials/unuran/unuranFoamTest.C",
-		"/home/ufan/src/software/root/5.34/tutorials/roofit/rf104_classfactory.C"
+		"/home/ufan/src/git/mwdc_ana/kernel/BoardInfo.h"
 	],
 	"find":
 	{
-		"height": 42.0
+		"height": 44.0
 	},
 	"find_in_files":
 	{
 		"height": 114.0,
 		"where_history":
 		[
+			"/home/ufan/src/git/root/tutorials",
+			"/home/ufan/src/git/root/tutorials/eve",
+			"/home/ufan/src/git/root",
+			"/home/ufan/src/git/root/graf3d/eve",
+			"/home/ufan/src/git/root/",
+			"/home/ufan/src/git/root/tutorials/eve",
+			"/home/ufan/src/git/root/graf3d/eve",
+			"/home/ufan/src/git/mwdc_ana/eve",
+			"/home/ufan/src/git/root/",
+			"/home/ufan/src/git/root/tutorials",
+			"/home/ufan/src/git/root/graf3d/eve",
+			"/home/ufan/src/git/root/tutorials",
+			"/home/ufan/src/git/root/tutorials/gui",
+			"/home/ufan/src/git/root/graf3d/eve",
+			"/home/ufan/src/git/root/graf3d/eve/inc",
+			"/home/ufan/src/git/root/tutorials",
+			"/home/ufan/src/git/root/tutorials/eve",
+			"",
+			"/home/ufan/src/git/mwdc_ana/macros",
 			"<current file>",
 			"<current file>,/home/ufan/src/software/root/5.34/tutorials/roofit",
 			"<current file>",
@@ -952,134 +1008,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"class",
-			"track",
-			"TGeoNode",
-			"lrange",
-			"kCameraOrthoXOY",
-			"redraw",
-			"zoom",
-			"arrow",
-			"importevent3d",
-			"kGrey",
-			"evegeoshape",
-			"get_c",
-			"get_chamber",
-			"get_c",
-			"tevegeotopnode",
-			"tevegeonode",
-			"fUsePreScale",
-			"getpoint",
-			".\"",
-			"axis",
-			"}\n",
-			"fUpUOZGeomScene",
-			"TEveViewer *sev = gEve->SpawnNewViewer(\"Scaled 3D\");\n   // TEveProjectionManager* smng =\n   //    new TEveProjectionManager(TEveProjection::kPT_3D);\n   // TEveProjection* sp = smng->GetProjection();\n   // sp->SetUsePreScale(kTRUE);\n   // sp->AddPreScaleEntry(2,   0,  1);\n   // sp->AddPreScaleEntry(2, 100,  0.2);\n\n   // TEveScene* ss = gEve->SpawnNewScene(\"Scaled Geom\");\n   // sev->AddScene(ss);\n   // ss->AddElement(smng);\n\n   // smng->ImportElements(gsre);",
-			"Move3LF",
-			"fRPhiMgr",
-			"hitwireUpX",
-			"fRPhiGeomScene",
-			"-89.25",
-			"final_resi",
-			"printf",
-			"fit(",
-			"here",
-			"fit(",
-			"rt_relation[",
-			"here",
-			"herre",
-			"TrackFit::Line",
-			"fPolyline.",
-			"polyline",
-			"linefit",
-			"std::map<UInt_t, Line> GetHittedWires(){\n	// 	return fHittedwires;\n	// }",
-			"fHittedwires",
-			"minrising_gid",
-			"line",
-			"next",
-			"hitted",
-			"hittedwi",
-			"h1d_init_fitteddistances",
-			"fitteddis",
-			"h1d_init_fitteddistances",
-			"error",
-			"h1d_init_fitteddistances",
-			"h1d_final_fitteddistances",
-			"h1d_init_fitteddistances",
-			"h1d_fitteddistances",
-			"h1d_init_fitteddistances",
-			"dir_rtseed",
-			"dir_rtco",
-			"nbins",
-			"dir_rtseed",
-			"dir_rtcorrected",
-			"rt_relation",
-			"h1d_init_fitteddistances",
-			"outfile",
-			"UChar_t l,p;",
-			"tspline",
-			"minrising_drifttime",
-			"print",
-			"Reset",
-			"line",
-			"init_track",
-			"TrackFit::Line",
-			"Reset",
-			"in line",
-			"init_track",
-			"TrackFit::Line",
-			"line",
-			"p0_step",
-			"\n// class LineFit: public ROOT::Math::IBaseFunctionMultiDim\n// {\n// public:\n// 	LineFit(GeometryInfo info): fWirePositions(info) {}\n// 	LineFit() {}\n// 	~LineFit() {}\n// 	// \n// 	ROOT::Math::IBaseFunctionMultiDim* Clone() const {\n// 		return new LineFit(*this);\n// 	}\n// 	unsigned int NDim() const { return 4; }\n\n// 	//  \n// 	void AddHit(UInt_t gid, Double_t distance){\n// 		fDistances[gid]=distance;\n// 	}\n\n// 	void Reset(){\n// 		fDistances.clear();\n// 	}\n\n// private:\n// 	double DoEval(const double * p) const {\n// 		Line track(p);\n// 		Line wire;\n\n// 		Double_t sum=0;\n// 		Int_t size=fDistances.size();\n// 		assert(size==6);\n\n// 		std::map<UInt_t, Double_t>::iterator it;\n// 		UInt_t gid;\n// 		Double_t distance,tmpdistance;\n// 		TVector3 wire_location,wire_direction;\n// 		for(it=fDistances.begin();it!=fDistances.end();it++){\n// 			gid=it->first;distance=it->second;\n// 			// \n// 			fWirePositions.GetPoint(gid,wire_location);\n// 			fWirePositions.GetDirection(gid,wire_direction);\n			\n// 			wire.Reset(wire_location,wire_direction);\n// 			// \n// 			tmpdistance=track.DistanceToLine(wire);\n\n// 			sum+=TMath::Power(tmpdistance-distance,2);\n// 		}\n\n// 		return sum;\n// 	}\n\n\n// private:\n// 	std::map<UInt_t, Double_t> fDistances;//gid -> drift_distance\n// 	GeometryInfo               fWirePositions;\n// };\n",
-			"tmpdistance",
-			"TMath",
-			"h1d_minrising_drifttime_mwdc_single",
-			"DriftInfo_Dict",
-			"Encoding",
-			"Encodeing",
-			"h2d_location_vs_tm",
-			"fit_falling(",
-			"fit_rising",
-			"extract_minrising_time",
-			"h1d_minrising_drifttime_mwdc",
-			"rising_paranames",
-			"minrising_gid",
-			"dir_maxtot",
-			"it_starttime",
-			"rising",
-			"max_drift_time",
-			"x_up_position",
-			"it",
-			"h1d_mwdc_test",
-			"h2d_mwdc_risingtimediff_vs_totdiff",
-			"h1d_mwdc_maxtot_minrising_risingtimediff_adjacent",
-			"h2d_mwdc_risingtimediff_vs_totdiff",
-			"h2d_mwdc_risingtimediff_vs_totdiff_gid",
-			"h1d_starttime_tof",
-			"h1d_startimediff_tof",
-			"utility",
-			"utillity",
-			"calc_starttime",
-			"starttime",
-			"h1d_timetag_tof",
-			"h1d_drifttime_maxhit_mwdc",
-			"for(int l=0;l<g_mwdc_location;l++){\n      //   for(int p=0;p<g_mwdc_wireplane;p++){\n      //     h1d_tot_maxchannel_mwdc[maxtot_gid[l][p]]->Fill(maxtot[l][p]);\n      //     h1d_drifttime_maxhit_mwdc[maxtot_gid[l][p]]->Fill(max_drift_time[l][p]);\n      //   }\n      // }",
-			"h1d_tot_maxchannel_mwdc",
-			"[i]",
-			"mwdc_leading",
-			"histrepo1d_mwdc_global_tot_cut",
-			"histrepo1d_mwdc_global_tot",
-			"histrepo1d_mwdc_global_trailing",
-			"h1d_driftsingle_mwdc",
-			"h1d_drift_mwdc",
-			"evaluate(",
-			"evaluate",
-			"RooExponential",
-			"RooWorkspace",
-			"previous_mwdc_bunchid",
-			"previous_event_index",
-			"previous_tof_bunchid",
-			"previous_mwdc_bunchid"
+			"kred",
+			"SetTextColor",
+			"gTextEntry",
+			"TGTextEntry",
+			"kred",
+			"SetTextColor",
+			"gTextEntry",
+			"ftextentrystatus",
+			"fnumberentry",
+			"fTextEntryStatus",
+			"gTextEntry",
+			"textentry",
+			"doclose",
+			"fHittedCells",
+			"fhittedcells",
+			"fActive",
+			"closetabs",
+			"fhittedcell",
+			"Emit(\"CloseWindow()\");",
+			"fhittedcells",
+			"Specialization of TRootBrowser for Eve.",
+			"fEveBrowser",
+			"fEveBrowser2",
+			"TEveManager::Terminate()",
+			"CloseEveWindow",
+			"DontCallClose",
+			"closewindow",
+			"DontCallClose",
+			"TEveWindow",
+			"tevewi",
+			"TEveCompositeFrameInMainFrame",
+			"DontCallClose()",
+			"Emit(\"CloseWindow()\")",
+			"closewin",
+			"tgmainf",
+			"closewindow",
+			"DoClose",
+			"DontCallClose",
+			"dontcallclose",
+			"decdenydestroy",
+			"RemoveElementLocal",
+			"DoElementUnselect",
+			"gEve->GetSelection()",
+			"fselection",
+			"gEve->GetSelect",
+			"SelectionRemoved",
+			"UserPickedElement",
+			"fListTree",
+			"geve->GetHighlight",
+			"fhighlight",
+			"fhighlighted",
+			"fhittedcells",
+			"CloseWindow",
+			"CloseWindow()",
+			"Terminate()",
+			"fHittedCells",
+			"fIsMaster",
+			"removeelementlocal",
+			"GetHighlight()",
+			"fIncImpSelElement",
+			"IncImpliedHighlighted",
+			"fhighlight",
+			"fParents",
+			"fhighlight",
+			"RemoveElementLocal",
+			"fHighlight",
+			"fHittedCells.",
+			"fhighlight",
+			"fTabLeft",
+			"str_opt",
+			"get",
+			"resize",
+			"size",
+			"RemoveElements",
+			"fImpliedSelected",
+			"gEve->GetHighlight()",
+			"DoElementSelect",
+			"gethighlight",
+			"fHighlight",
+			"fPickToSelect",
+			"DoElementUnselect",
+			"fSelElement",
+			"Select_foo",
+			"fSelElement",
+			"fHighlight",
+			"fSelection",
+			"TEveSelection",
+			"HighlightElement",
+			"highlight",
+			"kRowHeader",
+			"fTableDistance",
+			"DefaultRowName",
+			"20",
+			"fTableDistanceBuffer",
+			"getcell",
+			"resize",
+			"fRows",
+			"fcellwidth",
+			"cell",
+			"fCellWidth",
+			"fCanvas",
+			"fWidth",
+			"fNumberEntryGoto",
+			"fNumericEntry",
+			"TGNumberFormat",
+			"TGNumberEntry",
+			"TGVSplitter",
+			"\"tgtext\"",
+			"tgtexteditor",
+			"tgtext",
+			"TGString",
+			"Status",
+			"gProgress",
+			"progress",
+			"pro",
+			"gpogress",
+			"fBgnd",
+			"update",
+			"cf",
+			"DefaultColumnName",
+			"tgsimpletable",
+			"frame",
+			"kRowHeader",
+			"update(",
+			"Init(",
+			"fRowHeaders",
+			"tgsimpletable",
+			"TGTable"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1087,6 +1143,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"fHittedCells->",
 			"maxtot_drifttime",
 			"utility",
 			"utillity::calc_starttime",
@@ -1116,53 +1173,55 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "eve/EventDisply.h",
+					"file": "eve/src/EventDisplay.cxx",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2846,
+						"buffer_size": 18888,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1182,
-								1182
+								18783,
+								18783
 							]
 						],
 						"settings":
 						{
+							"auto_name": "",
+							"history_list_is_closing": true,
 							"syntax": "Packages/C++/C++.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 641.0,
+						"translation.y": 18303.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "eve/EventDisply.cxx",
+					"file": "eve/include/EventHandler.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12880,
+						"buffer_size": 2300,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								85,
-								85
+								1243,
+								1243
 							]
 						],
 						"settings":
@@ -1171,58 +1230,817 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2016.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "/home/ufan/.config/sublime-text-3/Packages/DocBlockr/README.md",
+					"file": "eve/include/EventDisplay.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14587,
+						"buffer_size": 4088,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9510,
-								9510
+								2811,
+								2811
 							]
 						],
 						"settings":
 						{
-							"auto_complete": false,
-							"buffer_empty": false,
-							"create_dir": true,
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 0.0,
-						"translation.y": 7222.0,
+						"translation.x": -0.0,
+						"translation.y": 2203.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "eve/MultiView.C",
+					"file": "/home/ufan/src/git/root/tutorials/eve/alice_esd_split.C",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15830,
+						"buffer_size": 17414,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								15273,
-								15273
+								8881,
+								8881
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7215.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 36193,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										215,
+										227
+									],
+									[
+										556,
+										568
+									],
+									[
+										767,
+										779
+									],
+									[
+										977,
+										989
+									],
+									[
+										1226,
+										1238
+									],
+									[
+										1458,
+										1470
+									],
+									[
+										1872,
+										1884
+									],
+									[
+										2112,
+										2124
+									],
+									[
+										2368,
+										2380
+									],
+									[
+										2617,
+										2629
+									],
+									[
+										2875,
+										2887
+									],
+									[
+										3216,
+										3228
+									],
+									[
+										3427,
+										3439
+									],
+									[
+										3637,
+										3649
+									],
+									[
+										3886,
+										3898
+									],
+									[
+										4118,
+										4130
+									],
+									[
+										4455,
+										4467
+									],
+									[
+										4674,
+										4686
+									],
+									[
+										4975,
+										4987
+									],
+									[
+										5133,
+										5145
+									],
+									[
+										5291,
+										5303
+									],
+									[
+										5451,
+										5463
+									],
+									[
+										5612,
+										5624
+									],
+									[
+										5768,
+										5780
+									],
+									[
+										5923,
+										5935
+									],
+									[
+										6082,
+										6094
+									],
+									[
+										6243,
+										6255
+									],
+									[
+										6402,
+										6414
+									],
+									[
+										6561,
+										6573
+									],
+									[
+										6721,
+										6733
+									],
+									[
+										7024,
+										7036
+									],
+									[
+										7315,
+										7327
+									],
+									[
+										7621,
+										7633
+									],
+									[
+										7859,
+										7871
+									],
+									[
+										8124,
+										8136
+									],
+									[
+										8377,
+										8389
+									],
+									[
+										8642,
+										8654
+									],
+									[
+										8932,
+										8944
+									],
+									[
+										9210,
+										9222
+									],
+									[
+										9516,
+										9528
+									],
+									[
+										9828,
+										9840
+									],
+									[
+										10120,
+										10132
+									],
+									[
+										10432,
+										10444
+									],
+									[
+										10735,
+										10747
+									],
+									[
+										11026,
+										11038
+									],
+									[
+										11315,
+										11327
+									],
+									[
+										11597,
+										11609
+									],
+									[
+										11918,
+										11930
+									],
+									[
+										12181,
+										12193
+									],
+									[
+										12465,
+										12477
+									],
+									[
+										12753,
+										12765
+									],
+									[
+										12937,
+										12949
+									],
+									[
+										13225,
+										13237
+									],
+									[
+										13409,
+										13421
+									],
+									[
+										13633,
+										13645
+									],
+									[
+										13804,
+										13816
+									],
+									[
+										13916,
+										13928
+									],
+									[
+										14147,
+										14159
+									],
+									[
+										14337,
+										14349
+									],
+									[
+										14677,
+										14689
+									],
+									[
+										14991,
+										15003
+									],
+									[
+										15281,
+										15293
+									],
+									[
+										15579,
+										15591
+									],
+									[
+										15902,
+										15914
+									],
+									[
+										16190,
+										16202
+									],
+									[
+										16367,
+										16379
+									],
+									[
+										16602,
+										16614
+									],
+									[
+										16855,
+										16867
+									],
+									[
+										17044,
+										17056
+									],
+									[
+										17185,
+										17197
+									],
+									[
+										17330,
+										17342
+									],
+									[
+										17472,
+										17484
+									],
+									[
+										17612,
+										17624
+									],
+									[
+										17751,
+										17763
+									],
+									[
+										17901,
+										17913
+									],
+									[
+										18038,
+										18050
+									],
+									[
+										18264,
+										18276
+									],
+									[
+										18414,
+										18426
+									],
+									[
+										18539,
+										18551
+									],
+									[
+										18681,
+										18693
+									],
+									[
+										18811,
+										18823
+									],
+									[
+										18944,
+										18956
+									],
+									[
+										19087,
+										19099
+									],
+									[
+										19219,
+										19231
+									],
+									[
+										19448,
+										19460
+									],
+									[
+										19873,
+										19885
+									],
+									[
+										20090,
+										20102
+									],
+									[
+										20241,
+										20253
+									],
+									[
+										20520,
+										20532
+									],
+									[
+										20724,
+										20736
+									],
+									[
+										20940,
+										20952
+									],
+									[
+										20970,
+										20982
+									],
+									[
+										21223,
+										21235
+									],
+									[
+										21435,
+										21447
+									],
+									[
+										21647,
+										21659
+									],
+									[
+										21833,
+										21845
+									],
+									[
+										22041,
+										22053
+									],
+									[
+										22366,
+										22378
+									],
+									[
+										22545,
+										22557
+									],
+									[
+										22716,
+										22728
+									],
+									[
+										22932,
+										22944
+									],
+									[
+										23184,
+										23196
+									],
+									[
+										23507,
+										23519
+									],
+									[
+										23547,
+										23559
+									],
+									[
+										23876,
+										23888
+									],
+									[
+										24037,
+										24049
+									],
+									[
+										24276,
+										24288
+									],
+									[
+										24403,
+										24415
+									],
+									[
+										24555,
+										24567
+									],
+									[
+										24696,
+										24708
+									],
+									[
+										24787,
+										24799
+									],
+									[
+										24878,
+										24890
+									],
+									[
+										25005,
+										25017
+									],
+									[
+										25152,
+										25164
+									],
+									[
+										25293,
+										25305
+									],
+									[
+										25461,
+										25473
+									],
+									[
+										25711,
+										25723
+									],
+									[
+										25956,
+										25968
+									],
+									[
+										26171,
+										26183
+									],
+									[
+										26451,
+										26463
+									],
+									[
+										26699,
+										26711
+									],
+									[
+										26963,
+										26975
+									],
+									[
+										27234,
+										27246
+									],
+									[
+										27473,
+										27485
+									],
+									[
+										27734,
+										27746
+									],
+									[
+										27934,
+										27946
+									],
+									[
+										28077,
+										28089
+									],
+									[
+										28220,
+										28232
+									],
+									[
+										28363,
+										28375
+									],
+									[
+										28540,
+										28552
+									],
+									[
+										28676,
+										28688
+									],
+									[
+										28842,
+										28854
+									],
+									[
+										29014,
+										29026
+									],
+									[
+										29240,
+										29252
+									],
+									[
+										29441,
+										29453
+									],
+									[
+										29707,
+										29719
+									],
+									[
+										29876,
+										29888
+									],
+									[
+										30104,
+										30116
+									],
+									[
+										30315,
+										30327
+									],
+									[
+										30533,
+										30545
+									],
+									[
+										30673,
+										30685
+									],
+									[
+										30817,
+										30829
+									],
+									[
+										30958,
+										30970
+									],
+									[
+										31056,
+										31068
+									],
+									[
+										31153,
+										31165
+									],
+									[
+										31282,
+										31294
+									],
+									[
+										31504,
+										31516
+									],
+									[
+										31645,
+										31657
+									],
+									[
+										31817,
+										31829
+									],
+									[
+										32127,
+										32139
+									],
+									[
+										32340,
+										32352
+									],
+									[
+										32608,
+										32620
+									],
+									[
+										32848,
+										32860
+									],
+									[
+										33080,
+										33092
+									],
+									[
+										33270,
+										33282
+									],
+									[
+										33297,
+										33309
+									],
+									[
+										33503,
+										33515
+									],
+									[
+										33698,
+										33710
+									],
+									[
+										33899,
+										33911
+									],
+									[
+										33927,
+										33939
+									],
+									[
+										34072,
+										34084
+									],
+									[
+										34258,
+										34270
+									],
+									[
+										34438,
+										34450
+									],
+									[
+										34621,
+										34633
+									],
+									[
+										34821,
+										34833
+									],
+									[
+										34849,
+										34861
+									],
+									[
+										35003,
+										35015
+									],
+									[
+										35203,
+										35215
+									],
+									[
+										35452,
+										35464
+									],
+									[
+										35489,
+										35501
+									],
+									[
+										35799,
+										35811
+									],
+									[
+										36094,
+										36106
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								21230,
+								21230
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/home/ufan/src/git/mwdc_ana",
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 2,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ 	].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 15120.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/home/ufan/src/git/root/tutorials/graphics/quarks.C",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3323,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								367,
+								367
 							]
 						],
 						"settings":
@@ -1232,75 +2050,139 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 13643.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "CMakeLists.txt",
+					"buffer": 6,
+					"file": "/home/ufan/src/git/root/gui/gui/src/TGTextEntry.cxx",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1486,
+						"buffer_size": 61967,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1436,
-								1436
+								57085,
+								57085
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/CMakeEditor/CMakeEditor.tmLanguage"
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 49389.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "kernel/CMakeLists.txt",
+					"buffer": 7,
+					"file": "/home/ufan/src/git/root/core/base/inc/TColor.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1472,
+						"buffer_size": 6769,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								3234,
+								3234
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/CMakeEditor/CMakeEditor.tmLanguage"
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": -0.0,
+						"translation.y": 1677.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "kernel/RootNewMacros.cmake",
+					"buffer": 8,
+					"file": "/home/ufan/src/git/root/core/base/src/TColor.cxx",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 32375,
+						"buffer_size": 57881,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18189,
+								18189
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 15083.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/home/ufan/src/git/root/core/base/inc/Rtypes.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 18204,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4892,
+								4892
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 2707.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/home/ufan/.config/sublime-text-3/Packages/SublimeGDB/SublimeGDB.sublime-settings",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7372,
 						"regions":
 						{
 						},
@@ -1313,15 +2195,15 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/CMakeEditor/CMakeEditor.tmLanguage",
-							"tab_size": 2,
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3780.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 10,
 					"type": "text"
 				}
 			]
@@ -1329,7 +2211,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 36.0
 	},
 	"input":
 	{
@@ -1378,7 +2260,7 @@
 	"project": "mwdc_ana.sublime-project",
 	"replace":
 	{
-		"height": 64.0
+		"height": 82.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1389,7 +2271,451 @@
 		[
 			[
 				"",
-				"kernel/CMakeLists.txt"
+				"mwdc_ana/eve/include/EventHandler.h"
+			],
+			[
+				"rty",
+				"root/core/base/inc/Rtypes.h"
+			],
+			[
+				"tcol",
+				"root/core/base/src/TColor.cxx"
+			],
+			[
+				"tcolor",
+				"root/core/base/inc/TColor.h"
+			],
+			[
+				"tcolr",
+				"root/core/base/src/TColor.cxx"
+			],
+			[
+				"tgtexten",
+				"root/gui/gui/inc/TGTextEntry.h"
+			],
+			[
+				"splitvi",
+				"root/tutorials/eve/SplitGLView.C"
+			],
+			[
+				"alice",
+				"root/tutorials/eve/alice_esd_split.C"
+			],
+			[
+				"eventdi",
+				"mwdc_ana/eve/include/EventDisplay.h"
+			],
+			[
+				"eventhan",
+				"mwdc_ana/eve/include/EventHandler.h"
+			],
+			[
+				"eventdis",
+				"mwdc_ana/eve/include/EventDisplay.h"
+			],
+			[
+				"tevesel",
+				"root/graf3d/eve/src/TEveSelection.cxx"
+			],
+			[
+				"main",
+				"mwdc_ana/eve/test/main.cxx"
+			],
+			[
+				"tapplic",
+				"root/core/base/src/TApplication.cxx"
+			],
+			[
+				"teve",
+				"root/graf3d/eve/src/TEveBrowser.cxx"
+			],
+			[
+				"tgfra",
+				"root/gui/gui/src/TGFrame.cxx"
+			],
+			[
+				"tevebrow",
+				"root/graf3d/eve/src/TEveBrowser.cxx"
+			],
+			[
+				"tevb",
+				"root/graf3d/eve/inc/TEveBrowser.h"
+			],
+			[
+				"tframe",
+				"root/graf2d/graf/inc/TFrame.h"
+			],
+			[
+				"trootbr",
+				"root/gui/gui/inc/TRootBrowser.h"
+			],
+			[
+				"tevebrowser",
+				"root/graf3d/eve/inc/TEveBrowser.h"
+			],
+			[
+				"teveman",
+				"root/graf3d/eve/inc/TEveManager.h"
+			],
+			[
+				"tevebo",
+				"root/graf3d/eve/src/TEveBrowser.cxx"
+			],
+			[
+				"tevebro",
+				"root/graf3d/eve/src/TEveBrowser.cxx"
+			],
+			[
+				"selec",
+				"root/tutorials/eve/selection_sigs.C"
+			],
+			[
+				"event",
+				"mwdc_ana/eve/src/EventDisplay.cxx"
+			],
+			[
+				"teveele",
+				"root/graf3d/eve/inc/TEveElement.h"
+			],
+			[
+				"tevsle",
+				"root/graf3d/eve/inc/TEveSelection.h"
+			],
+			[
+				"selesi",
+				"root/tutorials/eve/selection_sigs.C"
+			],
+			[
+				"tevbor",
+				"root/graf3d/eve/inc/TEveBrowser.h"
+			],
+			[
+				"teveselec",
+				"root/graf3d/eve/inc/TEveSelection.h"
+			],
+			[
+				"teves",
+				"root/graf3d/eve/src/TEveSelection.cxx"
+			],
+			[
+				"tevman",
+				"root/graf3d/eve/src/TEveManager.cxx"
+			],
+			[
+				"teveel",
+				"root/graf3d/eve/inc/TEveElement.h"
+			],
+			[
+				"teveshape",
+				"root/graf3d/eve/src/TEveShape.cxx"
+			],
+			[
+				"tevegeosha",
+				"root/graf3d/eve/inc/TEveGeoShape.h"
+			],
+			[
+				"tevegeosh",
+				"root/graf3d/eve/src/TEveGeoShape.cxx"
+			],
+			[
+				"even",
+				"mwdc_ana/eve/src/EventDisplay.cxx"
+			],
+			[
+				"tevese",
+				"root/graf3d/eve/src/TEveSelection.cxx"
+			],
+			[
+				"tevelement",
+				"root/graf3d/eve/src/TEveElement.cxx"
+			],
+			[
+				"evesel",
+				"root/graf3d/eve/inc/TEveSelection.h"
+			],
+			[
+				"tevemang",
+				"root/graf3d/eve/src/TEveManager.cxx"
+			],
+			[
+				"teveselc",
+				"root/graf3d/eve/src/TEveSelection.cxx"
+			],
+			[
+				"tgtab",
+				"root/gui/gui/inc/TGTab.h"
+			],
+			[
+				"tbrowserimp",
+				"root/core/base/src/TBrowserImp.cxx"
+			],
+			[
+				"trootbo",
+				"root/gui/gui/inc/TRootBrowser.h"
+			],
+			[
+				"trootbro",
+				"root/gui/gui/src/TRootBrowser.cxx"
+			],
+			[
+				"evendis",
+				"mwdc_ana/eve/include/EventDisplay.h"
+			],
+			[
+				"tvirtualx",
+				"root/core/base/src/TVirtualX.cxx"
+			],
+			[
+				"tevema",
+				"root/graf3d/eve/src/TEveManager.cxx"
+			],
+			[
+				"tevebor",
+				"root/graf3d/eve/inc/TEveBrowser.h"
+			],
+			[
+				"teveelement",
+				"root/graf3d/eve/inc/TEveElement.h"
+			],
+			[
+				"mult",
+				"mwdc_ana/eve/src/MultiView.cxx"
+			],
+			[
+				"main.",
+				"mwdc_ana/eve/test/main.cxx"
+			],
+			[
+				"tevemanager",
+				"root/graf3d/eve/src/TEveManager.cxx"
+			],
+			[
+				"tgsimp",
+				"root/gui/gui/src/TGSimpleTableInterface.cxx"
+			],
+			[
+				"tgtable",
+				"root/gui/gui/src/TGTable.cxx"
+			],
+			[
+				"evenhand",
+				"mwdc_ana/eve/include/EventHandler.h"
+			],
+			[
+				"mul",
+				"mwdc_ana/eve/include/MultiView.h"
+			],
+			[
+				"tgtablecell",
+				"root/gui/gui/inc/TGTableCell.h"
+			],
+			[
+				"tgtabin",
+				"root/gui/gui/src/TGSimpleTableInterface.cxx"
+			],
+			[
+				"tghea",
+				"root/gui/gui/inc/TGTableHeader.h"
+			],
+			[
+				"eve_lin",
+				"mwdc_ana/eve/include/eve_LinkDef.h"
+			],
+			[
+				"eventhand",
+				"mwdc_ana/eve/include/EventHandler.h"
+			],
+			[
+				"tgnumber",
+				"root/gui/gui/src/TGNumberEntry.cxx"
+			],
+			[
+				"tgnumberentry",
+				"root/gui/gui/inc/TGNumberEntry.h"
+			],
+			[
+				"tglabe",
+				"root/gui/gui/inc/TGLabel.h"
+			],
+			[
+				"simpletab",
+				"root/tutorials/gui/simpleTableTest.C"
+			],
+			[
+				"splitview",
+				"root/tutorials/eve/SplitGLView.C"
+			],
+			[
+				"tglayou",
+				"root/gui/gui/inc/TGLayout.h"
+			],
+			[
+				"tgtabl",
+				"root/gui/gui/src/TGTable.cxx"
+			],
+			[
+				"evend",
+				"mwdc_ana/eve/src/EventDisplay.cxx"
+			],
+			[
+				"eve",
+				"mwdc_ana/eve/include/EventDisplay.h"
+			],
+			[
+				"tgsimpletableinterface",
+				"root/gui/gui/src/TGSimpleTableInterface.cxx"
+			],
+			[
+				"debugtrac",
+				"mwdc_ana/macros/debug_trackfit_perwire.C"
+			],
+			[
+				"trac",
+				"mwdc_ana/kernel/include/TrackFit.h"
+			],
+			[
+				"tgtableheader",
+				"root/gui/gui/inc/TGTableHeader.h"
+			],
+			[
+				"tevewindow",
+				"root/graf3d/eve/inc/TEveWindow.h"
+			],
+			[
+				"wind",
+				"root/tutorials/eve/window_manager.C"
+			],
+			[
+				"multvie.",
+				"mwdc_ana/eve/src/MultiView.cxx"
+			],
+			[
+				"tvirtualtableinterface",
+				"root/core/base/inc/TVirtualTableInterface.h"
+			],
+			[
+				"alicehtm",
+				"root/tutorials/eve/alice_esd_html_summary.C"
+			],
+			[
+				"spliter",
+				"root/tutorials/gui/splitterHorizontal.C"
+			],
+			[
+				"splitbu",
+				"root/tutorials/gui/splitbuttonTest.C"
+			],
+			[
+				"eve_",
+				"mwdc_ana/eve/include/eve_LinkDef.h"
+			],
+			[
+				"alice_es",
+				"root/tutorials/eve/alice_esd.C"
+			],
+			[
+				"alice_vs",
+				"root/tutorials/eve/alice_vsd.C"
+			],
+			[
+				"rtypes",
+				"root/core/base/inc/RtypesCint.h"
+			],
+			[
+				"rootne",
+				"root/cmake/modules/RootNewMacros.cmake"
+			],
+			[
+				"mulv",
+				"mwdc_ana/eve/src/MultiView.cxx"
+			],
+			[
+				"eve_lik",
+				"mwdc_ana/eve/include/eve_LinkDef.h"
+			],
+			[
+				"eve_li",
+				"mwdc_ana/eve/include/eve_LinkDef.h"
+			],
+			[
+				"cma",
+				"mwdc_ana/eve/CMakeLists.txt"
+			],
+			[
+				"ke",
+				"mwdc_ana/kernel/include/kernel_LinkDef.h"
+			],
+			[
+				"de",
+				"mwdc_ana/macros/debug_eve.C"
+			],
+			[
+				"multivi.",
+				"mwdc_ana/eve/src/MultiView.cxx"
+			],
+			[
+				"tevegeoshap",
+				"root/graf3d/eve/inc/TEveGeoShape.h"
+			],
+			[
+				"deb",
+				"mwdc_ana/eve/test/debug_eve.C"
+			],
+			[
+				"debu",
+				"mwdc_ana/eve/test/debug_eve.C"
+			],
+			[
+				"rootlog",
+				"mwdc_ana/scripts/rootlogon.C"
+			],
+			[
+				"rootconfig.c",
+				"~/src/software/root/5.34/cmake/ROOTConfig.cmake"
+			],
+			[
+				"multivie",
+				"mwdc_ana/eve/include/MultiView.h"
+			],
+			[
+				"multiviw",
+				"mwdc_ana/eve/src/MultiView.cxx"
+			],
+			[
+				"kene",
+				"mwdc_ana/kernel/include/kernel_LinkDef.h"
+			],
+			[
+				"geominfo",
+				"mwdc_ana/kernel/src/GeometryInfo.cxx"
+			],
+			[
+				"eved",
+				"mwdc_ana/eve/EventDisply.h"
+			],
+			[
+				"geoin",
+				"mwdc_ana/kernel/include/GeometryInfo.h"
+			],
+			[
+				"trackfi",
+				"mwdc_ana/kernel/include/TrackFit.h"
+			],
+			[
+				"j",
+				"mwdc_ana/json/jsoncpp.cpp"
+			],
+			[
+				"jso",
+				"mwdc_ana/json/json.h"
+			],
+			[
+				"findr",
+				"mwdc_ana/kernel/FindROOT.cmake"
+			],
+			[
+				"findroo",
+				"root/etc/cmake/FindROOT.cmake"
 			],
 			[
 				"rootnew",
@@ -1398,14 +2724,6 @@
 			[
 				"cmak",
 				"kernel/CMakeLists.txt"
-			],
-			[
-				"mult",
-				"eve/MultiView.C"
-			],
-			[
-				"eve",
-				"eve/EventDisply.h"
 			],
 			[
 				"geo",
@@ -1420,15 +2738,7 @@
 				"macros/debug_trackfit.C"
 			],
 			[
-				"trac",
-				"kernel/TrackFit.h"
-			],
-			[
 				"mu",
-				"eve/MultiView.C"
-			],
-			[
-				"mul",
 				"eve/MultiView.C"
 			],
 			[
@@ -1460,10 +2770,6 @@
 				"kernel/global.h"
 			],
 			[
-				"debu",
-				"~/workspace/mwdc/fm/workspace/install/debug_trackfit.C"
-			],
-			[
 				"tset",
 				"~/workspace/mwdc/fm/workspace/install/test.C"
 			],
@@ -1474,430 +2780,6 @@
 			[
 				"debug_",
 				"~/workspace/mwdc/fm/workspace/install/debug_trackfit_test.C"
-			],
-			[
-				"tr",
-				"kernel/TrackFit.h"
-			],
-			[
-				"draw_tra",
-				"macros/draw_trajectory.C"
-			],
-			[
-				"trakc",
-				"kernel/TrackFit.h"
-			],
-			[
-				"ge",
-				"kernel/GeometryInfo.cxx"
-			],
-			[
-				"go",
-				"kernel/global.h"
-			],
-			[
-				"debt",
-				"~/workspace/mwdc/fm/workspace/install/debug_fit_track.C"
-			],
-			[
-				"glo",
-				"kernel/global.h"
-			],
-			[
-				"draw_drif",
-				"macros/draw_drifttime.C"
-			],
-			[
-				"debug",
-				"~/workspace/mwdc/fm/workspace/install/debug_fit_rtrelation.C"
-			],
-			[
-				"deb",
-				"~/workspace/mwdc/fm/workspace/install/debug_fit_track.C"
-			],
-			[
-				"draw",
-				"macros/draw_mwdctot.C"
-			],
-			[
-				"drif",
-				"kernel/DriftInfo.h"
-			],
-			[
-				"fit_",
-				"macros/fit_drifttime_edge.C"
-			],
-			[
-				"get",
-				"~/workspace/mwdc/fm/workspace/install/get_rtrelation.C"
-			],
-			[
-				"exr",
-				"macros/extract_minrising_time.C"
-			],
-			[
-				"fit",
-				"~/workspace/mwdc/fm/workspace/install/fit_drifttime_edge.C"
-			],
-			[
-				"draw_drf",
-				"~/workspace/mwdc/fm/workspace/install/draw_drifttime.C"
-			],
-			[
-				"bor",
-				"kernel/BoardInfo.h"
-			],
-			[
-				"fited",
-				"~/workspace/mwdc/fm/workspace/install/fit_drifttime_edge.C"
-			],
-			[
-				"bat",
-				"~/workspace/mwdc/fm/workspace/install/batch_extract_drifttime.C"
-			],
-			[
-				"ex",
-				"~/workspace/mwdc/fm/workspace/install/extract_minrising_time.C"
-			],
-			[
-				"r",
-				"~/workspace/mwdc/fm/workspace/install/rootlogon.C"
-			],
-			[
-				"o",
-				"scripts/rootlogon.C"
-			],
-			[
-				"root",
-				"scripts/rootlogon.C"
-			],
-			[
-				"pro",
-				"macros/process.C"
-			],
-			[
-				"extr",
-				"macros/extract_minrising_time.C"
-			],
-			[
-				"ext",
-				"~/workspace/mwdc/fm/workspace/install/extract_minrising_time.C"
-			],
-			[
-				"check_ma",
-				"~/workspace/mwdc/fm/workspace/install/check_correlation_maxtot.C"
-			],
-			[
-				"check",
-				"~/workspace/mwdc/fm/workspace/install/check_triggermatching.C"
-			],
-			[
-				"che",
-				"~/workspace/mwdc/fm/workspace/install/check_maxtot.C"
-			],
-			[
-				"u",
-				"kernel/utility.cxx"
-			],
-			[
-				"ut",
-				"kernel/utility.cxx"
-			],
-			[
-				"chectot",
-				"~/workspace/mwdc/fm/workspace/install/check_maxtot.C"
-			],
-			[
-				"chec",
-				"macros/check_bunchid.C"
-			],
-			[
-				"check_max",
-				"~/workspace/mwdc/fm/workspace/install/check_correlation_maxtot.C"
-			],
-			[
-				"car",
-				"crate.json"
-			],
-			[
-				"checkma",
-				"~/workspace/mwdc/fm/workspace/install/check_maxtot.C"
-			],
-			[
-				"newh1d",
-				"~/.config/sublime-text-3/Packages/User/mwdc/newh1dmwdc_gid.sublime-snippet"
-			],
-			[
-				"newh2d",
-				"~/.config/sublime-text-3/Packages/User/mwdc/newh2dmwdc.sublime-snippet"
-			],
-			[
-				"newh1dm",
-				"~/.config/sublime-text-3/Packages/User/mwdc/newh1dmwdc_gid.sublime-snippet"
-			],
-			[
-				"check_mat",
-				"~/workspace/mwdc/fm/workspace/install/check_correlation_maxtot.C"
-			],
-			[
-				"uti",
-				"kernel/utility.cxx"
-			],
-			[
-				"trig",
-				"~/workspace/mwdc/fm/workspace/install/check_triggermatching.C"
-			],
-			[
-				"bo",
-				"kernel/BoardInfo.h"
-			],
-			[
-				"mer",
-				"macros/extract_event.C"
-			],
-			[
-				"checs",
-				"~/workspace/mwdc/fm/workspace/install/check_starttime.C"
-			],
-			[
-				"newh1dto",
-				"~/.config/sublime-text-3/Packages/User/mwdc/newh1dtof_gid.sublime-snippet"
-			],
-			[
-				"drawh1dtof",
-				"~/.config/sublime-text-3/Packages/User/mwdc/drawh1dtof.sublime-snippet"
-			],
-			[
-				"make",
-				"scripts/maketemplate"
-			],
-			[
-				"check_",
-				"~/workspace/mwdc/fm/workspace/install/check_drift.C"
-			],
-			[
-				"new",
-				"~/.config/sublime-text-3/Packages/User/mwdc/newh2dtof.sublime-snippet"
-			],
-			[
-				"mak",
-				"scripts/maketemplate"
-			],
-			[
-				"drawh",
-				"~/.config/sublime-text-3/Packages/User/mwdc/drawh1dmwdc.sublime-snippet"
-			],
-			[
-				"c",
-				"crate.json"
-			],
-			[
-				"cra",
-				"crate.json"
-			],
-			[
-				"drto",
-				"macros/draw_tof.C"
-			],
-			[
-				"ch",
-				"~/workspace/mwdc/fm/workspace/install/check_drift.C"
-			],
-			[
-				"cr",
-				"crate.json"
-			],
-			[
-				"/",
-				"~/.config/sublime-text-3/Packages/User/mwdc/newh1dmwdc_gid.sublime-snippet"
-			],
-			[
-				"gloa",
-				"kernel/global.h"
-			],
-			[
-				"sim",
-				"macros/simulate_bunchunsync.C"
-			],
-			[
-				"bun",
-				"~/workspace/mwdc/fm/workspace/install/check_bunchid.C"
-			],
-			[
-				"checsi",
-				"~/workspace/mwdc/fm/workspace/install/check_simulate_bunchid.C"
-			],
-			[
-				"inter",
-				"~/workspace/mwdc/fm/data/test21/analysis/interval_pdf.C"
-			],
-			[
-				"int",
-				"docs/tex/fig/tof_interval.eps"
-			],
-			[
-				"clone",
-				"~/workspace/temp/clones_test.cpp"
-			],
-			[
-				"tes",
-				"~/workspace/temp/test.cpp"
-			],
-			[
-				"linkd",
-				"kernel/global_LinkDef.h"
-			],
-			[
-				"clo",
-				"~/workspace/temp/clones_test.cpp"
-			],
-			[
-				"link",
-				"kernel/BoardInfo_LinkDef.h"
-			],
-			[
-				"algpsdpre",
-				"Reconstruction/Psd/src/DmpAlgPsdPreRec.cc"
-			],
-			[
-				"tosimp",
-				"Install/share/TestRelease/Psd/AlgToSimple/share/JobPsd_ToSimple.py"
-			],
-			[
-				"psdbase",
-				"Kernel/src/DmpPsdBase.cc"
-			],
-			[
-				"dmpsdbas",
-				"Install/include/DmpPsdBase.h"
-			],
-			[
-				"evtbgoraw",
-				"Install/include/DmpEvtBgoRaw.h"
-			],
-			[
-				"tosim",
-				"Install/share/TestRelease/Psd/AlgToSimple/src/DmpAlgToSimple.cc"
-			],
-			[
-				"tos",
-				"Install/share/TestRelease/Psd/AlgToSimple/src/DmpAlgToSimple.cc"
-			],
-			[
-				"recpsdma",
-				"Reconstruction/Psd/src/DmpRecPsdManager.cc"
-			],
-			[
-				"pre",
-				"pre-install.sh"
-			],
-			[
-				"dmprecpsdma",
-				"Install/include/DmpRecPsdManager.h"
-			],
-			[
-				"dmprecpsd",
-				"Install/include/DmpRecPsdManager.h"
-			],
-			[
-				"psdmang",
-				"Reconstruction/Psd/src/DmpRecPsdManager.cc"
-			],
-			[
-				"psdrec",
-				"Reconstruction/Psd/src/PsdRecManager.cc"
-			],
-			[
-				"psdalgdy",
-				"Reconstruction/Psd/include/DmpAlgPsdDy58Fit.h"
-			],
-			[
-				"evtpsd",
-				"Install/include/DmpEvtPsdPed.h"
-			],
-			[
-				"psdba",
-				"Install/include/DmpPsdBase.h"
-			],
-			[
-				"psdpedcut",
-				"Reconstruction/Psd/src/DmpAlgPsdPedcut.cc"
-			],
-			[
-				"dmpalgpsdped",
-				"Install/include/DmpAlgPsdPedcut.h"
-			],
-			[
-				"psdprere",
-				"Reconstruction/Psd/src/DmpAlgPsdPreRec.cc"
-			],
-			[
-				"bgora",
-				"Install/include/DmpEvtBgoRaw.h"
-			],
-			[
-				"algpsddy",
-				"Reconstruction/Psd/src/DmpAlgPsdDy58Fit.cc"
-			],
-			[
-				"pedfit",
-				"Reconstruction/Psd/src/DmpAlgPsdPedfit.cc"
-			],
-			[
-				"cnct",
-				"Install/share/Connector/Psd/EQM/Q1_FEE0x20.cnct"
-			],
-			[
-				"dmpevtpsdra",
-				"Install/include/DmpEvtPsdRaw.h"
-			],
-			[
-				"dmpsdbase.c",
-				"Kernel/src/DmpPsdBase.cc"
-			],
-			[
-				"dmppsd",
-				"Install/include/DmpPsdBase.h"
-			],
-			[
-				"dmpevtpsdped",
-				"Install/include/DmpEvtPsdPed.h"
-			],
-			[
-				"recpsd",
-				"Install/include/DmpRecPsdManager.h"
-			],
-			[
-				"pedcut",
-				"Reconstruction/Psd/src/DmpAlgPsdPedcut.cc"
-			],
-			[
-				"dmpalgpsd",
-				"Install/include/DmpAlgPsdPedcut.h"
-			],
-			[
-				"dmpalgpsdbto",
-				"Reconstruction/Psd/src/DmpAlgPsdBtOther.cc"
-			],
-			[
-				"scons",
-				"SConstruct"
-			],
-			[
-				"cppyy",
-				"bindings/pyroot/cppyy.py"
-			],
-			[
-				"root.p",
-				"bindings/pyroot/ROOT.py"
-			],
-			[
-				"root.py",
-				"bindings/pyroot/ROOT.py"
-			],
-			[
-				"str",
-				"test/stress.cxx"
 			]
 		],
 		"width": 0.0

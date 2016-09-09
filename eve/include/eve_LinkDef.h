@@ -10,4 +10,6 @@
 // EventHandler.h
 #pragma link C++ class EventHandler+;
 
+// FitGUI.h
+#pragma link C++ class FitGUI+;
 #endif

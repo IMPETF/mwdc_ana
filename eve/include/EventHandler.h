@@ -17,38 +17,40 @@
 #define _EventHandler_
 
 #include "Rtypes.h"
+#include <TString.h>
+#include "EventDisplay.h"
 
 class EventHandler
 {
 public:
-	EventHandler(): fTotalEvents(10),fCurrentEvent(0),fNavigationStep(1){}
+	EventHandler(): fTotalEvents(-1),fCurrentEvent(-1),fNavigationStep(1){}
 	~EventHandler(){}
 
-	void NextEvent(){
+	virtual void NextEvent(){
 		// printf("NextEvent: %d \n", fCurrentEvent+fNavigationStep);
 		GotoEvent(fCurrentEvent+fNavigationStep);
 	}
 
-	void PreviousEvent(){ 
+	virtual void PreviousEvent(){ 
 		// printf("PreviousEvent: %d\n", fCurrentEvent- fNavigationStep);
 		GotoEvent(fCurrentEvent- fNavigationStep);
 	}
 
-	Bool_t GotoEvent(Long_t ev){ 
+	virtual Bool_t GotoEvent(Long_t ev){ 
 		// printf("GotoEvent: %d\n",ev);
 		fCurrentEvent = ev;
 		// check bounds
 		if(fCurrentEvent>=fTotalEvents){
-			PrintWarningMessage(Form("%d is Beyond the total event limit %d",fCurrentEvent, fTotalEvents));
+			PrintWarningMessage(Form("%ld is Beyond the total event limit %ld",fCurrentEvent, fTotalEvents));
 			return kFALSE;
 		}
 		else if(fCurrentEvent<0){
-			PrintWarningMessage(Form("%d is an invalid event num.",fCurrentEvent));
+			PrintWarningMessage(Form("%ld is an invalid event num.",fCurrentEvent));
 			return kFALSE;
 		}
 
 		// new event 
-		PrintWarningMessage(Form("Loading event %d ...",ev));
+		PrintWarningMessage(Form("Loading event %ld ...",ev));
 		DropEvent();
 		ReadEvent();
 		AddEvent();
@@ -76,10 +78,10 @@ public:
 
 private:
 	virtual void DropEvent() {};
-	virtual void ReadEvent() {};
+	virtual Bool_t ReadEvent() {};
 	virtual void AddEvent() {};
 
-private:
+protected:
 	Long_t fTotalEvents;
 	Long_t fCurrentEvent;
 	Int_t  fNavigationStep;
