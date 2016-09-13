@@ -182,6 +182,11 @@ public:
 	unsigned int NDim() const { return 4; }
 
 	//  
+  GeometryInfo GetGeometryInfo()
+  {
+    return fWirePositions;
+  }
+
 	void AddHit(UInt_t gid, Double_t distance){
 		fDistances[gid]=distance;
 		fHittedwires[gid]=Line();

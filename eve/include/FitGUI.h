@@ -45,7 +45,7 @@ class FitGUI : public EventHandler
 	virtual void AddEvent();
 
  	// void GetRtRelation();
-	Bool_t	Fit();
+	// Bool_t	Fit();
 	
  private:
 	// fit related

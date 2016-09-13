@@ -30,7 +30,7 @@ FitGUI::FitGUI(const char* filename, Long_t evt)
 FitGUI::~FitGUI()
 {
 	delete fLineFitAlg;
-	delete fFileInput;
+  if (fFileInput)    delete fFileInput;
 }
 
 void FitGUI::SetFile(const char* filename)
@@ -45,14 +45,14 @@ void FitGUI::SetFirstEvent(Long_t evt)
 
 void FitGUI::Init()
 {
-	//
+	//open root file
 	fFileInput = new TFile(fFileNameInput);
 	if (!fFileInput) {
 		PrintWarningMessage("Open File Error!");
 		return;
 	}
 
-	//
+	//init drifttime tree
 	fFileInput->GetObject("minrising_drifttime/minrising_drifttime", fTreeDriftTime);
 	if (!fTreeDriftTime) {
 		PrintWarningMessage("Drifttime tree not exist");
@@ -62,13 +62,13 @@ void FitGUI::Init()
 	fTreeDriftTime->SetBranchAddress("drifttime", fRawDriftTime);
 	fTotalEvents = fTreeDriftTime->GetEntries();
 
-	//
+	//get t0 information
 	fFileInput->GetObject("minrising_drifttime/init_edge_fitting_result", fDriftInfo);
 	if (!fDriftInfo) {
 		PrintWarningMessage("DriftInfo not exist");
 	}
 
-	//
+	//get init R-T relation
 	const char hist[6][40] = {"h1d_minrising_drifttime_mwdc_Down_X_40"
 	                          , "h1d_minrising_drifttime_mwdc_Down_Y_40"
 	                          , "h1d_minrising_drifttime_mwdc_Down_U_50"
@@ -93,7 +93,7 @@ Bool_t FitGUI::ReadEvent()
 {
 	fTreeDriftTime->GetEntry(fCurrentEvent);
 
-	// check event validity
+	// first step: check event validity
 	// broken wires
 	UInt_t brokenwire_gid[12];
 	// DownX
@@ -125,23 +125,25 @@ Bool_t FitGUI::ReadEvent()
 	for (l = 0; l < g_mwdc_location; l++) {
 		for (p = 0; p < g_mwdc_wireplane; p++) {
 			if (valid_event) {
+        // whether invalid channel
 				if (!Encoding::IsChannelValid(fGid[l][p])) {
 					valid_event = false;
 					break;
 				}
-				//
+				// whether boundary wires
 				wireindex = Encoding::DecodeIndex(fGid[l][p]);
 				if (wireindex < boundary_wire_low[p] || wireindex > boundary_wire_high[p]) {
 					valid_event = false;
 					break;
 				}
-				//
+				// whether broken wires
 				for (int brokenwire_index = 0; brokenwire_index < 11; brokenwire_index++) {
 					if (fGid[l][p] == brokenwire_gid[brokenwire_index]) {
 						valid_event = false;
 						break;
 					}
 				}
+        // whether valid timing information
 				if (fRawDriftTime[l][p] == drifttime_limt || fTot[l][p] == tot_limit) {
 					valid_event = false;
 					break;
@@ -153,24 +155,56 @@ Bool_t FitGUI::ReadEvent()
 		}
 	}
 
-	// correct drifttime and get drift distance
 	Double_t t0,T0;
+	TVector3 hitwireUpX,hitwireUpY,hitwireDownX,hitwireDownY,hitposUp,hitposDown;
+  GeometryInfo gm_info = fLineFitAlg->GetGeometryInfo();
+	Double_t p0_start[4];
+	const Double_t* p0_stop;
+	double p0_step=0.01;
+
 	if(valid_event){
+    // reset fLineFitAlg
+    fLineFitAlg->Reset();
+
+    // correct drifttime and get drift distance
+    // And push them into fLineFitAlg
 		for(l=0;l<g_mwdc_location;l++){
 		  for(p=0;p<g_mwdc_wireplane;p++){
 		  	t0=fDriftInfo->Get_t0(fGid[l][p]);
 		  	T0=fDriftInfo->Get_T0(fGid[l][p]);
 		  	fCorrectedDriftTime[l][p] = fRawDriftTime[l][p] - (t0-2*T0);
 		  	fDriftRadius[l][p] = fRtRelation_Spline[l][p]->Eval(fCorrectedDriftTime[l][p]);
+
+        fLineFitAlg->AddHit(fGid[l][p], fDriftRadius[l][p]);
 		  }
 		}
-	}
 
-	// get init track
-	
-	// Fit
-	
-	// 
+    // get init track
+    hitwireUpX=gm_info.GetPoint(fGid[1][0]);
+    hitwireUpY=gm_info.GetPoint(fGid[1][1]);
+    hitwireDownX=gm_info.GetPoint(fGid[0][0]);
+    hitwireDownY=gm_info.GetPoint(fGid[0][1]);
+    hitposUp.SetXYZ(hitwireUpY.X(),hitwireUpX.Y(),(hitwireUpY.Z()+hitwireUpX.Z())/2);
+    hitposDown.SetXYZ(hitwireDownX.X(),hitwireDownY.Y(),(hitwireDownX.Z()+hitwireDownY.Z())/2);
+
+    fInitTrack.Reset(hitposUp, hitposDown, false); 
+    fInitTrack.GetParameter(p0_start);
+     
+    // fitting
+    fFitter.SetFCN(fLineFitAlg,p0_start);
+    for (int j = 0; j < 4; ++j) 
+      fFitter.Config().ParSettings(j).SetStepSize(p0_step);
+    
+    if (!fFitter.FitFCN()) {
+      PrintWarningMessage("Line3D Fit failed");
+    }
+
+    // fit result
+    fFitResult = fFitter.Result();
+    p0_stop=fFitResult.GetParams();
+    fFinalTrack.Reset(p0_stop);
+
+    return true;
 }
 
 void FitGUI::AddEvent()
@@ -178,8 +212,3 @@ void FitGUI::AddEvent()
 
 }
 
-Bool_t FitGUI::Fit()
-{
-	fLineFitAlg->Reset();
-
-}

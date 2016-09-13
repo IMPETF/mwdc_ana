@@ -51,9 +51,9 @@ public:
 
 		// new event 
 		PrintWarningMessage(Form("Loading event %ld ...",ev));
-		DropEvent();
-		ReadEvent();
-		AddEvent();
+		DropEvent();// remove eve elements of previous events from viewers
+		ReadEvent();// read the current event data
+		AddEvent();//  add the eve elements of current event into the viewers
 
 		// finish
 		PrintCurrentStatus();
