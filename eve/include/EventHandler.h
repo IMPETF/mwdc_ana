@@ -52,7 +52,10 @@ public:
 		// new event 
 		PrintWarningMessage(Form("Loading event %ld ...",ev));
 		DropEvent();// remove eve elements of previous events from viewers
-		ReadEvent();// read the current event data
+    if (!ReadEvent()) {// read the current event data
+      PrintWarningMessage(Form("Current event (%ld) is invalid!!",fCurrentEvent));
+      return false;
+    }
 		AddEvent();//  add the eve elements of current event into the viewers
 
 		// finish
@@ -77,9 +80,9 @@ public:
 	}
 
 private:
-	virtual void DropEvent() {};
-	virtual Bool_t ReadEvent() {};
-	virtual void AddEvent() {};
+	virtual void DropEvent() {}
+	virtual Bool_t ReadEvent() { return true; }
+	virtual void AddEvent() {}
 
 protected:
 	Long_t fTotalEvents;

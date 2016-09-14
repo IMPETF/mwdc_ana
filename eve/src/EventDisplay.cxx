@@ -77,6 +77,13 @@ EventDisplay::EventDisplay()
 EventDisplay::~EventDisplay()
 {
 	fHittedCells->DecDenyDestroy();
+
+  fTextUp->DecDenyDestroy();
+  fTextDown->DecDenyDestroy();
+  fTextX->DecDenyDestroy();
+  fTextY->DecDenyDestroy();
+  fArrowX->DecDenyDestroy();
+  fArrowY->DecDenyDestroy();
 }
 
 /**
@@ -114,6 +121,8 @@ void EventDisplay::Initialize()
 
 	UseDefaultSetting();
 
+  gEve->AddEvent(new TEveEventManager("Event", "MWDC Cosmic Event"));
+
 	gEve->Redraw3D();
 }
 
@@ -124,6 +133,9 @@ void EventDisplay::Draw(Bool_t resetCameras, Bool_t dropLogicals)
 
 void EventDisplay::AddGuides()
 {
+  if(!fTextUp){
+    printf("Error fTextUp has been deleted\n");
+  }
 	fMultiView->ImportEvent3D(fTextUp);
 	fMultiView->ImportEvent3D(fTextDown);
 	fMultiView->ImportEvent3D(fTextX);
@@ -225,6 +237,7 @@ void EventDisplay::AddGeometryGuides()
 	t_pos[0] -= 70; t_pos[2] += 10;
 	fTextUp->RefMainTrans().SetPos(t_pos);
 	gEve->AddGlobalElement(fTextUp);
+  fTextUp->IncDenyDestroy();
 
 	Double_t t_pos_down[3];
 	fTextDown = new TEveText("Down");
@@ -234,24 +247,29 @@ void EventDisplay::AddGeometryGuides()
 	t_pos_down[0] -= 70; t_pos_down[2] -= 10;
 	fTextDown->RefMainTrans().SetPos(t_pos_down);
 	gEve->AddGlobalElement(fTextDown);
+  fTextDown->IncDenyDestroy();
 
 	fArrowX = new TEveArrow(15., 0., 0., t_pos[0], t_pos[1], (t_pos[2] + t_pos_down[2]) / 2);
 	fArrowX->SetMainColor(kRed); fArrowX->SetTubeR(0.05); fArrowX->SetConeR(0.15); fArrowX->SetConeL(0.2);
 	fArrowX->SetPickable(kTRUE);
 	gEve->AddGlobalElement(fArrowX);
+  fArrowX->IncDenyDestroy();
 	fTextX = new TEveText("+X");
 	fTextX->SetFontSize(15); fTextX->SetMainColor(kRed);
 	fTextX->RefMainTrans().SetPos(t_pos[0] + 15, t_pos[1], (t_pos[2] + t_pos_down[2]) / 2);
 	gEve->AddGlobalElement(fTextX);
+  fTextX->IncDenyDestroy();
 
 	fArrowY = new TEveArrow(0., 15., 0., t_pos[0], t_pos[1], (t_pos[2] + t_pos_down[2]) / 2);
 	fArrowY->SetMainColor(kGreen); fArrowY->SetTubeR(0.05); fArrowY->SetConeR(0.15); fArrowY->SetConeL(0.2);
 	fArrowY->SetPickable(kTRUE);
 	gEve->AddGlobalElement(fArrowY);
+  fArrowY->IncDenyDestroy();
 	fTextY = new TEveText("+Y");
 	fTextY->SetFontSize(15); fTextY->SetMainColor(kGreen);
 	fTextY->RefMainTrans().SetPos(t_pos[0], t_pos[1] + 15, (t_pos[2] + t_pos_down[2]) / 2);
 	gEve->AddGlobalElement(fTextY);
+  fTextY->IncDenyDestroy();
 }
 
 void EventDisplay::AddGeometry()

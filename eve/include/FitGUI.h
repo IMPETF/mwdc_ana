@@ -28,50 +28,52 @@ class DriftInfo;
 class TF1;
 
 class FitGUI : public EventHandler
- {
+{
 
- public:
- 	FitGUI();
- 	FitGUI(const char* filename, Long_t evt=0);
- 	~FitGUI();
- 	
- 	void SetFile(const char* filename);
- 	void SetFirstEvent(Long_t evt);
- 	void Init();
+public:
+  FitGUI();
+  FitGUI(const char* filename);
+  ~FitGUI();
 
- private:
- 	virtual void DropEvent();
-	virtual Bool_t ReadEvent();
-	virtual void AddEvent();
+  void SetFile(const char* filename);
+  void Init();
 
- 	// void GetRtRelation();
-	// Bool_t	Fit();
-	
- private:
-	// fit related
-	TrackFit::LineFit*		fLineFitAlg;
-	ROOT::Fit::Fitter		fFitter;
-	ROOT::Fit::FitResult	fFitResult;
-	TrackFit::Line 			fInitTrack;
-	TrackFit::Line 			fFinalTrack;
-	  
-	// input/output
-	TString 	fFileNameInput;
-	TFile*		fFileInput;
-	TTree*		fTreeDriftTime;
-	
-	DriftInfo*  fDriftInfo;
-	TSpline5*   fRtRelation_Spline[2][3];
-	TGraph*		fRtRelation_Graph[2][3];
-	TF1*		fRtRelation[2][3];
+private:
+  virtual void DropEvent();
+  virtual Bool_t ReadEvent();
+  virtual void AddEvent();
 
-	UInt_t		fGid[2][3];
-	Double_t	fTot[2][3];
-	Double_t	fRawDriftTime[2][3];
-	Double_t	fCorrectedDriftTime[2][3];
-	Double_t	fDriftRadius[2][3];
+  // void GetRtRelation();
+  // Bool_t	Fit();
 
+private:
+  // fit related
+  TrackFit::LineFit*		fLineFitAlg;
+  ROOT::Fit::Fitter		fFitter;
+  ROOT::Fit::FitResult	fFitResult;
+  TrackFit::Line      fInitTrack;
+  TrackFit::Line      fFinalTrack;
 
- ClassDef(FitGUI,0);	
- }; 
+  // input/output
+  TString   fFileNameInput;
+  TFile*		fFileInput;
+  TTree*		fTreeDriftTime;
+
+  DriftInfo*  fDriftInfo;
+  TSpline5*   fRtRelation_Spline[2][3];
+  TGraph*		fRtRelation_Graph[2][3];
+  TF1*		fRtRelation[2][3];
+
+  UInt_t		fGid[2][3];
+  Double_t	fTot[2][3];
+  Double_t	fRawDriftTime[2][3];
+
+  Double_t	fCorrectedDriftTime[2][3];
+  Double_t	fDriftRadius[2][3];
+  Double_t  fInitFittedDistances[2][3];
+  Double_t  fFinalFittedDistances[2][3];
+  TrackFit::Line fHittedWires[2][3];
+
+  ClassDef(FitGUI,0);
+};
 #endif

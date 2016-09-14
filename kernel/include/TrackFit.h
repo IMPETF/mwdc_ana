@@ -187,10 +187,12 @@ public:
     return fWirePositions;
   }
 
-	void AddHit(UInt_t gid, Double_t distance){
+	Line AddHit(UInt_t gid, Double_t distance){
 		fDistances[gid]=distance;
 		fHittedwires[gid]=Line();
 		fHittedwires[gid].Reset_Unstandard(fWirePositions.GetPoint(gid),fWirePositions.GetDirection(gid));
+
+    return fHittedwires[gid];
 	}
 
 	void Reset(){
@@ -214,7 +216,7 @@ public:
 		}
 	}
 
-	void CalcResiduals(Double_t *p){
+	void CalcResiduals(const Double_t *p){
 		track.Reset(p);
 		// 
 		fDistances_Fitted.clear();
@@ -240,20 +242,13 @@ public:
 private:
 	double DoEval(const double * p) const {
 		Line track(p);
-		// printf("in LineFit\n");
-
-		// 
 		Double_t sum=0;
-		// Int_t size=fDistances.size();
-		// assert(size==6);
-		// 		
 		Double_t tmpdistance;
 		std::map<UInt_t,Double_t>::const_iterator fIterator;
 		for(fIterator = fDistances.begin();fIterator!=fDistances.end();++fIterator){
 			tmpdistance=track.DistanceToLine(fHittedwires.at(fIterator->first));
 
 			sum+=TMath::Power(tmpdistance - fIterator->second,2);
-			// printf("%.4f(%.4f)\n", tmpdistance,distance);
 		}
 		return sum;
 	}

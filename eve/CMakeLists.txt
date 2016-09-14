@@ -36,4 +36,7 @@ endforeach()
 #---------------------------------------------------------
 add_executable(evetest test/main.cxx)
 target_link_libraries(evetest mwdc_kernel mwdc_eve)
-install(TARGETS evetest DESTINATION lib)
+
+add_executable(fit_debug test/fit_debug.cxx)
+target_link_libraries(fit_debug mwdc_kernel mwdc_eve)
+install(TARGETS evetest fit_debug DESTINATION lib)
