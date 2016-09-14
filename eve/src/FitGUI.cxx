@@ -256,7 +256,7 @@ void FitGUI::AddEvent()
   TVector3 point;
   TEveLine* track_line = new TEveLine;
   track_line->SetMainColor(kBlack);
-  track_line->SetLineStyle(2);
+  // track_line->SetLineStyle(2);
   track_line->SetLineWidth(2);
   for(int i=0;i<400;i++){
     point=fInitTrack.GetPoint(-400+i*1400/400);
@@ -264,37 +264,37 @@ void FitGUI::AddEvent()
   }
   gEvtDisplay->AddToAll(track_line);
 
-  // // final fitted track
-  // track_line = new TEveLine;
-  // track_line->SetMainColor(kBlue);
-  // track_line->SetLineWidth(2);
-  // for(int i=0;i<400;i++){
-  //   point=fFinalTrack.GetPoint(-400+i*1400/400);
-  //   track_line->SetNextPoint(point.X()/10,point.Y()/10,point.Z()/10);
-  // }
-  // gEvtDisplay->AddToAll(track_line);
+  // final fitted track
+  track_line = new TEveLine;
+  track_line->SetMainColor(kBlue);
+  track_line->SetLineWidth(2);
+  for(int i=0;i<400;i++){
+    point=fFinalTrack.GetPoint(-400+i*1400/400);
+    track_line->SetNextPoint(point.X()/10,point.Y()/10,point.Z()/10);
+  }
+  gEvtDisplay->AddToAll(track_line);
 
-  // // drift circles
-  // TEveGeoShape* driftcircles[2][3];
-  // Double_t wire_angles[2][3]={{0,TMath::Pi()/2,TMath::Pi()/6},
-  //               {TMath::Pi()/2,0,TMath::Pi()/3}}; 
-  // for(int l=0;l<2;l++){
-  //   for(int p=0;p<3;p++){
-  //     driftcircles[l][p]=new TEveGeoShape(Form("drift_circle_%s_%s",g_str_location[l],g_str_plane[p]));
-  //     driftcircles[l][p]->SetShape(new TGeoTube(0,fDriftRadius[l][p]/10,60));
+  // drift circles
+  TEveGeoShape* driftcircles[2][3];
+  Double_t wire_angles[2][3]={{0,TMath::Pi()/2,TMath::Pi()/6},
+                {TMath::Pi()/2,0,TMath::Pi()/3}}; 
+  for(int l=0;l<2;l++){
+    for(int p=0;p<3;p++){
+      driftcircles[l][p]=new TEveGeoShape(Form("drift_circle_%s_%s",g_str_location[l],g_str_plane[p]));
+      driftcircles[l][p]->SetShape(new TGeoTube(0,fDriftRadius[l][p]/10,60));
       
-      // // tube rotation and translation
-      // driftcircles[l][p]->RefMainTrans().SetPos((fHittedWires[l][p].GetPoint(0).X())/10,(fHittedWires[l][p].GetPoint(0).Y())/10,fHittedWires[l][p].GetPoint(0).Z()/10);
-      // driftcircles[l][p]->RefMainTrans().SetRotByAngles(wire_angles[l][p],0,0);
-      // driftcircles[l][p]->RefMainTrans().RotateLF(2,3,TMath::Pi()/2);
+      // tube rotation and translation
+      driftcircles[l][p]->RefMainTrans().SetPos((fHittedWires[l][p].GetPoint(0).X())/10,(fHittedWires[l][p].GetPoint(0).Y())/10,fHittedWires[l][p].GetPoint(0).Z()/10);
+      driftcircles[l][p]->RefMainTrans().SetRotByAngles(wire_angles[l][p],0,0);
+      driftcircles[l][p]->RefMainTrans().RotateLF(2,3,TMath::Pi()/2);
       
-  //     driftcircles[l][p]->SetNSegments(100);
-  //     driftcircles[l][p]->SetMainTransparency(90);
-  //     driftcircles[l][p]->SetMainColor(kGreen);
-  //     driftcircles[l][p]->SetLineColor(kBlack);
-  //   }
-  // }
-  // gEvtDisplay->AddToProjection(driftcircles);
+      driftcircles[l][p]->SetNSegments(100);
+      driftcircles[l][p]->SetMainTransparency(90);
+      driftcircles[l][p]->SetMainColor(kGreen);
+      driftcircles[l][p]->SetLineColor(kBlack);
+    }
+  }
+  gEvtDisplay->AddToProjection(driftcircles);
 
   // coordinates guide
   gEvtDisplay->AddGuides();

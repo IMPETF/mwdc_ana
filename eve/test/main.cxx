@@ -18,44 +18,44 @@ void add_debug_event()
 {
   GeometryInfo gm_info;
 
-  // TrackFit::Line hitted_wire[2][3];
-  // UInt_t gid[2][3];
-  // for(int l=0;l<2;l++){
-  //   for(int p=0;p<3;p++){
-  //     gid[l][p]=Encoding::Encode(EMWDC,l,p,20+2*l+p*3);
-  //     hitted_wire[l][p].Reset_Unstandard(gm_info.GetPoint(gid[l][p]),gm_info.GetDirection(gid[l][p]));
-  //   }
-  // }
+  TrackFit::Line hitted_wire[2][3];
+  UInt_t gid[2][3];
+  for(int l=0;l<2;l++){
+    for(int p=0;p<3;p++){
+      gid[l][p]=Encoding::Encode(EMWDC,l,p,20+2*l+p*3);
+      hitted_wire[l][p].Reset_Unstandard(gm_info.GetPoint(gid[l][p]),gm_info.GetDirection(gid[l][p]));
+    }
+  }
 
-  // TrackFit::Line track;
-  // TVector3 hitwireUpX,hitwireUpY,hitwireDownX,hitwireDownY,hitposUp,hitposDown;
+  TrackFit::Line track;
+  TVector3 hitwireUpX,hitwireUpY,hitwireDownX,hitwireDownY,hitposUp,hitposDown;
   
-  // hitwireUpX=gm_info.GetPoint(gid[1][0]);
-  // hitwireUpY=gm_info.GetPoint(gid[1][1]);
-  // hitwireDownX=gm_info.GetPoint(gid[0][0]);
-  // hitwireDownY=gm_info.GetPoint(gid[0][1]);
-  // hitposUp.SetXYZ(hitwireUpY.X(),hitwireUpX.Y(),(hitwireUpY.Z()+hitwireUpX.Z())/2);
-  // hitposDown.SetXYZ(hitwireDownX.X(),hitwireDownY.Y(),(hitwireDownX.Z()+hitwireDownY.Z())/2);
+  hitwireUpX=gm_info.GetPoint(gid[1][0]);
+  hitwireUpY=gm_info.GetPoint(gid[1][1]);
+  hitwireDownX=gm_info.GetPoint(gid[0][0]);
+  hitwireDownY=gm_info.GetPoint(gid[0][1]);
+  hitposUp.SetXYZ(hitwireUpY.X(),hitwireUpX.Y(),(hitwireUpY.Z()+hitwireUpX.Z())/2);
+  hitposDown.SetXYZ(hitwireDownX.X(),hitwireDownY.Y(),(hitwireDownX.Z()+hitwireDownY.Z())/2);
   
-  // track.Reset(hitposUp,hitposDown,false);
+  track.Reset(hitposUp,hitposDown,false);
 
   // TrackFit::Line track2;
   // hitposUp.SetXYZ(hitwireUpY.X()+100,hitwireUpX.Y()+300,(hitwireUpY.Z()+hitwireUpX.Z())/2+200);
   // hitposDown.SetXYZ(hitwireDownX.X()+10,hitwireDownY.Y()+30,(hitwireDownX.Z()+hitwireDownY.Z())/2+20);
   // track2.Reset(hitposUp,hitposDown,false);
 
-  // // track
-  // TVector3 point;
-  // TEveLine* track_line = new TEveLine;
-  // track_line->SetMainColor(kBlack);
-  // track_line->SetLineWidth(2);
-  // for(int i=0;i<400;i++){
-  //   point=track.GetPoint(-400+i*1400/400);
-  //   track_line->SetNextPoint(point.X()/10,point.Y()/10,point.Z()/10);
-  // }
-  // // track_line->SetRnrSelf(kFALSE);
+  // track
+  TVector3 point;
+  TEveLine* track_line = new TEveLine;
+  track_line->SetMainColor(kBlack);
+  track_line->SetLineWidth(2);
+  for(int i=0;i<400;i++){
+    point=track.GetPoint(-400+i*1400/400);
+    track_line->SetNextPoint(point.X()/10,point.Y()/10,point.Z()/10);
+  }
+  // track_line->SetRnrSelf(kFALSE);
 
-  // gEvtDisplay->AddToAll(track_line);
+  gEvtDisplay->AddToAll(track_line);
 
   // // hitted wire
   // TEveLine* hitted_wire_line[2][3];
