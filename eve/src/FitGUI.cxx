@@ -233,6 +233,7 @@ Bool_t FitGUI::ReadEvent()
 
 void FitGUI::AddEvent()
 {
+
   // hitted wire highlighting 
   for(int l=0;l<2;l++){
     for(int p=0;p<3;p++){
@@ -275,6 +276,7 @@ void FitGUI::AddEvent()
   gEvtDisplay->AddToAll(track_line);
 
   // drift circles
+  TEveGeoManagerHolder gmgr(TEveGeoShape::GetGeoMangeur());// ref to TEveGeoShape.cxx
   TEveGeoShape* driftcircles[2][3];
   Double_t wire_angles[2][3]={{0,TMath::Pi()/2,TMath::Pi()/6},
                 {TMath::Pi()/2,0,TMath::Pi()/3}}; 
