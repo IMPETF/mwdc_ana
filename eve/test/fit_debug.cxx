@@ -6,6 +6,7 @@
 // invoking: fit_debug <root_file> [geom_file] [init_eventnum]
 int main(int argc, char *argv[])
 {
+  // TODO: arguments parsing using standard library (like getopts ...)
   TString geom_filename;
   TString root_filename;
   Int_t   init_evtnum;

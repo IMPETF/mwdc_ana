@@ -234,7 +234,7 @@ Bool_t FitGUI::ReadEvent()
 void FitGUI::AddEvent()
 {
 
-  // hitted wire highlighting 
+  // hitted wire highlighting
   for(int l=0;l<2;l++){
     for(int p=0;p<3;p++){
       UChar_t type,location,direction;
@@ -279,17 +279,17 @@ void FitGUI::AddEvent()
   TEveGeoManagerHolder gmgr(TEveGeoShape::GetGeoMangeur());// ref to TEveGeoShape.cxx
   TEveGeoShape* driftcircles[2][3];
   Double_t wire_angles[2][3]={{0,TMath::Pi()/2,TMath::Pi()/6},
-                {TMath::Pi()/2,0,TMath::Pi()/3}}; 
+                              {TMath::Pi()/2,0,TMath::Pi()/3}};
   for(int l=0;l<2;l++){
     for(int p=0;p<3;p++){
       driftcircles[l][p]=new TEveGeoShape(Form("drift_circle_%s_%s",g_str_location[l],g_str_plane[p]));
       driftcircles[l][p]->SetShape(new TGeoTube(0,fDriftRadius[l][p]/10,60));
-      
+
       // tube rotation and translation
       driftcircles[l][p]->RefMainTrans().SetPos((fHittedWires[l][p].GetPoint(0).X())/10,(fHittedWires[l][p].GetPoint(0).Y())/10,fHittedWires[l][p].GetPoint(0).Z()/10);
       driftcircles[l][p]->RefMainTrans().SetRotByAngles(wire_angles[l][p],0,0);
       driftcircles[l][p]->RefMainTrans().RotateLF(2,3,TMath::Pi()/2);
-      
+
       driftcircles[l][p]->SetNSegments(100);
       driftcircles[l][p]->SetMainTransparency(90);
       driftcircles[l][p]->SetMainColor(kGreen);
@@ -309,4 +309,3 @@ void FitGUI::AddEvent()
   //
   gEvtDisplay->Draw();
 }
-
