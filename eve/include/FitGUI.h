@@ -19,6 +19,7 @@
 #include "EventHandler.h"
 #include "TrackFit.h"
 #include <Fit/Fitter.h>
+#include "TString.h"
 
 class TFile;
 class TTree;
